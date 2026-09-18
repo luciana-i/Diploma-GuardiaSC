@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BE
 {
     public class Familia : Perfil
-    {// cambio!
+    {
         public override void AgregarHijo(Perfil p)
         {
             listaPerfiles.Add(p);

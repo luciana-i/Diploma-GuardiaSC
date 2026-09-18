@@ -157,7 +157,7 @@ ORDER BY Usuario_ID;
             return lista;
         }
 
-        public static long CalcularDVVUsuario() // cambio! nuevo metodo
+        public static long CalcularDVVUsuario() 
         {
 
             var dao = new DAO();
@@ -169,7 +169,7 @@ ORDER BY Usuario_ID;
             return Convert.ToInt64(resultado);
         }
 
-        public static long UpdateDvH(int id, long suma) // cambio! nuevo metodo
+        public static long UpdateDvH(int id, long suma) 
         {
 
             var dao = new DAO();

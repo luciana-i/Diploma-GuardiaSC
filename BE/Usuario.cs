@@ -11,7 +11,7 @@ namespace BE
         public int IntentosFallidos { get; set; }
         public bool Bloqueado { get; set; }
         public Idioma IdiomaDefault { get; set; }
-        public int DVH { get; set; } //cambio!!
+        public int DVH { get; set; } 
 
         private readonly List<Perfil> listaPerfiles = new List<Perfil>();
 
@@ -45,7 +45,6 @@ namespace BE
                 listaPerfiles.Add(perfil);
             }
         }
-        //agregar esto para leer readonly CAMBIO!!
         public IReadOnlyList<Perfil> listaReadonlyPerfiles => listaPerfiles;
 
 

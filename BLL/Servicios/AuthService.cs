@@ -67,7 +67,7 @@ namespace BLL.Servicios
                     _usuarioBL.ActualizarUsuario(usuario);
                 }
 
-                if(usuario.IdiomaDefault != null) // si tiene seteado el idioma por default, debo cambiar para notificar a los formularios CAMBIO!!
+                if(usuario.IdiomaDefault != null) // si tiene seteado el idioma por default, debo cambiar para notificar a los formularios
                 {
                     IdiomaService.CambiarIdioma(usuario.IdiomaDefault.Id);
                 }

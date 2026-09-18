@@ -16,7 +16,7 @@ namespace BLL.Servicios
         // El diccionario en memoria con las traducciones del idioma actual
         public static Dictionary<string, string> TraduccionesActuales { get; private set; }
 
-        public static void Suscribir(IIdiomaObserver observador) //CAMBIO!
+        public static void Suscribir(IIdiomaObserver observador) 
         {
             _observadores.Add(observador);
             if (TraduccionesActuales != null)
@@ -30,7 +30,7 @@ namespace BLL.Servicios
             _observadores.Remove(observador);
         }
 
-        public static void CambiarIdioma(int idiomaId) //cambio!!
+        public static void CambiarIdioma(int idiomaId) 
         {
             SessionManager.getInstance().IdiomaActual = idiomaId;
 

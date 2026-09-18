@@ -46,46 +46,55 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgregarIdiomaForm.cs">
+    <Compile Include="Negocio\AdmisionGuardiaForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AgregarIdiomaForm.Designer.cs">
+    <Compile Include="Negocio\AdmisionGuardiaForm.Designer.cs">
+      <DependentUpon>AdmisionGuardiaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Arquitectura\AgregarIdiomaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Arquitectura\AgregarIdiomaForm.Designer.cs">
       <DependentUpon>AgregarIdiomaForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AsignarPerfilesUsuarioForm.cs">
+    <Compile Include="Arquitectura\AsignarPerfilesUsuarioForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AsignarPerfilesUsuarioForm.Designer.cs">
+    <Compile Include="Arquitectura\AsignarPerfilesUsuarioForm.Designer.cs">
       <DependentUpon>AsignarPerfilesUsuarioForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BitacoraForm.cs">
+    <Compile Include="Arquitectura\BitacoraForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BitacoraForm.Designer.cs">
+    <Compile Include="Arquitectura\BitacoraForm.Designer.cs">
       <DependentUpon>BitacoraForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="CambiarClaveForm.cs">
+    <Compile Include="Arquitectura\CambiarClaveForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CambiarClaveForm.Designer.cs">
+    <Compile Include="Arquitectura\CambiarClaveForm.Designer.cs">
       <DependentUpon>CambiarClaveForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AdministrarPerfilesForm.cs">
+    <Compile Include="Arquitectura\AdministrarPerfilesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AdministrarPerfilesForm.Designer.cs">
+    <Compile Include="Arquitectura\AdministrarPerfilesForm.Designer.cs">
       <DependentUpon>AdministrarPerfilesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="HistorialCambiosForm.cs">
+    <Compile Include="Controles\DarkGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Arquitectura\HistorialCambiosForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="HistorialCambiosForm.Designer.cs">
+    <Compile Include="Arquitectura\HistorialCambiosForm.Designer.cs">
       <DependentUpon>HistorialCambiosForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="IdiomaForm.cs">
+    <Compile Include="Arquitectura\IdiomaForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IdiomaForm.Designer.cs">
+    <Compile Include="Arquitectura\IdiomaForm.Designer.cs">
       <DependentUpon>IdiomaForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Login.cs">
@@ -100,58 +109,79 @@
     <Compile Include="MenuPrincipalForm.Designer.cs">
       <DependentUpon>MenuPrincipalForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GestionPerfilForm.cs">
+    <Compile Include="Arquitectura\GestionPerfilForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GestionPerfilForm.Designer.cs">
+    <Compile Include="Arquitectura\GestionPerfilForm.Designer.cs">
       <DependentUpon>GestionPerfilForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ModificarMailForm.cs">
+    <Compile Include="Arquitectura\ModificarMailForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ModificarMailForm.Designer.cs">
+    <Compile Include="Arquitectura\ModificarMailForm.Designer.cs">
       <DependentUpon>ModificarMailForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Negocio\EvaluacionYClasificacionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Negocio\EvaluacionYClasificacionForm.Designer.cs">
+      <DependentUpon>EvaluacionYClasificacionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Negocio\PacientesEnfermeriaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Negocio\PacientesEnfermeriaForm.Designer.cs">
+      <DependentUpon>PacientesEnfermeriaForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegistrarseForm.cs">
+    <Compile Include="Arquitectura\RegistrarseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RegistrarseForm.Designer.cs">
+    <Compile Include="Arquitectura\RegistrarseForm.Designer.cs">
       <DependentUpon>RegistrarseForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AgregarIdiomaForm.resx">
+    <EmbeddedResource Include="Negocio\AdmisionGuardiaForm.resx">
+      <DependentUpon>AdmisionGuardiaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Arquitectura\AgregarIdiomaForm.resx">
       <DependentUpon>AgregarIdiomaForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AsignarPerfilesUsuarioForm.resx">
+    <EmbeddedResource Include="Arquitectura\AsignarPerfilesUsuarioForm.resx">
       <DependentUpon>AsignarPerfilesUsuarioForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BitacoraForm.resx">
+    <EmbeddedResource Include="Arquitectura\BitacoraForm.resx">
       <DependentUpon>BitacoraForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CambiarClaveForm.resx">
+    <EmbeddedResource Include="Arquitectura\CambiarClaveForm.resx">
       <DependentUpon>CambiarClaveForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AdministrarPerfilesForm.resx">
+    <EmbeddedResource Include="Arquitectura\AdministrarPerfilesForm.resx">
       <DependentUpon>AdministrarPerfilesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="HistorialCambiosForm.resx">
+    <EmbeddedResource Include="Arquitectura\HistorialCambiosForm.resx">
       <DependentUpon>HistorialCambiosForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IdiomaForm.resx">
+    <EmbeddedResource Include="Arquitectura\IdiomaForm.resx">
       <DependentUpon>IdiomaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GestionPerfilForm.resx">
+    <EmbeddedResource Include="Arquitectura\GestionPerfilForm.resx">
       <DependentUpon>GestionPerfilForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipalForm.resx">
       <DependentUpon>MenuPrincipalForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ModificarMailForm.resx">
+    <EmbeddedResource Include="Arquitectura\ModificarMailForm.resx">
       <DependentUpon>ModificarMailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Negocio\EvaluacionYClasificacionForm.resx">
+      <DependentUpon>EvaluacionYClasificacionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Negocio\PacientesEnfermeriaForm.resx">
+      <DependentUpon>PacientesEnfermeriaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -162,7 +192,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="RegistrarseForm.resx">
+    <EmbeddedResource Include="Arquitectura\RegistrarseForm.resx">
       <DependentUpon>RegistrarseForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">

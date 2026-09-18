@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using Seguridad;
 using BLL;
 using System.Collections.Generic;
+using SistemaTurnos.Negocio;
 
 namespace SistemaTurnosUI
 {/// <summary>
@@ -207,5 +208,25 @@ namespace SistemaTurnosUI
         }
         #endregion
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            AdmisionGuardiaForm admisionGuardiaForm = new AdmisionGuardiaForm();
+            admisionGuardiaForm.ShowDialog();
+            this.Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            EvaluacionYClasificacionForm admisionGuardiaForm = new EvaluacionYClasificacionForm();
+            admisionGuardiaForm.ShowDialog();
+            this.Close();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            PacientesEnfermeriaForm admisionGuardiaForm = new PacientesEnfermeriaForm();
+            admisionGuardiaForm.ShowDialog();
+            this.Close();
+        }
     }
 }
