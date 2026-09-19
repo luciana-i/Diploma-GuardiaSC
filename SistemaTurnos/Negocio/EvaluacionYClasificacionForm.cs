@@ -101,5 +101,13 @@ namespace SistemaTurnos.Negocio
                 e.Graphics.DrawString(cmb.Items[e.Index].ToString(), cmb.Font, brushText, e.Bounds.X + 24, e.Bounds.Y + 3);
         }
 
+        private void btnVerHistoriaClinica_Click(object sender, EventArgs e)
+        {
+            using (var formHC = new HistoriaClinicaForm())
+            {
+                // Abre el modal centrado sobre la pantalla actual
+                formHC.ShowDialog(this);
+            }
+        }
     }
 }

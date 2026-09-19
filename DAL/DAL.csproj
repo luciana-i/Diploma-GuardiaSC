@@ -42,10 +42,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AtencionMedicaDAL.cs" />
     <Compile Include="BitacoraDAL.cs" />
+    <Compile Include="ConsultaDAL.cs" />
     <Compile Include="DVVDAL.cs" />
+    <Compile Include="EmpleadoDAL.cs" />
+    <Compile Include="EvaluacionEnfermeriaDAL.cs" />
+    <Compile Include="HistoriaClinicaDAL.cs" />
     <Compile Include="HistorialDAL.cs" />
     <Compile Include="IdiomaDAL.cs" />
+    <Compile Include="PacienteDAL.cs" />
     <Compile Include="PerfilDAL.cs" />
     <Compile Include="TraduccionDAL.cs" />
     <Compile Include="UsuarioDAL.cs" />

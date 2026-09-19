@@ -228,5 +228,19 @@ namespace SistemaTurnosUI
             admisionGuardiaForm.ShowDialog();
             this.Close();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            HistoriaClinicaForm admisionGuardiaForm = new HistoriaClinicaForm();
+            admisionGuardiaForm.ShowDialog();
+            this.Close();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            AtencionMedicaForm admisionGuardiaForm = new AtencionMedicaForm();
+            admisionGuardiaForm.ShowDialog();
+            this.Close();
+        }
     }
 }

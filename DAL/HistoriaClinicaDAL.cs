@@ -1,0 +1,156 @@
+﻿using BE;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace DAL
+{
+    public class HistoriaClinicaDAL
+    {
+        private readonly DAO _dao;
+
+        public HistoriaClinicaDAL()
+        {
+            _dao = new DAO();
+        }
+
+        public HistoriaClinicaDAL(DAO dao)
+        {
+            _dao = dao;
+        }
+
+        /// <summary>
+        /// Inserta una entrada de antecedente/historia clínica vinculada al paciente.
+        /// Retorna el HistoriaClinica_Id generado.
+        /// </summary>
+        public int Insertar(HistoriaClinica hc)
+        {
+            string sql = @"
+                INSERT INTO dbo.HistoriaClinica (
+                    Paciente_Id,
+                    HistoriaClinica_FechaAtencion,
+                    HistoriaClinica_Antecedente,
+                    HistoriaClinica_Observacion,
+                    HistoriaClinica_Alergias,
+                    DVH
+                )
+                VALUES (
+                    @PacienteId,
+                    @FechaAtencion,
+                    @Antecedente,
+                    @Observacion,
+                    @Alergias,
+                    @DVH
+                );
+                SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+            var parametros = new SqlParameter[]
+            {
+                new SqlParameter("@PacienteId", hc.Paciente != null ? (object)hc.Paciente.Id : DBNull.Value),
+                new SqlParameter("@FechaAtencion", hc.FechaAtencion),
+                new SqlParameter("@Antecedente", hc.Antecedente ?? string.Empty),
+                new SqlParameter("@Observacion", (object)hc.Observacion ?? DBNull.Value),
+                new SqlParameter("@Alergias", (object)hc.Alergias ?? DBNull.Value),
+                new SqlParameter("@DVH", (object)hc.DVH ?? DBNull.Value)
+            };
+
+            object resultado = _dao.ExecuteScalarFunction(sql, parametros);
+            hc.Id = Convert.ToInt32(resultado);
+            return hc.Id;
+        }
+
+        /// <summary>
+        /// Obtiene todos los registros de antecedentes de la historia clínica de un paciente.
+        /// </summary>
+        public List<HistoriaClinica> ListarPorPacienteId(int pacienteId)
+        {
+            var lista = new List<HistoriaClinica>();
+
+            string sql = @"
+                SELECT 
+                    hc.HistoriaClinica_Id,
+                    hc.Paciente_Id,
+                    hc.HistoriaClinica_FechaAtencion,
+                    hc.HistoriaClinica_Antecedente,
+                    hc.HistoriaClinica_Observacion,
+                    hc.HistoriaClinica_Alergias,
+                    hc.DVH,
+                    p.Paciente_dni,
+                    p.Paciente_nombre,
+                    p.Paciente_fecha_nac,
+                    p.Paciente_telefono
+                FROM dbo.HistoriaClinica hc
+                INNER JOIN dbo.Paciente p ON hc.Paciente_Id = p.Paciente_Id
+                WHERE hc.Paciente_Id = @PacienteId
+                ORDER BY hc.HistoriaClinica_FechaAtencion DESC;";
+
+            var param = new SqlParameter("@PacienteId", pacienteId);
+            DataSet ds = _dao.ExecuteDataSet(sql, param);
+
+            if (ds != null && ds.Tables.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    lista.Add(MapearHistoriaClinica(row));
+                }
+            }
+
+            return lista;
+        }
+
+        /// <summary>
+        /// Obtiene un registro puntual por su clave primaria.
+        /// </summary>
+        public HistoriaClinica ObtenerPorId(int historiaClinicaId)
+        {
+            string sql = @"
+                SELECT 
+                    hc.HistoriaClinica_Id,
+                    hc.Paciente_Id,
+                    hc.HistoriaClinica_FechaAtencion,
+                    hc.HistoriaClinica_Antecedente,
+                    hc.HistoriaClinica_Observacion,
+                    hc.HistoriaClinica_Alergias,
+                    hc.DVH,
+                    p.Paciente_dni,
+                    p.Paciente_nombre,
+                    p.Paciente_fecha_nac,
+                    p.Paciente_telefono
+                FROM dbo.HistoriaClinica hc
+                INNER JOIN dbo.Paciente p ON hc.Paciente_Id = p.Paciente_Id
+                WHERE hc.HistoriaClinica_Id = @HistoriaClinicaId;";
+
+            var param = new SqlParameter("@HistoriaClinicaId", historiaClinicaId);
+            DataSet ds = _dao.ExecuteDataSet(sql, param);
+
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                return MapearHistoriaClinica(ds.Tables[0].Rows[0]);
+            }
+
+            return null;
+        }
+
+        private HistoriaClinica MapearHistoriaClinica(DataRow row)
+        {
+            return new HistoriaClinica
+            {
+                Id = Convert.ToInt32(row["HistoriaClinica_Id"]),
+                FechaAtencion = Convert.ToDateTime(row["HistoriaClinica_FechaAtencion"]),
+                Antecedente = row["HistoriaClinica_Antecedente"].ToString(),
+                Observacion = row["HistoriaClinica_Observacion"] != DBNull.Value ? row["HistoriaClinica_Observacion"].ToString() : null,
+                Alergias = row["HistoriaClinica_Alergias"] != DBNull.Value ? row["HistoriaClinica_Alergias"].ToString() : null,
+                DVH = row["DVH"] != DBNull.Value ? Convert.ToInt32(row["DVH"]) : (int?)null,
+                Paciente = new Paciente
+                {
+                    Id = Convert.ToInt32(row["Paciente_Id"]),
+                    Dni = row.Table.Columns.Contains("Paciente_dni") && row["Paciente_dni"] != DBNull.Value ? row["Paciente_dni"].ToString() : string.Empty,
+                    Nombre = row.Table.Columns.Contains("Paciente_nombre") && row["Paciente_nombre"] != DBNull.Value ? row["Paciente_nombre"].ToString() : string.Empty,
+                    FechaNacimiento = row.Table.Columns.Contains("Paciente_fecha_nac") && row["Paciente_fecha_nac"] != DBNull.Value ? Convert.ToDateTime(row["Paciente_fecha_nac"]) : (DateTime?)null,
+                    Telefono = row.Table.Columns.Contains("Paciente_telefono") && row["Paciente_telefono"] != DBNull.Value ? row["Paciente_telefono"].ToString() : string.Empty
+                }
+            };
+        }
+    }
+}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -84,6 +85,24 @@ namespace SistemaTurnos
             path.AddArc(r.X, r.Bottom - d, d, d, 90, 90);
             path.CloseFigure();
             return path;
+        }
+
+        // ==============================================================
+        // Fuerza al Diseñador de Visual Studio a mostrar Text en F4
+        // ==============================================================
+        [Browsable(true)]
+        [EditorBrowsable(EditorBrowsableState.Always)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [Category("Appearance")]
+        [Description("Título mostrado en la cabecera del contenedor.")]
+        public override string Text
+        {
+            get => base.Text;
+            set
+            {
+                base.Text = value;
+                this.Invalidate(); // Fuerza el redibujado en tiempo de diseño
+            }
         }
     }
 }

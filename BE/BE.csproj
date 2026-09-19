@@ -41,13 +41,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AtencionMedica.cs" />
     <Compile Include="Bitacora.cs" />
+    <Compile Include="Consulta.cs" />
     <Compile Include="DVV.cs" />
+    <Compile Include="Empleado.cs" />
+    <Compile Include="EstadoConsulta.cs" />
+    <Compile Include="EvaluacionEnfermeria.cs" />
+    <Compile Include="HistoriaClinica.cs" />
     <Compile Include="Historial.cs" />
     <Compile Include="Idioma.cs" />
+    <Compile Include="NivelPrioridad.cs" />
+    <Compile Include="Paciente.cs" />
     <Compile Include="Perfil.cs" />
     <Compile Include="Familia.cs" />
     <Compile Include="Patente.cs" />
+    <Compile Include="Persona.cs" />
+    <Compile Include="TipoEmpleado.cs" />
     <Compile Include="Traduccion.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

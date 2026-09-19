@@ -32,6 +32,7 @@
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.lblHeader = new System.Windows.Forms.Label();
             this.btnConfirmarTriage = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.grpDeterminacionPrioridad = new SistemaTurnos.DarkGroupBox();
             this.txtJustificacion = new System.Windows.Forms.TextBox();
             this.lblJustificacionTitulo = new System.Windows.Forms.Label();
@@ -41,7 +42,6 @@
             this.lblNivelSugerido = new System.Windows.Forms.Label();
             this.lblSugerenciaHeader = new System.Windows.Forms.Label();
             this.btnCalcularPrioridad = new System.Windows.Forms.Button();
-            this.btnCancelar = new System.Windows.Forms.Button();
             this.grpEvaluacionClinica = new SistemaTurnos.DarkGroupBox();
             this.chkConsultaAdministrativa = new System.Windows.Forms.CheckBox();
             this.txtSintomas = new System.Windows.Forms.TextBox();
@@ -62,6 +62,7 @@
             this.lblPacienteDni = new System.Windows.Forms.Label();
             this.lblPacienteNombre = new System.Windows.Forms.Label();
             this.lblPacienteTitulo = new System.Windows.Forms.Label();
+            this.btnVerHistoriaClinica = new System.Windows.Forms.Button();
             this.pnlMainContainer.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.grpDeterminacionPrioridad.SuspendLayout();
@@ -73,6 +74,7 @@
             // pnlMainContainer
             // 
             this.pnlMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(242)))), ((int)(((byte)(246)))));
+            this.pnlMainContainer.Controls.Add(this.btnVerHistoriaClinica);
             this.pnlMainContainer.Controls.Add(this.pnlHeader);
             this.pnlMainContainer.Controls.Add(this.btnConfirmarTriage);
             this.pnlMainContainer.Controls.Add(this.grpDeterminacionPrioridad);
@@ -115,12 +117,26 @@
             this.btnConfirmarTriage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnConfirmarTriage.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnConfirmarTriage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(62)))), ((int)(((byte)(48)))));
-            this.btnConfirmarTriage.Location = new System.Drawing.Point(512, 757);
+            this.btnConfirmarTriage.Location = new System.Drawing.Point(597, 757);
             this.btnConfirmarTriage.Name = "btnConfirmarTriage";
-            this.btnConfirmarTriage.Size = new System.Drawing.Size(254, 37);
+            this.btnConfirmarTriage.Size = new System.Drawing.Size(169, 37);
             this.btnConfirmarTriage.TabIndex = 2;
-            this.btnConfirmarTriage.Text = "✓ Confirmar Triage";
+            this.btnConfirmarTriage.Text = "✓ Confirmar";
             this.btnConfirmarTriage.UseVisualStyleBackColor = false;
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCancelar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
+            this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancelar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.btnCancelar.Location = new System.Drawing.Point(311, 757);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(178, 37);
+            this.btnCancelar.TabIndex = 1;
+            this.btnCancelar.Text = "✗ Cancelar";
+            this.btnCancelar.UseVisualStyleBackColor = false;
             // 
             // grpDeterminacionPrioridad
             // 
@@ -137,9 +153,9 @@
             this.grpDeterminacionPrioridad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
             this.grpDeterminacionPrioridad.Location = new System.Drawing.Point(26, 430);
             this.grpDeterminacionPrioridad.Name = "grpDeterminacionPrioridad";
+            this.grpDeterminacionPrioridad.Padding = new System.Windows.Forms.Padding(16, 32, 16, 16);
             this.grpDeterminacionPrioridad.Size = new System.Drawing.Size(740, 301);
             this.grpDeterminacionPrioridad.TabIndex = 2;
-            this.grpDeterminacionPrioridad.TabStop = false;
             this.grpDeterminacionPrioridad.Text = "Selección de Nivel y Validación";
             this.grpDeterminacionPrioridad.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
             // 
@@ -241,20 +257,6 @@
             this.btnCalcularPrioridad.Text = "⚡ Calcular Prioridad";
             this.btnCalcularPrioridad.UseVisualStyleBackColor = false;
             // 
-            // btnCancelar
-            // 
-            this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.btnCancelar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnCancelar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
-            this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancelar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.btnCancelar.Location = new System.Drawing.Point(26, 757);
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(264, 38);
-            this.btnCancelar.TabIndex = 1;
-            this.btnCancelar.Text = "✗ Cancelar";
-            this.btnCancelar.UseVisualStyleBackColor = false;
-            // 
             // grpEvaluacionClinica
             // 
             this.grpEvaluacionClinica.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(51)))), ((int)(((byte)(57)))));
@@ -275,9 +277,9 @@
             this.grpEvaluacionClinica.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
             this.grpEvaluacionClinica.Location = new System.Drawing.Point(26, 206);
             this.grpEvaluacionClinica.Name = "grpEvaluacionClinica";
+            this.grpEvaluacionClinica.Padding = new System.Windows.Forms.Padding(16, 32, 16, 16);
             this.grpEvaluacionClinica.Size = new System.Drawing.Size(740, 209);
             this.grpEvaluacionClinica.TabIndex = 1;
-            this.grpEvaluacionClinica.TabStop = false;
             this.grpEvaluacionClinica.Text = "Signos Vitales y Síntomas";
             this.grpEvaluacionClinica.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
             // 
@@ -417,9 +419,9 @@
             this.grpPacienteEspera.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
             this.grpPacienteEspera.Location = new System.Drawing.Point(26, 68);
             this.grpPacienteEspera.Name = "grpPacienteEspera";
+            this.grpPacienteEspera.Padding = new System.Windows.Forms.Padding(16, 32, 16, 16);
             this.grpPacienteEspera.Size = new System.Drawing.Size(740, 111);
             this.grpPacienteEspera.TabIndex = 0;
-            this.grpPacienteEspera.TabStop = false;
             this.grpPacienteEspera.Text = "Datos del Paciente en Espera";
             this.grpPacienteEspera.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
             // 
@@ -491,6 +493,21 @@
             this.lblPacienteTitulo.TabIndex = 0;
             this.lblPacienteTitulo.Text = "PACIENTE / DNI";
             // 
+            // btnVerHistoriaClinica
+            // 
+            this.btnVerHistoriaClinica.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnVerHistoriaClinica.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnVerHistoriaClinica.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(189)))), ((int)(((byte)(248)))));
+            this.btnVerHistoriaClinica.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVerHistoriaClinica.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.btnVerHistoriaClinica.Location = new System.Drawing.Point(26, 758);
+            this.btnVerHistoriaClinica.Name = "btnVerHistoriaClinica";
+            this.btnVerHistoriaClinica.Size = new System.Drawing.Size(178, 37);
+            this.btnVerHistoriaClinica.TabIndex = 4;
+            this.btnVerHistoriaClinica.Text = "📋 Historia Clínica";
+            this.btnVerHistoriaClinica.UseVisualStyleBackColor = false;
+            this.btnVerHistoriaClinica.Click += new System.EventHandler(this.btnVerHistoriaClinica_Click);
+            // 
             // EvaluacionYClasificacionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -554,5 +571,6 @@
         private System.Windows.Forms.CheckBox chkConsultaAdministrativa;
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label lblHeader;
+        private System.Windows.Forms.Button btnVerHistoriaClinica;
     }
 }

@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.pnlMainContainer = new System.Windows.Forms.Panel();
+            this.pnlHeader = new System.Windows.Forms.Panel();
+            this.lblHeader = new System.Windows.Forms.Label();
             this.pnlEpisodio = new SistemaTurnos.DarkGroupBox();
             this.txtMotivoConsulta = new System.Windows.Forms.TextBox();
             this.lblFechaIngresoTitulo = new System.Windows.Forms.Label();
@@ -51,13 +53,11 @@
             this.txtDni = new System.Windows.Forms.TextBox();
             this.btnConfirmarIngreso = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblHeader = new System.Windows.Forms.Label();
             this.pnlMainContainer.SuspendLayout();
+            this.pnlHeader.SuspendLayout();
             this.pnlEpisodio.SuspendLayout();
             this.grpDatosFiliatorios.SuspendLayout();
             this.pnlIdentificacion.SuspendLayout();
-            this.pnlHeader.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlMainContainer
@@ -75,6 +75,28 @@
             this.pnlMainContainer.Name = "pnlMainContainer";
             this.pnlMainContainer.Size = new System.Drawing.Size(778, 561);
             this.pnlMainContainer.TabIndex = 0;
+            // 
+            // pnlHeader
+            // 
+            this.pnlHeader.BackColor = System.Drawing.Color.White;
+            this.pnlHeader.Controls.Add(this.lblHeader);
+            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlHeader.Name = "pnlHeader";
+            this.pnlHeader.Size = new System.Drawing.Size(778, 56);
+            this.pnlHeader.TabIndex = 10;
+            // 
+            // lblHeader
+            // 
+            this.lblHeader.AutoSize = true;
+            this.lblHeader.BackColor = System.Drawing.Color.White;
+            this.lblHeader.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
+            this.lblHeader.Location = new System.Drawing.Point(14, 22);
+            this.lblHeader.Name = "lblHeader";
+            this.lblHeader.Size = new System.Drawing.Size(318, 17);
+            this.lblHeader.TabIndex = 2;
+            this.lblHeader.Text = "Hospital Sagrado Corazón | Inicio Consulta Guardia";
             // 
             // pnlEpisodio
             // 
@@ -163,7 +185,6 @@
             this.grpDatosFiliatorios.Size = new System.Drawing.Size(743, 160);
             this.grpDatosFiliatorios.TabIndex = 8;
             this.grpDatosFiliatorios.Text = "DATOS PERSONALES";
-            this.grpDatosFiliatorios.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
             // 
             // btnModificarPaciente
             // 
@@ -371,28 +392,6 @@
             this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click_1);
             // 
-            // pnlHeader
-            // 
-            this.pnlHeader.BackColor = System.Drawing.Color.White;
-            this.pnlHeader.Controls.Add(this.lblHeader);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(778, 56);
-            this.pnlHeader.TabIndex = 10;
-            // 
-            // lblHeader
-            // 
-            this.lblHeader.AutoSize = true;
-            this.lblHeader.BackColor = System.Drawing.Color.White;
-            this.lblHeader.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHeader.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(41)))), ((int)(((byte)(59)))));
-            this.lblHeader.Location = new System.Drawing.Point(14, 22);
-            this.lblHeader.Name = "lblHeader";
-            this.lblHeader.Size = new System.Drawing.Size(318, 17);
-            this.lblHeader.TabIndex = 2;
-            this.lblHeader.Text = "Hospital Sagrado Corazón | Inicio Consulta Guardia";
-            // 
             // AdmisionGuardiaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -406,14 +405,14 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AdmisionGuardiaForm";
             this.pnlMainContainer.ResumeLayout(false);
+            this.pnlHeader.ResumeLayout(false);
+            this.pnlHeader.PerformLayout();
             this.pnlEpisodio.ResumeLayout(false);
             this.pnlEpisodio.PerformLayout();
             this.grpDatosFiliatorios.ResumeLayout(false);
             this.grpDatosFiliatorios.PerformLayout();
             this.pnlIdentificacion.ResumeLayout(false);
             this.pnlIdentificacion.PerformLayout();
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
             this.ResumeLayout(false);
 
         }
