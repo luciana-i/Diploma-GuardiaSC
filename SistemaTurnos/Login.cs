@@ -224,7 +224,7 @@ namespace SistemaTurnosUI
 
         private void button4_Click(object sender, EventArgs e)
         {
-            PacientesEnfermeriaForm admisionGuardiaForm = new PacientesEnfermeriaForm();
+            BandejaEnfermeriaForm admisionGuardiaForm = new BandejaEnfermeriaForm();
             admisionGuardiaForm.ShowDialog();
             this.Close();
         }
@@ -239,6 +239,13 @@ namespace SistemaTurnosUI
         private void button6_Click(object sender, EventArgs e)
         {
             AtencionMedicaForm admisionGuardiaForm = new AtencionMedicaForm();
+            admisionGuardiaForm.ShowDialog();
+            this.Close();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            BandejaMedicaForm admisionGuardiaForm = new BandejaMedicaForm();
             admisionGuardiaForm.ShowDialog();
             this.Close();
         }

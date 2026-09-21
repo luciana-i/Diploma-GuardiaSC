@@ -7,20 +7,9 @@ namespace DAL
 {
     public class EvaluacionEnfermeriaDAL
     {
-        private readonly DAO _dao;
-
-        public EvaluacionEnfermeriaDAL()
+        public static int Insertar(EvaluacionEnfermeria evaluacion)
         {
-            _dao = new DAO();
-        }
-
-        public EvaluacionEnfermeriaDAL(DAO dao)
-        {
-            _dao = dao;
-        }
-
-        public int Insertar(EvaluacionEnfermeria evaluacion)
-        {
+            DAO dao = new DAO();
             string sql = @"
                 INSERT INTO dbo.EvaluacionEnfermeria (
                     EvaluacionEnfermeria_ConsultaId,
@@ -34,8 +23,7 @@ namespace DAL
                     NivelPrioridad_IdFinal,
                     EvaluacionEnfermeria_JustificacionCambio,
                     Usuario_Id,
-                    EvaluacionEnfermeria_FechaEvaluacion,
-                    DVH
+                    EvaluacionEnfermeria_FechaEvaluacion
                 )
                 VALUES (
                     @ConsultaId,
@@ -49,8 +37,7 @@ namespace DAL
                     @NivelPrioridadIdFinal,
                     @JustificacionCambio,
                     @UsuarioId,
-                    @FechaEvaluacion,
-                    @DVH
+                    @FechaEvaluacion
                 );
                 SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
@@ -68,16 +55,16 @@ namespace DAL
                 new SqlParameter("@JustificacionCambio", !string.IsNullOrWhiteSpace(evaluacion.JustificacionCambio) ? (object)evaluacion.JustificacionCambio : DBNull.Value),
                 new SqlParameter("@UsuarioId", evaluacion.Enfermero != null ? (object)evaluacion.Enfermero.Id : DBNull.Value),
                 new SqlParameter("@FechaEvaluacion", evaluacion.FechaEvaluacion),
-                new SqlParameter("@DVH", evaluacion.DVH.HasValue ? (object)evaluacion.DVH.Value : DBNull.Value)
             };
 
-            object resultado = _dao.ExecuteScalarFunction(sql, parametros);
+            object resultado = dao.ExecuteScalarFunction(sql, parametros);
             evaluacion.Id = Convert.ToInt32(resultado);
             return evaluacion.Id;
         }
 
-        public EvaluacionEnfermeria ObtenerPorConsultaId(int consultaId)
+        public static EvaluacionEnfermeria ObtenerPorConsultaId(int consultaId)
         {
+            DAO dao = new DAO();
             string sql = @"
                 SELECT 
                     EvaluacionEnfermeria_Id,
@@ -92,13 +79,12 @@ namespace DAL
                     NivelPrioridad_IdFinal,
                     EvaluacionEnfermeria_JustificacionCambio,
                     Usuario_Id,
-                    EvaluacionEnfermeria_FechaEvaluacion,
-                    DVH
+                    EvaluacionEnfermeria_FechaEvaluacion
                 FROM dbo.EvaluacionEnfermeria
                 WHERE EvaluacionEnfermeria_ConsultaId = @ConsultaId;";
 
             var param = new SqlParameter("@ConsultaId", consultaId);
-            DataSet ds = _dao.ExecuteDataSet(sql, param);
+            DataSet ds = dao.ExecuteDataSet(sql, param);
 
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
@@ -108,8 +94,9 @@ namespace DAL
             return null;
         }
 
-        public EvaluacionEnfermeria ObtenerPorId(int evaluacionId)
+        public static EvaluacionEnfermeria ObtenerPorId(int evaluacionId)
         {
+            DAO dao = new DAO();
             string sql = @"
                 SELECT 
                     EvaluacionEnfermeria_Id,
@@ -124,13 +111,12 @@ namespace DAL
                     NivelPrioridad_IdFinal,
                     EvaluacionEnfermeria_JustificacionCambio,
                     Usuario_Id,
-                    EvaluacionEnfermeria_FechaEvaluacion,
-                    DVH
+                    EvaluacionEnfermeria_FechaEvaluacion
                 FROM dbo.EvaluacionEnfermeria
                 WHERE EvaluacionEnfermeria_Id = @EvaluacionId;";
 
             var param = new SqlParameter("@EvaluacionId", evaluacionId);
-            DataSet ds = _dao.ExecuteDataSet(sql, param);
+            DataSet ds = dao.ExecuteDataSet(sql, param);
 
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
@@ -140,7 +126,7 @@ namespace DAL
             return null;
         }
 
-        private EvaluacionEnfermeria MapearEvaluacion(DataRow row)
+        public static EvaluacionEnfermeria MapearEvaluacion(DataRow row)
         {
             return new EvaluacionEnfermeria
             {
@@ -174,9 +160,6 @@ namespace DAL
                     ? new Usuario { Id = Convert.ToInt32(row["Usuario_Id"]) }
                     : null,
                 FechaEvaluacion = Convert.ToDateTime(row["EvaluacionEnfermeria_FechaEvaluacion"]),
-                DVH = row["DVH"] != DBNull.Value
-                    ? Convert.ToInt64(row["DVH"])
-                    : (long?)null
             };
         }
     }

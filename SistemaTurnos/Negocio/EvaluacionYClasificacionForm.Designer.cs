@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.pnlMainContainer = new System.Windows.Forms.Panel();
+            this.btnVerHistoriaClinica = new System.Windows.Forms.Button();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.lblHeader = new System.Windows.Forms.Label();
             this.btnConfirmarTriage = new System.Windows.Forms.Button();
@@ -55,14 +56,13 @@
             this.txtFc = new System.Windows.Forms.TextBox();
             this.lblFc = new System.Windows.Forms.Label();
             this.grpPacienteEspera = new SistemaTurnos.DarkGroupBox();
-            this.lblHoraArriboValor = new System.Windows.Forms.Label();
+            this.lblHoraConsulta = new System.Windows.Forms.Label();
             this.lblHoraArriboTitulo = new System.Windows.Forms.Label();
-            this.lblEpisodioValor = new System.Windows.Forms.Label();
+            this.lblNumeroConsulta = new System.Windows.Forms.Label();
             this.lblEpisodioTitulo = new System.Windows.Forms.Label();
             this.lblPacienteDni = new System.Windows.Forms.Label();
             this.lblPacienteNombre = new System.Windows.Forms.Label();
             this.lblPacienteTitulo = new System.Windows.Forms.Label();
-            this.btnVerHistoriaClinica = new System.Windows.Forms.Button();
             this.pnlMainContainer.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.grpDeterminacionPrioridad.SuspendLayout();
@@ -86,6 +86,21 @@
             this.pnlMainContainer.Name = "pnlMainContainer";
             this.pnlMainContainer.Size = new System.Drawing.Size(793, 825);
             this.pnlMainContainer.TabIndex = 0;
+            // 
+            // btnVerHistoriaClinica
+            // 
+            this.btnVerHistoriaClinica.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnVerHistoriaClinica.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnVerHistoriaClinica.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(189)))), ((int)(((byte)(248)))));
+            this.btnVerHistoriaClinica.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVerHistoriaClinica.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.btnVerHistoriaClinica.Location = new System.Drawing.Point(26, 758);
+            this.btnVerHistoriaClinica.Name = "btnVerHistoriaClinica";
+            this.btnVerHistoriaClinica.Size = new System.Drawing.Size(178, 37);
+            this.btnVerHistoriaClinica.TabIndex = 4;
+            this.btnVerHistoriaClinica.Text = "📋 Historia Clínica";
+            this.btnVerHistoriaClinica.UseVisualStyleBackColor = false;
+            this.btnVerHistoriaClinica.Click += new System.EventHandler(this.btnVerHistoriaClinica_Click);
             // 
             // pnlHeader
             // 
@@ -123,6 +138,7 @@
             this.btnConfirmarTriage.TabIndex = 2;
             this.btnConfirmarTriage.Text = "✓ Confirmar";
             this.btnConfirmarTriage.UseVisualStyleBackColor = false;
+            this.btnConfirmarTriage.Click += new System.EventHandler(this.btnConfirmarTriage_Click);
             // 
             // btnCancelar
             // 
@@ -256,6 +272,7 @@
             this.btnCalcularPrioridad.TabIndex = 0;
             this.btnCalcularPrioridad.Text = "⚡ Calcular Prioridad";
             this.btnCalcularPrioridad.UseVisualStyleBackColor = false;
+            this.btnCalcularPrioridad.Click += new System.EventHandler(this.btnCalcularPrioridad_Click);
             // 
             // grpEvaluacionClinica
             // 
@@ -408,9 +425,9 @@
             this.grpPacienteEspera.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(51)))), ((int)(((byte)(57)))));
             this.grpPacienteEspera.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
             this.grpPacienteEspera.BorderRadius = 8;
-            this.grpPacienteEspera.Controls.Add(this.lblHoraArriboValor);
+            this.grpPacienteEspera.Controls.Add(this.lblHoraConsulta);
             this.grpPacienteEspera.Controls.Add(this.lblHoraArriboTitulo);
-            this.grpPacienteEspera.Controls.Add(this.lblEpisodioValor);
+            this.grpPacienteEspera.Controls.Add(this.lblNumeroConsulta);
             this.grpPacienteEspera.Controls.Add(this.lblEpisodioTitulo);
             this.grpPacienteEspera.Controls.Add(this.lblPacienteDni);
             this.grpPacienteEspera.Controls.Add(this.lblPacienteNombre);
@@ -425,15 +442,15 @@
             this.grpPacienteEspera.Text = "Datos del Paciente en Espera";
             this.grpPacienteEspera.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
             // 
-            // lblHoraArriboValor
+            // lblHoraConsulta
             // 
-            this.lblHoraArriboValor.AutoSize = true;
-            this.lblHoraArriboValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(176)))), ((int)(((byte)(184)))));
-            this.lblHoraArriboValor.Location = new System.Drawing.Point(568, 67);
-            this.lblHoraArriboValor.Name = "lblHoraArriboValor";
-            this.lblHoraArriboValor.Size = new System.Drawing.Size(45, 17);
-            this.lblHoraArriboValor.TabIndex = 6;
-            this.lblHoraArriboValor.Text = "label1";
+            this.lblHoraConsulta.AutoSize = true;
+            this.lblHoraConsulta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(176)))), ((int)(((byte)(184)))));
+            this.lblHoraConsulta.Location = new System.Drawing.Point(568, 67);
+            this.lblHoraConsulta.Name = "lblHoraConsulta";
+            this.lblHoraConsulta.Size = new System.Drawing.Size(45, 17);
+            this.lblHoraConsulta.TabIndex = 6;
+            this.lblHoraConsulta.Text = "label1";
             // 
             // lblHoraArriboTitulo
             // 
@@ -444,16 +461,16 @@
             this.lblHoraArriboTitulo.TabIndex = 5;
             this.lblHoraArriboTitulo.Text = "Hora Consulta";
             // 
-            // lblEpisodioValor
+            // lblNumeroConsulta
             // 
-            this.lblEpisodioValor.AutoSize = true;
-            this.lblEpisodioValor.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.lblEpisodioValor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
-            this.lblEpisodioValor.Location = new System.Drawing.Point(387, 67);
-            this.lblEpisodioValor.Name = "lblEpisodioValor";
-            this.lblEpisodioValor.Size = new System.Drawing.Size(50, 19);
-            this.lblEpisodioValor.TabIndex = 4;
-            this.lblEpisodioValor.Text = "label1";
+            this.lblNumeroConsulta.AutoSize = true;
+            this.lblNumeroConsulta.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.lblNumeroConsulta.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
+            this.lblNumeroConsulta.Location = new System.Drawing.Point(387, 67);
+            this.lblNumeroConsulta.Name = "lblNumeroConsulta";
+            this.lblNumeroConsulta.Size = new System.Drawing.Size(50, 19);
+            this.lblNumeroConsulta.TabIndex = 4;
+            this.lblNumeroConsulta.Text = "label1";
             // 
             // lblEpisodioTitulo
             // 
@@ -493,21 +510,6 @@
             this.lblPacienteTitulo.TabIndex = 0;
             this.lblPacienteTitulo.Text = "PACIENTE / DNI";
             // 
-            // btnVerHistoriaClinica
-            // 
-            this.btnVerHistoriaClinica.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnVerHistoriaClinica.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnVerHistoriaClinica.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(189)))), ((int)(((byte)(248)))));
-            this.btnVerHistoriaClinica.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVerHistoriaClinica.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            this.btnVerHistoriaClinica.Location = new System.Drawing.Point(26, 758);
-            this.btnVerHistoriaClinica.Name = "btnVerHistoriaClinica";
-            this.btnVerHistoriaClinica.Size = new System.Drawing.Size(178, 37);
-            this.btnVerHistoriaClinica.TabIndex = 4;
-            this.btnVerHistoriaClinica.Text = "📋 Historia Clínica";
-            this.btnVerHistoriaClinica.UseVisualStyleBackColor = false;
-            this.btnVerHistoriaClinica.Click += new System.EventHandler(this.btnVerHistoriaClinica_Click);
-            // 
             // EvaluacionYClasificacionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -541,9 +543,9 @@
         private DarkGroupBox grpDeterminacionPrioridad;
         private DarkGroupBox grpEvaluacionClinica;
         private DarkGroupBox grpPacienteEspera;
-        private System.Windows.Forms.Label lblHoraArriboValor;
+        private System.Windows.Forms.Label lblHoraConsulta;
         private System.Windows.Forms.Label lblHoraArriboTitulo;
-        private System.Windows.Forms.Label lblEpisodioValor;
+        private System.Windows.Forms.Label lblNumeroConsulta;
         private System.Windows.Forms.Label lblEpisodioTitulo;
         private System.Windows.Forms.Label lblPacienteDni;
         private System.Windows.Forms.Label lblPacienteNombre;

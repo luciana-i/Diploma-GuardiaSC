@@ -31,6 +31,8 @@
             this.pnlMainContainer = new System.Windows.Forms.Panel();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.lblHeader = new System.Windows.Forms.Label();
+            this.btnConfirmarIngreso = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
             this.pnlEpisodio = new SistemaTurnos.DarkGroupBox();
             this.txtMotivoConsulta = new System.Windows.Forms.TextBox();
             this.lblFechaIngresoTitulo = new System.Windows.Forms.Label();
@@ -51,7 +53,6 @@
             this.lblDni = new System.Windows.Forms.Label();
             this.btnBuscarPaciente = new System.Windows.Forms.Button();
             this.txtDni = new System.Windows.Forms.TextBox();
-            this.btnConfirmarIngreso = new System.Windows.Forms.Button();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.pnlMainContainer.SuspendLayout();
             this.pnlHeader.SuspendLayout();
@@ -64,12 +65,13 @@
             // 
             this.pnlMainContainer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.pnlMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(242)))), ((int)(((byte)(246)))));
+            this.pnlMainContainer.Controls.Add(this.btnCancelar);
             this.pnlMainContainer.Controls.Add(this.pnlHeader);
             this.pnlMainContainer.Controls.Add(this.pnlEpisodio);
             this.pnlMainContainer.Controls.Add(this.grpDatosFiliatorios);
             this.pnlMainContainer.Controls.Add(this.pnlIdentificacion);
             this.pnlMainContainer.Controls.Add(this.btnConfirmarIngreso);
-            this.pnlMainContainer.Controls.Add(this.btnCancelar);
+            this.pnlMainContainer.Controls.Add(this.btnLimpiar);
             this.pnlMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlMainContainer.Location = new System.Drawing.Point(0, 0);
             this.pnlMainContainer.Name = "pnlMainContainer";
@@ -97,6 +99,37 @@
             this.lblHeader.Size = new System.Drawing.Size(318, 17);
             this.lblHeader.TabIndex = 2;
             this.lblHeader.Text = "Hospital Sagrado Corazón | Inicio Consulta Guardia";
+            // 
+            // btnConfirmarIngreso
+            // 
+            this.btnConfirmarIngreso.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
+            this.btnConfirmarIngreso.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnConfirmarIngreso.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(111)))), ((int)(((byte)(83)))));
+            this.btnConfirmarIngreso.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnConfirmarIngreso.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.btnConfirmarIngreso.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(62)))), ((int)(((byte)(48)))));
+            this.btnConfirmarIngreso.Location = new System.Drawing.Point(509, 517);
+            this.btnConfirmarIngreso.Name = "btnConfirmarIngreso";
+            this.btnConfirmarIngreso.Size = new System.Drawing.Size(251, 32);
+            this.btnConfirmarIngreso.TabIndex = 6;
+            this.btnConfirmarIngreso.Text = "✓ Confirmar Ingreso a Guardia";
+            this.btnConfirmarIngreso.UseVisualStyleBackColor = false;
+            this.btnConfirmarIngreso.Click += new System.EventHandler(this.btnConfirmarIngreso_Click);
+            // 
+            // btnLimpiar
+            // 
+            this.btnLimpiar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.btnLimpiar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnLimpiar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
+            this.btnLimpiar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLimpiar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
+            this.btnLimpiar.Location = new System.Drawing.Point(291, 517);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(157, 32);
+            this.btnLimpiar.TabIndex = 5;
+            this.btnLimpiar.Text = "Limpiar Campos";
+            this.btnLimpiar.UseVisualStyleBackColor = false;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnCancelar_Click_1);
             // 
             // pnlEpisodio
             // 
@@ -185,6 +218,7 @@
             this.grpDatosFiliatorios.Size = new System.Drawing.Size(743, 160);
             this.grpDatosFiliatorios.TabIndex = 8;
             this.grpDatosFiliatorios.Text = "DATOS PERSONALES";
+            this.grpDatosFiliatorios.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
             // 
             // btnModificarPaciente
             // 
@@ -198,6 +232,7 @@
             this.btnModificarPaciente.TabIndex = 13;
             this.btnModificarPaciente.Text = "Modificar / Alta Paciente";
             this.btnModificarPaciente.UseVisualStyleBackColor = false;
+            this.btnModificarPaciente.Click += new System.EventHandler(this.btnModificarPaciente_Click);
             // 
             // lblNombre
             // 
@@ -230,7 +265,6 @@
             this.txtNombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.txtNombre.Location = new System.Drawing.Point(91, 53);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.ReadOnly = true;
             this.txtNombre.Size = new System.Drawing.Size(160, 20);
             this.txtNombre.TabIndex = 6;
             // 
@@ -277,7 +311,6 @@
             this.txtApellido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
             this.txtApellido.Location = new System.Drawing.Point(514, 50);
             this.txtApellido.Name = "txtApellido";
-            this.txtApellido.ReadOnly = true;
             this.txtApellido.Size = new System.Drawing.Size(199, 20);
             this.txtApellido.TabIndex = 8;
             // 
@@ -350,6 +383,7 @@
             this.btnBuscarPaciente.TabIndex = 2;
             this.btnBuscarPaciente.Text = "🔍 Buscar Paciente";
             this.btnBuscarPaciente.UseVisualStyleBackColor = false;
+            this.btnBuscarPaciente.Click += new System.EventHandler(this.btnBuscarPaciente_Click);
             // 
             // txtDni
             // 
@@ -362,21 +396,6 @@
             this.txtDni.Size = new System.Drawing.Size(112, 20);
             this.txtDni.TabIndex = 1;
             // 
-            // btnConfirmarIngreso
-            // 
-            this.btnConfirmarIngreso.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
-            this.btnConfirmarIngreso.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnConfirmarIngreso.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(111)))), ((int)(((byte)(83)))));
-            this.btnConfirmarIngreso.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnConfirmarIngreso.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.btnConfirmarIngreso.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(62)))), ((int)(((byte)(48)))));
-            this.btnConfirmarIngreso.Location = new System.Drawing.Point(509, 517);
-            this.btnConfirmarIngreso.Name = "btnConfirmarIngreso";
-            this.btnConfirmarIngreso.Size = new System.Drawing.Size(251, 32);
-            this.btnConfirmarIngreso.TabIndex = 6;
-            this.btnConfirmarIngreso.Text = "✓ Confirmar Ingreso a Guardia";
-            this.btnConfirmarIngreso.UseVisualStyleBackColor = false;
-            // 
             // btnCancelar
             // 
             this.btnCancelar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
@@ -384,13 +403,13 @@
             this.btnCancelar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
             this.btnCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancelar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.btnCancelar.Location = new System.Drawing.Point(221, 517);
+            this.btnCancelar.Location = new System.Drawing.Point(17, 517);
             this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(227, 32);
-            this.btnCancelar.TabIndex = 5;
-            this.btnCancelar.Text = "✗ Cancelar / Limpiar";
+            this.btnCancelar.Size = new System.Drawing.Size(148, 32);
+            this.btnCancelar.TabIndex = 11;
+            this.btnCancelar.Text = "✗ Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = false;
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click_1);
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // AdmisionGuardiaForm
             // 
@@ -438,11 +457,12 @@
         private System.Windows.Forms.Label lblFechaIngresoValor;
         private System.Windows.Forms.Label lblFechaIngresoTitulo;
         private System.Windows.Forms.Button btnConfirmarIngreso;
-        private System.Windows.Forms.Button btnCancelar;
+        private System.Windows.Forms.Button btnLimpiar;
         private DarkGroupBox pnlIdentificacion;
         private DarkGroupBox grpDatosFiliatorios;
         private DarkGroupBox pnlEpisodio;
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label lblHeader;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }

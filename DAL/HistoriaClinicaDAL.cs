@@ -8,40 +8,27 @@ namespace DAL
 {
     public class HistoriaClinicaDAL
     {
-        private readonly DAO _dao;
-
-        public HistoriaClinicaDAL()
-        {
-            _dao = new DAO();
-        }
-
-        public HistoriaClinicaDAL(DAO dao)
-        {
-            _dao = dao;
-        }
-
         /// <summary>
         /// Inserta una entrada de antecedente/historia clínica vinculada al paciente.
         /// Retorna el HistoriaClinica_Id generado.
         /// </summary>
-        public int Insertar(HistoriaClinica hc)
+        public static int Insertar(HistoriaClinica hc)
         {
+            DAO dao = new DAO();
             string sql = @"
                 INSERT INTO dbo.HistoriaClinica (
                     Paciente_Id,
                     HistoriaClinica_FechaAtencion,
                     HistoriaClinica_Antecedente,
                     HistoriaClinica_Observacion,
-                    HistoriaClinica_Alergias,
-                    DVH
+                    HistoriaClinica_Alergias
                 )
                 VALUES (
                     @PacienteId,
                     @FechaAtencion,
                     @Antecedente,
                     @Observacion,
-                    @Alergias,
-                    @DVH
+                    @Alergias
                 );
                 SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
@@ -51,11 +38,10 @@ namespace DAL
                 new SqlParameter("@FechaAtencion", hc.FechaAtencion),
                 new SqlParameter("@Antecedente", hc.Antecedente ?? string.Empty),
                 new SqlParameter("@Observacion", (object)hc.Observacion ?? DBNull.Value),
-                new SqlParameter("@Alergias", (object)hc.Alergias ?? DBNull.Value),
-                new SqlParameter("@DVH", (object)hc.DVH ?? DBNull.Value)
+                new SqlParameter("@Alergias", (object)hc.Alergias ?? DBNull.Value)
             };
 
-            object resultado = _dao.ExecuteScalarFunction(sql, parametros);
+            object resultado = dao.ExecuteScalarFunction(sql, parametros);
             hc.Id = Convert.ToInt32(resultado);
             return hc.Id;
         }
@@ -63,8 +49,9 @@ namespace DAL
         /// <summary>
         /// Obtiene todos los registros de antecedentes de la historia clínica de un paciente.
         /// </summary>
-        public List<HistoriaClinica> ListarPorPacienteId(int pacienteId)
+        public static List<HistoriaClinica> ListarPorPacienteId(int pacienteId)
         {
+            DAO dao = new DAO();
             var lista = new List<HistoriaClinica>();
 
             string sql = @"
@@ -75,7 +62,6 @@ namespace DAL
                     hc.HistoriaClinica_Antecedente,
                     hc.HistoriaClinica_Observacion,
                     hc.HistoriaClinica_Alergias,
-                    hc.DVH,
                     p.Paciente_dni,
                     p.Paciente_nombre,
                     p.Paciente_fecha_nac,
@@ -86,7 +72,7 @@ namespace DAL
                 ORDER BY hc.HistoriaClinica_FechaAtencion DESC;";
 
             var param = new SqlParameter("@PacienteId", pacienteId);
-            DataSet ds = _dao.ExecuteDataSet(sql, param);
+            DataSet ds = dao.ExecuteDataSet(sql, param);
 
             if (ds != null && ds.Tables.Count > 0)
             {
@@ -102,8 +88,9 @@ namespace DAL
         /// <summary>
         /// Obtiene un registro puntual por su clave primaria.
         /// </summary>
-        public HistoriaClinica ObtenerPorId(int historiaClinicaId)
+        public static HistoriaClinica ObtenerPorId(int historiaClinicaId)
         {
+            DAO dao = new DAO();
             string sql = @"
                 SELECT 
                     hc.HistoriaClinica_Id,
@@ -112,7 +99,6 @@ namespace DAL
                     hc.HistoriaClinica_Antecedente,
                     hc.HistoriaClinica_Observacion,
                     hc.HistoriaClinica_Alergias,
-                    hc.DVH,
                     p.Paciente_dni,
                     p.Paciente_nombre,
                     p.Paciente_fecha_nac,
@@ -122,7 +108,7 @@ namespace DAL
                 WHERE hc.HistoriaClinica_Id = @HistoriaClinicaId;";
 
             var param = new SqlParameter("@HistoriaClinicaId", historiaClinicaId);
-            DataSet ds = _dao.ExecuteDataSet(sql, param);
+            DataSet ds = dao.ExecuteDataSet(sql, param);
 
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
@@ -132,7 +118,7 @@ namespace DAL
             return null;
         }
 
-        private HistoriaClinica MapearHistoriaClinica(DataRow row)
+        public static HistoriaClinica MapearHistoriaClinica(DataRow row)
         {
             return new HistoriaClinica
             {
@@ -141,7 +127,6 @@ namespace DAL
                 Antecedente = row["HistoriaClinica_Antecedente"].ToString(),
                 Observacion = row["HistoriaClinica_Observacion"] != DBNull.Value ? row["HistoriaClinica_Observacion"].ToString() : null,
                 Alergias = row["HistoriaClinica_Alergias"] != DBNull.Value ? row["HistoriaClinica_Alergias"].ToString() : null,
-                DVH = row["DVH"] != DBNull.Value ? Convert.ToInt32(row["DVH"]) : (int?)null,
                 Paciente = new Paciente
                 {
                     Id = Convert.ToInt32(row["Paciente_Id"]),

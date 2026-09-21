@@ -1,6 +1,6 @@
 ﻿namespace SistemaTurnos.Negocio
 {
-    partial class PacientesEnfermeriaForm
+    partial class PacientesEnEsperaForm
     {
         /// <summary>
         /// Required designer variable.
@@ -31,9 +31,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlMainContainer = new System.Windows.Forms.Panel();
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblTituloModulo = new System.Windows.Forms.Label();
             this.grpEpisodiosActivos = new SistemaTurnos.DarkGroupBox();
+            this.btnRefrescar = new System.Windows.Forms.Button();
+            this.cmbFiltroEstado = new System.Windows.Forms.ComboBox();
+            this.lblFiltrarPor = new System.Windows.Forms.Label();
+            this.lblContadorActivas = new System.Windows.Forms.Label();
             this.pnlModalAbandono = new System.Windows.Forms.Panel();
             this.pnlModalHeader = new System.Windows.Forms.Panel();
             this.lblModalTitulo = new System.Windows.Forms.Label();
@@ -50,13 +52,15 @@
             this.colMotivo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colEstado = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAcciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pnlHeader = new System.Windows.Forms.Panel();
+            this.lblTituloModulo = new System.Windows.Forms.Label();
             this.pnlMainContainer.SuspendLayout();
-            this.pnlHeader.SuspendLayout();
             this.grpEpisodiosActivos.SuspendLayout();
             this.pnlModalAbandono.SuspendLayout();
             this.pnlModalHeader.SuspendLayout();
             this.pnlModalResumen.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEpisodios)).BeginInit();
+            this.pnlHeader.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlMainContainer
@@ -72,33 +76,15 @@
             this.pnlMainContainer.Size = new System.Drawing.Size(942, 663);
             this.pnlMainContainer.TabIndex = 0;
             // 
-            // pnlHeader
-            // 
-            this.pnlHeader.BackColor = System.Drawing.Color.White;
-            this.pnlHeader.Controls.Add(this.lblTituloModulo);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
-            this.pnlHeader.Size = new System.Drawing.Size(942, 52);
-            this.pnlHeader.TabIndex = 0;
-            // 
-            // lblTituloModulo
-            // 
-            this.lblTituloModulo.AutoSize = true;
-            this.lblTituloModulo.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.lblTituloModulo.Location = new System.Drawing.Point(18, 15);
-            this.lblTituloModulo.Name = "lblTituloModulo";
-            this.lblTituloModulo.Size = new System.Drawing.Size(412, 20);
-            this.lblTituloModulo.TabIndex = 0;
-            this.lblTituloModulo.Text = "Hospital Sagrado Corazón | Módulo de Admisión y Guardia";
-            // 
             // grpEpisodiosActivos
             // 
             this.grpEpisodiosActivos.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(51)))), ((int)(((byte)(57)))));
             this.grpEpisodiosActivos.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
             this.grpEpisodiosActivos.BorderRadius = 8;
+            this.grpEpisodiosActivos.Controls.Add(this.btnRefrescar);
+            this.grpEpisodiosActivos.Controls.Add(this.cmbFiltroEstado);
+            this.grpEpisodiosActivos.Controls.Add(this.lblFiltrarPor);
+            this.grpEpisodiosActivos.Controls.Add(this.lblContadorActivas);
             this.grpEpisodiosActivos.Controls.Add(this.pnlModalAbandono);
             this.grpEpisodiosActivos.Controls.Add(this.dgvEpisodios);
             this.grpEpisodiosActivos.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
@@ -106,10 +92,60 @@
             this.grpEpisodiosActivos.Location = new System.Drawing.Point(15, 70);
             this.grpEpisodiosActivos.Name = "grpEpisodiosActivos";
             this.grpEpisodiosActivos.Padding = new System.Windows.Forms.Padding(16, 32, 16, 16);
-            this.grpEpisodiosActivos.Size = new System.Drawing.Size(915, 436);
+            this.grpEpisodiosActivos.Size = new System.Drawing.Size(915, 543);
             this.grpEpisodiosActivos.TabIndex = 1;
-            this.grpEpisodiosActivos.Text = "Pacientes En espera - Enfermeria";
+            this.grpEpisodiosActivos.Text = "Pacientes En espera";
             this.grpEpisodiosActivos.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
+            // 
+            // btnRefrescar
+            // 
+            this.btnRefrescar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(189)))), ((int)(((byte)(248)))));
+            this.btnRefrescar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnRefrescar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(56)))), ((int)(((byte)(189)))), ((int)(((byte)(248)))));
+            this.btnRefrescar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefrescar.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnRefrescar.ForeColor = System.Drawing.Color.White;
+            this.btnRefrescar.Location = new System.Drawing.Point(774, 47);
+            this.btnRefrescar.Name = "btnRefrescar";
+            this.btnRefrescar.Size = new System.Drawing.Size(122, 30);
+            this.btnRefrescar.TabIndex = 5;
+            this.btnRefrescar.Text = "↻ Refrescar";
+            this.btnRefrescar.UseVisualStyleBackColor = false;
+            // 
+            // cmbFiltroEstado
+            // 
+            this.cmbFiltroEstado.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
+            this.cmbFiltroEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFiltroEstado.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cmbFiltroEstado.ForeColor = System.Drawing.Color.White;
+            this.cmbFiltroEstado.FormattingEnabled = true;
+            this.cmbFiltroEstado.Location = new System.Drawing.Point(533, 47);
+            this.cmbFiltroEstado.Name = "cmbFiltroEstado";
+            this.cmbFiltroEstado.Size = new System.Drawing.Size(225, 25);
+            this.cmbFiltroEstado.TabIndex = 4;
+            // 
+            // lblFiltrarPor
+            // 
+            this.lblFiltrarPor.AutoSize = true;
+            this.lblFiltrarPor.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(176)))), ((int)(((byte)(184)))));
+            this.lblFiltrarPor.Location = new System.Drawing.Point(396, 52);
+            this.lblFiltrarPor.Name = "lblFiltrarPor";
+            this.lblFiltrarPor.Size = new System.Drawing.Size(119, 17);
+            this.lblFiltrarPor.TabIndex = 3;
+            this.lblFiltrarPor.Text = "Filtrar por Estado:";
+            // 
+            // lblContadorActivas
+            // 
+            this.lblContadorActivas.AutoSize = true;
+            this.lblContadorActivas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
+            this.lblContadorActivas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.lblContadorActivas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(212)))), ((int)(((byte)(191)))));
+            this.lblContadorActivas.Location = new System.Drawing.Point(19, 50);
+            this.lblContadorActivas.Name = "lblContadorActivas";
+            this.lblContadorActivas.Size = new System.Drawing.Size(214, 17);
+            this.lblContadorActivas.TabIndex = 2;
+            this.lblContadorActivas.Text = "● Consultas Activas en Guardia: 0";
+            this.lblContadorActivas.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // pnlModalAbandono
             // 
@@ -251,7 +287,7 @@
             this.dgvEpisodios.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvEpisodios.EnableHeadersVisualStyles = false;
             this.dgvEpisodios.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
-            this.dgvEpisodios.Location = new System.Drawing.Point(23, 46);
+            this.dgvEpisodios.Location = new System.Drawing.Point(19, 87);
             this.dgvEpisodios.MultiSelect = false;
             this.dgvEpisodios.Name = "dgvEpisodios";
             this.dgvEpisodios.RowHeadersVisible = false;
@@ -293,19 +329,40 @@
             this.colAcciones.Name = "colAcciones";
             this.colAcciones.Width = 230;
             // 
-            // PacientesEnfermeriaForm
+            // pnlHeader
+            // 
+            this.pnlHeader.BackColor = System.Drawing.Color.White;
+            this.pnlHeader.Controls.Add(this.lblTituloModulo);
+            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlHeader.Name = "pnlHeader";
+            this.pnlHeader.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
+            this.pnlHeader.Size = new System.Drawing.Size(942, 52);
+            this.pnlHeader.TabIndex = 0;
+            // 
+            // lblTituloModulo
+            // 
+            this.lblTituloModulo.AutoSize = true;
+            this.lblTituloModulo.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.lblTituloModulo.Location = new System.Drawing.Point(18, 15);
+            this.lblTituloModulo.Name = "lblTituloModulo";
+            this.lblTituloModulo.Size = new System.Drawing.Size(336, 20);
+            this.lblTituloModulo.TabIndex = 0;
+            this.lblTituloModulo.Text = "Hospital Sagrado Corazón | Módulo de  Guardia";
+            // 
+            // PacientesEnEsperaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(218)))), ((int)(((byte)(229)))));
             this.ClientSize = new System.Drawing.Size(942, 663);
             this.Controls.Add(this.pnlMainContainer);
-            this.Name = "PacientesEnfermeriaForm";
+            this.Name = "PacientesEnEsperaForm";
             this.Text = "PacientesEnfermeriaForm";
             this.pnlMainContainer.ResumeLayout(false);
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
             this.grpEpisodiosActivos.ResumeLayout(false);
+            this.grpEpisodiosActivos.PerformLayout();
             this.pnlModalAbandono.ResumeLayout(false);
             this.pnlModalAbandono.PerformLayout();
             this.pnlModalHeader.ResumeLayout(false);
@@ -313,6 +370,8 @@
             this.pnlModalResumen.ResumeLayout(false);
             this.pnlModalResumen.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEpisodios)).EndInit();
+            this.pnlHeader.ResumeLayout(false);
+            this.pnlHeader.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -339,5 +398,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colMotivo;
         private System.Windows.Forms.DataGridViewTextBoxColumn colEstado;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAcciones;
+        private System.Windows.Forms.ComboBox cmbFiltroEstado;
+        private System.Windows.Forms.Label lblFiltrarPor;
+        private System.Windows.Forms.Label lblContadorActivas;
+        private System.Windows.Forms.Button btnRefrescar;
     }
 }

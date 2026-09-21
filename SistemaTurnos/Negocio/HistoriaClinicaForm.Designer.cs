@@ -28,10 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlMainContainer = new System.Windows.Forms.Panel();
+            this.grpCondicionesBase = new SistemaTurnos.DarkGroupBox();
+            this.btnGuardarCondiciones = new System.Windows.Forms.Button();
+            this.txtObservacion = new System.Windows.Forms.TextBox();
+            this.txtAntecedente = new System.Windows.Forms.TextBox();
+            this.txtAlergias = new System.Windows.Forms.TextBox();
+            this.lblObservaciones = new System.Windows.Forms.Label();
+            this.lblAntecedentes = new System.Windows.Forms.Label();
+            this.lblAlergias = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.grpHistorial = new SistemaTurnos.DarkGroupBox();
             this.dgvHistoriaClinica = new System.Windows.Forms.DataGridView();
@@ -49,20 +57,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pnlHeader = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.grpCondicionesBase = new SistemaTurnos.DarkGroupBox();
-            this.lblAntecedentes = new System.Windows.Forms.Label();
-            this.lblAlergias = new System.Windows.Forms.Label();
-            this.lblObservaciones = new System.Windows.Forms.Label();
-            this.txtAlergias = new System.Windows.Forms.TextBox();
-            this.txtAntecedente = new System.Windows.Forms.TextBox();
-            this.txtObservacion = new System.Windows.Forms.TextBox();
-            this.btnGuardarCondiciones = new System.Windows.Forms.Button();
             this.pnlMainContainer.SuspendLayout();
+            this.grpCondicionesBase.SuspendLayout();
             this.grpHistorial.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoriaClinica)).BeginInit();
             this.grpPaciente.SuspendLayout();
             this.pnlHeader.SuspendLayout();
-            this.grpCondicionesBase.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlMainContainer
@@ -76,8 +76,102 @@
             this.pnlMainContainer.Controls.Add(this.pnlHeader);
             this.pnlMainContainer.Location = new System.Drawing.Point(1, 2);
             this.pnlMainContainer.Name = "pnlMainContainer";
-            this.pnlMainContainer.Size = new System.Drawing.Size(800, 719);
+            this.pnlMainContainer.Size = new System.Drawing.Size(800, 685);
             this.pnlMainContainer.TabIndex = 0;
+            // 
+            // grpCondicionesBase
+            // 
+            this.grpCondicionesBase.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(51)))), ((int)(((byte)(57)))));
+            this.grpCondicionesBase.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
+            this.grpCondicionesBase.BorderRadius = 14;
+            this.grpCondicionesBase.Controls.Add(this.btnGuardarCondiciones);
+            this.grpCondicionesBase.Controls.Add(this.txtObservacion);
+            this.grpCondicionesBase.Controls.Add(this.txtAntecedente);
+            this.grpCondicionesBase.Controls.Add(this.txtAlergias);
+            this.grpCondicionesBase.Controls.Add(this.lblObservaciones);
+            this.grpCondicionesBase.Controls.Add(this.lblAntecedentes);
+            this.grpCondicionesBase.Controls.Add(this.lblAlergias);
+            this.grpCondicionesBase.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.grpCondicionesBase.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
+            this.grpCondicionesBase.Location = new System.Drawing.Point(10, 153);
+            this.grpCondicionesBase.Name = "grpCondicionesBase";
+            this.grpCondicionesBase.Padding = new System.Windows.Forms.Padding(16, 32, 16, 16);
+            this.grpCondicionesBase.Size = new System.Drawing.Size(778, 184);
+            this.grpCondicionesBase.TabIndex = 8;
+            this.grpCondicionesBase.Text = "Condiciones Medicas";
+            this.grpCondicionesBase.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
+            // 
+            // btnGuardarCondiciones
+            // 
+            this.btnGuardarCondiciones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(148)))), ((int)(((byte)(136)))));
+            this.btnGuardarCondiciones.ForeColor = System.Drawing.Color.White;
+            this.btnGuardarCondiciones.Location = new System.Drawing.Point(453, 114);
+            this.btnGuardarCondiciones.Name = "btnGuardarCondiciones";
+            this.btnGuardarCondiciones.Size = new System.Drawing.Size(306, 35);
+            this.btnGuardarCondiciones.TabIndex = 10;
+            this.btnGuardarCondiciones.Text = "Actualizar";
+            this.btnGuardarCondiciones.UseVisualStyleBackColor = false;
+            // 
+            // txtObservacion
+            // 
+            this.txtObservacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
+            this.txtObservacion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtObservacion.ForeColor = System.Drawing.Color.White;
+            this.txtObservacion.Location = new System.Drawing.Point(19, 102);
+            this.txtObservacion.Multiline = true;
+            this.txtObservacion.Name = "txtObservacion";
+            this.txtObservacion.Size = new System.Drawing.Size(388, 63);
+            this.txtObservacion.TabIndex = 9;
+            // 
+            // txtAntecedente
+            // 
+            this.txtAntecedente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
+            this.txtAntecedente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAntecedente.ForeColor = System.Drawing.Color.White;
+            this.txtAntecedente.Location = new System.Drawing.Point(436, 54);
+            this.txtAntecedente.Name = "txtAntecedente";
+            this.txtAntecedente.Size = new System.Drawing.Size(323, 24);
+            this.txtAntecedente.TabIndex = 8;
+            // 
+            // txtAlergias
+            // 
+            this.txtAlergias.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
+            this.txtAlergias.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtAlergias.ForeColor = System.Drawing.Color.White;
+            this.txtAlergias.Location = new System.Drawing.Point(19, 54);
+            this.txtAlergias.Name = "txtAlergias";
+            this.txtAlergias.Size = new System.Drawing.Size(388, 24);
+            this.txtAlergias.TabIndex = 5;
+            // 
+            // lblObservaciones
+            // 
+            this.lblObservaciones.AutoSize = true;
+            this.lblObservaciones.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this.lblObservaciones.Location = new System.Drawing.Point(20, 83);
+            this.lblObservaciones.Name = "lblObservaciones";
+            this.lblObservaciones.Size = new System.Drawing.Size(88, 15);
+            this.lblObservaciones.TabIndex = 7;
+            this.lblObservaciones.Text = "Observaciones";
+            // 
+            // lblAntecedentes
+            // 
+            this.lblAntecedentes.AutoSize = true;
+            this.lblAntecedentes.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this.lblAntecedentes.Location = new System.Drawing.Point(433, 36);
+            this.lblAntecedentes.Name = "lblAntecedentes";
+            this.lblAntecedentes.Size = new System.Drawing.Size(157, 15);
+            this.lblAntecedentes.TabIndex = 4;
+            this.lblAntecedentes.Text = "Antecedentes Importantes";
+            // 
+            // lblAlergias
+            // 
+            this.lblAlergias.AutoSize = true;
+            this.lblAlergias.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
+            this.lblAlergias.Location = new System.Drawing.Point(20, 36);
+            this.lblAlergias.Name = "lblAlergias";
+            this.lblAlergias.Size = new System.Drawing.Size(51, 15);
+            this.lblAlergias.TabIndex = 0;
+            this.lblAlergias.Text = "Alergias";
             // 
             // button1
             // 
@@ -87,7 +181,7 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.button1.Location = new System.Drawing.Point(611, 649);
+            this.button1.Location = new System.Drawing.Point(611, 626);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(175, 38);
             this.button1.TabIndex = 4;
@@ -102,7 +196,7 @@
             this.grpHistorial.Controls.Add(this.dgvHistoriaClinica);
             this.grpHistorial.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.grpHistorial.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
-            this.grpHistorial.Location = new System.Drawing.Point(9, 354);
+            this.grpHistorial.Location = new System.Drawing.Point(9, 343);
             this.grpHistorial.Name = "grpHistorial";
             this.grpHistorial.Padding = new System.Windows.Forms.Padding(16, 32, 16, 16);
             this.grpHistorial.Size = new System.Drawing.Size(777, 277);
@@ -113,33 +207,33 @@
             // dgvHistoriaClinica
             // 
             this.dgvHistoriaClinica.AllowUserToAddRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            this.dgvHistoriaClinica.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
+            this.dgvHistoriaClinica.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvHistoriaClinica.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
             this.dgvHistoriaClinica.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvHistoriaClinica.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(66)))), ((int)(((byte)(88)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHistoriaClinica.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(66)))), ((int)(((byte)(88)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvHistoriaClinica.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvHistoriaClinica.ColumnHeadersHeight = 32;
             this.dgvHistoriaClinica.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvHistoriaClinica.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colFecha,
             this.colAntecedente,
             this.colObservacion});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(78)))), ((int)(((byte)(74)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHistoriaClinica.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(78)))), ((int)(((byte)(74)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvHistoriaClinica.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvHistoriaClinica.EnableHeadersVisualStyles = false;
             this.dgvHistoriaClinica.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
             this.dgvHistoriaClinica.Location = new System.Drawing.Point(22, 51);
@@ -295,117 +389,23 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Hospital Sagrado Corazón  |  Historia Clínica y Antecedentes del Paciente";
             // 
-            // grpCondicionesBase
-            // 
-            this.grpCondicionesBase.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(51)))), ((int)(((byte)(57)))));
-            this.grpCondicionesBase.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
-            this.grpCondicionesBase.BorderRadius = 14;
-            this.grpCondicionesBase.Controls.Add(this.btnGuardarCondiciones);
-            this.grpCondicionesBase.Controls.Add(this.txtObservacion);
-            this.grpCondicionesBase.Controls.Add(this.txtAntecedente);
-            this.grpCondicionesBase.Controls.Add(this.txtAlergias);
-            this.grpCondicionesBase.Controls.Add(this.lblObservaciones);
-            this.grpCondicionesBase.Controls.Add(this.lblAntecedentes);
-            this.grpCondicionesBase.Controls.Add(this.lblAlergias);
-            this.grpCondicionesBase.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.grpCondicionesBase.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
-            this.grpCondicionesBase.Location = new System.Drawing.Point(10, 153);
-            this.grpCondicionesBase.Name = "grpCondicionesBase";
-            this.grpCondicionesBase.Padding = new System.Windows.Forms.Padding(16, 32, 16, 16);
-            this.grpCondicionesBase.Size = new System.Drawing.Size(778, 184);
-            this.grpCondicionesBase.TabIndex = 8;
-            this.grpCondicionesBase.Text = "Condiciones Medicas";
-            this.grpCondicionesBase.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
-            // 
-            // lblAntecedentes
-            // 
-            this.lblAntecedentes.AutoSize = true;
-            this.lblAntecedentes.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblAntecedentes.Location = new System.Drawing.Point(433, 36);
-            this.lblAntecedentes.Name = "lblAntecedentes";
-            this.lblAntecedentes.Size = new System.Drawing.Size(157, 15);
-            this.lblAntecedentes.TabIndex = 4;
-            this.lblAntecedentes.Text = "Antecedentes Importantes";
-            // 
-            // lblAlergias
-            // 
-            this.lblAlergias.AutoSize = true;
-            this.lblAlergias.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblAlergias.Location = new System.Drawing.Point(20, 36);
-            this.lblAlergias.Name = "lblAlergias";
-            this.lblAlergias.Size = new System.Drawing.Size(51, 15);
-            this.lblAlergias.TabIndex = 0;
-            this.lblAlergias.Text = "Alergias";
-            // 
-            // lblObservaciones
-            // 
-            this.lblObservaciones.AutoSize = true;
-            this.lblObservaciones.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblObservaciones.Location = new System.Drawing.Point(20, 83);
-            this.lblObservaciones.Name = "lblObservaciones";
-            this.lblObservaciones.Size = new System.Drawing.Size(88, 15);
-            this.lblObservaciones.TabIndex = 7;
-            this.lblObservaciones.Text = "Observaciones";
-            // 
-            // txtAlergias
-            // 
-            this.txtAlergias.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
-            this.txtAlergias.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAlergias.ForeColor = System.Drawing.Color.White;
-            this.txtAlergias.Location = new System.Drawing.Point(19, 54);
-            this.txtAlergias.Name = "txtAlergias";
-            this.txtAlergias.Size = new System.Drawing.Size(388, 24);
-            this.txtAlergias.TabIndex = 5;
-            // 
-            // txtAntecedente
-            // 
-            this.txtAntecedente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
-            this.txtAntecedente.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtAntecedente.ForeColor = System.Drawing.Color.White;
-            this.txtAntecedente.Location = new System.Drawing.Point(436, 54);
-            this.txtAntecedente.Name = "txtAntecedente";
-            this.txtAntecedente.Size = new System.Drawing.Size(323, 24);
-            this.txtAntecedente.TabIndex = 8;
-            // 
-            // txtObservacion
-            // 
-            this.txtObservacion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
-            this.txtObservacion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtObservacion.ForeColor = System.Drawing.Color.White;
-            this.txtObservacion.Location = new System.Drawing.Point(19, 102);
-            this.txtObservacion.Multiline = true;
-            this.txtObservacion.Name = "txtObservacion";
-            this.txtObservacion.Size = new System.Drawing.Size(388, 63);
-            this.txtObservacion.TabIndex = 9;
-            // 
-            // btnGuardarCondiciones
-            // 
-            this.btnGuardarCondiciones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(13)))), ((int)(((byte)(148)))), ((int)(((byte)(136)))));
-            this.btnGuardarCondiciones.ForeColor = System.Drawing.Color.White;
-            this.btnGuardarCondiciones.Location = new System.Drawing.Point(453, 114);
-            this.btnGuardarCondiciones.Name = "btnGuardarCondiciones";
-            this.btnGuardarCondiciones.Size = new System.Drawing.Size(306, 35);
-            this.btnGuardarCondiciones.TabIndex = 10;
-            this.btnGuardarCondiciones.Text = "Actualizar";
-            this.btnGuardarCondiciones.UseVisualStyleBackColor = false;
-            // 
             // HistoriaClinicaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 722);
+            this.ClientSize = new System.Drawing.Size(800, 684);
             this.Controls.Add(this.pnlMainContainer);
             this.Name = "HistoriaClinicaForm";
             this.Text = "HistoriaClinicaForm";
             this.pnlMainContainer.ResumeLayout(false);
+            this.grpCondicionesBase.ResumeLayout(false);
+            this.grpCondicionesBase.PerformLayout();
             this.grpHistorial.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistoriaClinica)).EndInit();
             this.grpPaciente.ResumeLayout(false);
             this.grpPaciente.PerformLayout();
             this.pnlHeader.ResumeLayout(false);
             this.pnlHeader.PerformLayout();
-            this.grpCondicionesBase.ResumeLayout(false);
-            this.grpCondicionesBase.PerformLayout();
             this.ResumeLayout(false);
 
         }
