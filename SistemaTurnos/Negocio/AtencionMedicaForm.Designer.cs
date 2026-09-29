@@ -30,17 +30,15 @@
         {
             this.pnlMainContainer = new System.Windows.Forms.Panel();
             this.btnFinalizarAtencion = new System.Windows.Forms.Button();
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblTituloModulo = new System.Windows.Forms.Label();
             this.grpDestinoAsistencial = new SistemaTurnos.DarkGroupBox();
             this.cmbDestino = new System.Windows.Forms.ComboBox();
-            this.txtIndicaciones = new System.Windows.Forms.TextBox();
+            this.txtDetalleDestino = new System.Windows.Forms.TextBox();
             this.lblTitDetalleDestino = new System.Windows.Forms.Label();
             this.lblTitDiagnostico = new System.Windows.Forms.Label();
             this.grpEvolucionMedica = new SistemaTurnos.DarkGroupBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtIndicaciones = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtDiagnostico = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.grpContextoTriage = new SistemaTurnos.DarkGroupBox();
             this.pnlTriageBadge = new System.Windows.Forms.Panel();
@@ -63,8 +61,9 @@
             this.lblTitMotivo = new System.Windows.Forms.Label();
             this.lblPacienteDatos = new System.Windows.Forms.Label();
             this.lblTitPaciente = new System.Windows.Forms.Label();
+            this.pnlHeader = new System.Windows.Forms.Panel();
+            this.lblTituloModulo = new System.Windows.Forms.Label();
             this.pnlMainContainer.SuspendLayout();
-            this.pnlHeader.SuspendLayout();
             this.grpDestinoAsistencial.SuspendLayout();
             this.grpEvolucionMedica.SuspendLayout();
             this.grpContextoTriage.SuspendLayout();
@@ -73,6 +72,7 @@
             this.pnlChipSat.SuspendLayout();
             this.pnlChipTemp.SuspendLayout();
             this.pnlChipFc.SuspendLayout();
+            this.pnlHeader.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlMainContainer
@@ -104,28 +104,7 @@
             this.btnFinalizarAtencion.TabIndex = 5;
             this.btnFinalizarAtencion.Text = "Finalizar Atención Médica";
             this.btnFinalizarAtencion.UseVisualStyleBackColor = false;
-            // 
-            // pnlHeader
-            // 
-            this.pnlHeader.BackColor = System.Drawing.Color.White;
-            this.pnlHeader.Controls.Add(this.lblTituloModulo);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
-            this.pnlHeader.Size = new System.Drawing.Size(1099, 52);
-            this.pnlHeader.TabIndex = 1;
-            // 
-            // lblTituloModulo
-            // 
-            this.lblTituloModulo.AutoSize = true;
-            this.lblTituloModulo.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.lblTituloModulo.Location = new System.Drawing.Point(18, 15);
-            this.lblTituloModulo.Name = "lblTituloModulo";
-            this.lblTituloModulo.Size = new System.Drawing.Size(444, 20);
-            this.lblTituloModulo.TabIndex = 0;
-            this.lblTituloModulo.Text = "Hospital Sagrado Corazón | Box de Atención Médica de Guardia";
+            this.btnFinalizarAtencion.Click += new System.EventHandler(this.btnFinalizarAtencion_Click);
             // 
             // grpDestinoAsistencial
             // 
@@ -133,7 +112,7 @@
             this.grpDestinoAsistencial.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
             this.grpDestinoAsistencial.BorderRadius = 14;
             this.grpDestinoAsistencial.Controls.Add(this.cmbDestino);
-            this.grpDestinoAsistencial.Controls.Add(this.txtIndicaciones);
+            this.grpDestinoAsistencial.Controls.Add(this.txtDetalleDestino);
             this.grpDestinoAsistencial.Controls.Add(this.lblTitDetalleDestino);
             this.grpDestinoAsistencial.Controls.Add(this.lblTitDiagnostico);
             this.grpDestinoAsistencial.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
@@ -162,16 +141,16 @@
             this.cmbDestino.Size = new System.Drawing.Size(447, 25);
             this.cmbDestino.TabIndex = 17;
             // 
-            // txtIndicaciones
+            // txtDetalleDestino
             // 
-            this.txtIndicaciones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
-            this.txtIndicaciones.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtIndicaciones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(176)))), ((int)(((byte)(184)))));
-            this.txtIndicaciones.Location = new System.Drawing.Point(515, 63);
-            this.txtIndicaciones.Multiline = true;
-            this.txtIndicaciones.Name = "txtIndicaciones";
-            this.txtIndicaciones.Size = new System.Drawing.Size(532, 61);
-            this.txtIndicaciones.TabIndex = 16;
+            this.txtDetalleDestino.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
+            this.txtDetalleDestino.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDetalleDestino.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(176)))), ((int)(((byte)(184)))));
+            this.txtDetalleDestino.Location = new System.Drawing.Point(515, 63);
+            this.txtDetalleDestino.Multiline = true;
+            this.txtDetalleDestino.Name = "txtDetalleDestino";
+            this.txtDetalleDestino.Size = new System.Drawing.Size(532, 61);
+            this.txtDetalleDestino.TabIndex = 16;
             // 
             // lblTitDetalleDestino
             // 
@@ -200,9 +179,9 @@
             this.grpEvolucionMedica.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(51)))), ((int)(((byte)(57)))));
             this.grpEvolucionMedica.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
             this.grpEvolucionMedica.BorderRadius = 14;
-            this.grpEvolucionMedica.Controls.Add(this.textBox2);
+            this.grpEvolucionMedica.Controls.Add(this.txtIndicaciones);
             this.grpEvolucionMedica.Controls.Add(this.label3);
-            this.grpEvolucionMedica.Controls.Add(this.textBox1);
+            this.grpEvolucionMedica.Controls.Add(this.txtDiagnostico);
             this.grpEvolucionMedica.Controls.Add(this.label2);
             this.grpEvolucionMedica.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.grpEvolucionMedica.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
@@ -214,16 +193,16 @@
             this.grpEvolucionMedica.Text = "Evaluacion e Indicaciones";
             this.grpEvolucionMedica.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
             // 
-            // textBox2
+            // txtIndicaciones
             // 
-            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.textBox2.Location = new System.Drawing.Point(19, 138);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(1028, 152);
-            this.textBox2.TabIndex = 15;
+            this.txtIndicaciones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
+            this.txtIndicaciones.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtIndicaciones.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.txtIndicaciones.Location = new System.Drawing.Point(19, 138);
+            this.txtIndicaciones.Multiline = true;
+            this.txtIndicaciones.Name = "txtIndicaciones";
+            this.txtIndicaciones.Size = new System.Drawing.Size(1028, 152);
+            this.txtIndicaciones.TabIndex = 15;
             // 
             // label3
             // 
@@ -236,15 +215,15 @@
             this.label3.TabIndex = 14;
             this.label3.Text = "Indicaciones Terapéuticas, Medicación y Solicitud de Estudios: *";
             // 
-            // textBox1
+            // txtDiagnostico
             // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.textBox1.Location = new System.Drawing.Point(19, 74);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(1028, 24);
-            this.textBox1.TabIndex = 13;
+            this.txtDiagnostico.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
+            this.txtDiagnostico.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDiagnostico.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
+            this.txtDiagnostico.Location = new System.Drawing.Point(19, 74);
+            this.txtDiagnostico.Name = "txtDiagnostico";
+            this.txtDiagnostico.Size = new System.Drawing.Size(1028, 24);
+            this.txtDiagnostico.TabIndex = 13;
             // 
             // label2
             // 
@@ -479,6 +458,28 @@
             this.lblTitPaciente.TabIndex = 0;
             this.lblTitPaciente.Text = "Paciente";
             // 
+            // pnlHeader
+            // 
+            this.pnlHeader.BackColor = System.Drawing.Color.White;
+            this.pnlHeader.Controls.Add(this.lblTituloModulo);
+            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlHeader.Name = "pnlHeader";
+            this.pnlHeader.Padding = new System.Windows.Forms.Padding(15, 0, 15, 0);
+            this.pnlHeader.Size = new System.Drawing.Size(1099, 52);
+            this.pnlHeader.TabIndex = 1;
+            // 
+            // lblTituloModulo
+            // 
+            this.lblTituloModulo.AutoSize = true;
+            this.lblTituloModulo.Font = new System.Drawing.Font("Segoe UI Semibold", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTituloModulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.lblTituloModulo.Location = new System.Drawing.Point(18, 15);
+            this.lblTituloModulo.Name = "lblTituloModulo";
+            this.lblTituloModulo.Size = new System.Drawing.Size(444, 20);
+            this.lblTituloModulo.TabIndex = 0;
+            this.lblTituloModulo.Text = "Hospital Sagrado Corazón | Box de Atención Médica de Guardia";
+            // 
             // AtencionMedicaForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -493,8 +494,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AtencionMedicaForm";
             this.pnlMainContainer.ResumeLayout(false);
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
             this.grpDestinoAsistencial.ResumeLayout(false);
             this.grpDestinoAsistencial.PerformLayout();
             this.grpEvolucionMedica.ResumeLayout(false);
@@ -511,6 +510,8 @@
             this.pnlChipTemp.PerformLayout();
             this.pnlChipFc.ResumeLayout(false);
             this.pnlChipFc.PerformLayout();
+            this.pnlHeader.ResumeLayout(false);
+            this.pnlHeader.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -540,15 +541,15 @@
         private System.Windows.Forms.Label lblTempVal;
         private System.Windows.Forms.Label lblTitTemp;
         private DarkGroupBox grpEvolucionMedica;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtDiagnostico;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblPrioridadValor;
         private System.Windows.Forms.Label lblTitTriageBadge;
         private DarkGroupBox grpDestinoAsistencial;
-        private System.Windows.Forms.TextBox txtIndicaciones;
+        private System.Windows.Forms.TextBox txtDetalleDestino;
         private System.Windows.Forms.Label lblTitDetalleDestino;
         private System.Windows.Forms.Label lblTitDiagnostico;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtIndicaciones;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cmbDestino;
         private System.Windows.Forms.Button btnFinalizarAtencion;

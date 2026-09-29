@@ -21,6 +21,12 @@ namespace BE
 
         public AtencionMedica()
         {
+        }
+
+        public AtencionMedica(Consulta consulta, Usuario medico)
+        {
+            Consulta = consulta;
+            Medico = medico;    
             FechaInicio = DateTime.Now;
         }
 

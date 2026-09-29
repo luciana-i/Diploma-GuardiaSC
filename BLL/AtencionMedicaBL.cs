@@ -1,10 +1,10 @@
 ﻿using BE;
+using DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Namespace.Of.AtencionMedica; // <- replace with the real namespace
 
 namespace BLL
 {
@@ -15,14 +15,16 @@ namespace BLL
             // Constructor logic here
         }
 
-        public void Agregar(AtencionMedica atencionMedica)
+        public AtencionMedica RegistrarAtencion(Consulta consulta, Usuario medico )
         {
-            
+            AtencionMedica atencionMedica = new AtencionMedica(consulta, medico);   
+            AtencionMedicaDAL.Insertar(atencionMedica);
+            return atencionMedica;  
         }
-    }
 
-    public class AtencionMedica
-    {
-        // Add properties/constructors/members as needed
+        public void FinalizarAtencionMedica(AtencionMedica atencionMedica)
+        {
+            AtencionMedicaDAL.FinalizarAtencion(atencionMedica);
+        }
     }
 }

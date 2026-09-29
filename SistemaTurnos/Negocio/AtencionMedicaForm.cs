@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BE;
+using BLL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,8 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BE;
-using BLL;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SistemaTurnos.Negocio
 {
@@ -17,6 +18,8 @@ namespace SistemaTurnos.Negocio
     {
 
         Consulta _consultaActual;
+        AtencionMedicaBL atencionMedicaBL = new AtencionMedicaBL();
+        AtencionMedica atencionMedica;
         public AtencionMedicaForm()
         {
             InitializeComponent();
@@ -33,7 +36,9 @@ namespace SistemaTurnos.Negocio
                 RedondearControl(btnVerHistoriaClinica, 4);
                 _consultaActual = ObtenerConsultaMockDePrueba(); // <--- Carga la consulta simulada aquí
                 CargarDatosMock(); // <--- Carga los datos simulados aquí
-               
+                                   // se da inicio a la consulta, se registra en AtencionMedica con fecha de inicio y estado en curso
+                atencionMedica = atencionMedicaBL.RegistrarAtencion(_consultaActual, new Usuario { Id = 1 }); // Simulación: ID del médico que atiende (en un caso real, se obtiene del usuario logueado)
+
             };
         }
 
@@ -41,6 +46,7 @@ namespace SistemaTurnos.Negocio
         {
             InitializeComponent();
             _consultaActual = consultaSeleccionada;
+            atencionMedica = atencionMedicaBL.RegistrarAtencion(_consultaActual, new Usuario { Id = 1 }); // Simulación: ID del médico que atiende (en un caso real, se obtiene del usuario logueado)
             // 1. Suscribir el pintado custom de los 3 GroupBoxes para el título con parche
             grpContextoTriage.Paint += GroupBox_CustomPaint;
             grpEvolucionMedica.Paint += GroupBox_CustomPaint;
@@ -251,6 +257,69 @@ namespace SistemaTurnos.Negocio
                 // En Triage (enfermería) solo es para consultar antecedentes
                 formHC.ConfigurarModoConsulta(soloLectura: true);
                 formHC.ShowDialog(this);
+            }
+        }
+
+        private void btnFinalizarAtencion_Click(object sender, EventArgs e)
+        {
+            string diagnostico = txtDiagnostico.Text.Trim();
+            string indicaciones = txtIndicaciones.Text.Trim();
+            string destinoSeleccionado = cmbDestino.SelectedItem?.ToString();
+            string detalleDestino = txtDetalleDestino.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(diagnostico) || string.IsNullOrWhiteSpace(indicaciones) || string.IsNullOrWhiteSpace(destinoSeleccionado))
+            {
+                MessageBox.Show("Debe completar todos los campos obligatorios:\n\n• Diagnóstico Clínico\n• Indicaciones Terapéuticas\n• Destino Asistencial",
+                    "Campos Incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                if (string.IsNullOrWhiteSpace(diagnostico))
+                    txtDiagnostico.Focus();
+                else if (string.IsNullOrWhiteSpace(indicaciones))
+                    txtIndicaciones.Focus();
+                else
+                    cmbDestino.Focus();
+
+                return;
+            }
+
+            var confirmacion = MessageBox.Show(
+            $"¿Confirma finalizar la atención médica con destino:\n\n'{destinoSeleccionado}'?",
+            "Confirmación de Cierre Clínico",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question);
+
+            if (confirmacion != DialogResult.Yes) return;
+
+            try
+            {
+                // si hay detalle o pautas de alarma,va a indicaciones
+                string indicacionesFinales = string.IsNullOrWhiteSpace(detalleDestino)
+                ? indicaciones
+                : $"{indicaciones}\r\n[Detalle/Pautas de Alarma]: {detalleDestino}";
+                /*
+                                atencionMedica = {
+                                    FechaFin = DateTime.Now, 
+                                    Diagnostico = diagnostico,
+                                    Indicaciones = indicacionesFinales,
+                                    Destino = destinoSeleccionado
+                                }
+
+
+                                new AtencionMedicaBL().RegistrarAtencion(atencionMedica);
+                                consultaBL.CambiarEstado(_consultaActual.Id, EstadoConsulta.Finalizado);
+
+                                MessageBox.Show(
+                                    "La atención médica se ha registrado y finalizado con éxito.\nEl episodio ha concluido.",
+                                    "Atención Concluida",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+                */
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al intentar registrar la atención médica: {ex.Message}", "Error de Persistencia", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
