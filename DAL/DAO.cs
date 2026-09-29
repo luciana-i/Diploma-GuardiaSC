@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Text.Json;
 
 namespace DAL
 {
@@ -9,23 +12,49 @@ namespace DAL
     public class DAO
     {
         private readonly string _connectionString;
+        /*
+                public DAO()
+                {
 
+                    _connectionString = "Data Source=WIN-O7CAF1FNCVK;Initial Catalog=Proyecto_Ing_softw;Integrated Security=True;TrustServerCertificate=True;";
+                }
+
+                protected SqlConnection GetConnection()
+                {
+                    return new SqlConnection(_connectionString);
+                }
+
+                public DAO(string connectionString)
+                {
+                    _connectionString = connectionString;
+                }
+                */
         public DAO()
         {
-            
-            _connectionString = "Data Source=WIN-O7CAF1FNCVK;Initial Catalog=Proyecto_Ing_softw;Integrated Security=True;TrustServerCertificate=True;";
-        }
+            string rutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
+            string cadenaBase;
 
-        protected SqlConnection GetConnection()
+            if (File.Exists(rutaArchivo))
+            {
+                // 1. Lee el contenido del archivo JSON
+                string jsonString = File.ReadAllText(rutaArchivo);
+
+                // 2. Deserializa el JSON a un diccionario para extraer el valor
+                var config = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
+                cadenaBase = config["ConnectionString"];
+            }
+            else
+            {
+                cadenaBase = @"Data Source=.;Initial Catalog=Proyecto_Ing_softw;Integrated Security=True";
+            }
+
+            var builder = new SqlConnectionStringBuilder(cadenaBase);
+            _connectionString = builder.ConnectionString;
+        }
+        private SqlConnection GetConnection()
         {
             return new SqlConnection(_connectionString);
         }
-
-        public DAO(string connectionString)
-        {
-            _connectionString = connectionString;
-        }
-
         public DataSet ExecuteDataSet(string sql, params SqlParameter[] parameters)
         {
             var ds = new DataSet();

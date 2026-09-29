@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Instalador\setupv3.iss" />
+    <Content Include="Instalador\SETUPV2.iss" />
     <Compile Include="Negocio\AtencionMedicaForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -266,6 +268,10 @@
       <Project>{ea149275-c64b-4a49-ba74-cebc1cd0ecd7}</Project>
       <Name>Seguridad</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Instalador\setup.iss" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

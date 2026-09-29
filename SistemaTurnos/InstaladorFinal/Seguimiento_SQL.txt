@@ -1,0 +1,66 @@
+=== INICIANDO DETECCIÓN DE SQL SERVER ===
+Sistema 64 bits detectado. Leyendo HKLM64.
+Total de instancias encontradas en el registro: 2
+--- FASE 1: BUSCANDO SQLEXPRESS ---
+Instancia SQLEXPRESS detectada. Intentando iniciar servicio...
+Resultado de net start (0=Inició, 2=Ya estaba prendido): 2
+-> HACIENDO PING CON SQLCMD A: .\SQLEXPRESS
+   Comando lanzado. Código de respuesta de SQL (0 = Éxito): 0
+¡ÉXITO! .\SQLEXPRESS responde. Se cortan las búsquedas.
+=== SERVIDOR FINAL ELEGIDO: .\SQLEXPRESS ===
+=== INICIANDO DETECCIÓN DE SQL SERVER ===
+Sistema 64 bits detectado. Leyendo HKLM64.
+Total de instancias encontradas en el registro: 2
+--- FASE 1: BUSCANDO SQLEXPRESS ---
+Instancia SQLEXPRESS detectada. Intentando iniciar servicio...
+Resultado de net start (0=Inició, 2=Ya estaba prendido): 2
+-> HACIENDO PING CON SQLCMD A: .\SQLEXPRESS
+   Comando lanzado. Código de respuesta de SQL (0 = Éxito): 0
+¡ÉXITO! .\SQLEXPRESS responde. Se cortan las búsquedas.
+=== SERVIDOR FINAL ELEGIDO: .\SQLEXPRESS ===
+=== INICIANDO DETECCIÓN DE SQL SERVER ===
+Sistema 64 bits detectado. Leyendo HKLM64.
+Total de instancias encontradas en el registro: 2
+--- FASE 1: BUSCANDO SQLEXPRESS ---
+Instancia SQLEXPRESS detectada. Intentando iniciar servicio...
+Resultado de net start (0=Inició, 2=Ya estaba prendido): 2
+-> HACIENDO PING CON SQLCMD A: .\SQLEXPRESS
+   Comando lanzado. Código de respuesta de SQL (0 = Éxito): 0
+¡ÉXITO! .\SQLEXPRESS responde. Se cortan las búsquedas.
+=== SERVIDOR FINAL ELEGIDO: .\SQLEXPRESS ===
+=== INICIANDO DETECCIÓN DE SQL SERVER ===
+Sistema 64 bits detectado. Leyendo HKLM64.
+Total de instancias encontradas en el registro: 2
+--- FASE 1: BUSCANDO SQLEXPRESS ---
+Instancia SQLEXPRESS detectada. Intentando iniciar servicio...
+Resultado de net start (0=Inició, 2=Ya estaba prendido): 2
+-> HACIENDO PING CON SQLCMD A: .\SQLEXPRESS
+   Comando lanzado. Código de respuesta de SQL (0 = Éxito): 0
+¡ÉXITO! .\SQLEXPRESS responde. Se cortan las búsquedas.
+=== SERVIDOR FINAL ELEGIDO: .\SQLEXPRESS ===
+=== INICIANDO DETECCIÓN DE SQL SERVER ===
+Sistema 64 bits detectado. Leyendo HKLM64.
+Total de instancias encontradas en el registro: 2
+--- FASE 1: BUSCANDO SQLEXPRESS ---
+Instancia SQLEXPRESS detectada. Intentando iniciar servicio...
+Resultado de net start (0=Inició, 2=Ya estaba prendido): 2
+-> HACIENDO PING CON SQLCMD A: .\SQLEXPRESS
+   Comando lanzado. Código de respuesta de SQL (0 = Éxito): 0
+¡ÉXITO! .\SQLEXPRESS responde. Se cortan las búsquedas.
+=== SERVIDOR FINAL ELEGIDO: .\SQLEXPRESS ===
+=== INICIANDO DETECCIÓN DE SQL SERVER ===
+Sistema 64 bits detectado. Leyendo HKLM64.
+Total de instancias encontradas en el registro: 2
+--- FASE 1: BUSCANDO SQLEXPRESS ---
+Instancia SQLEXPRESS detectada. Intentando iniciar servicio...
+Resultado de net start (0=Inició, 2=Ya estaba prendido): 2
+-> HACIENDO PING CON SQLCMD A: .\SQLEXPRESS
+   Comando lanzado. Código de respuesta de SQL (0 = Éxito): 0
+¡ÉXITO! .\SQLEXPRESS responde. Se cortan las búsquedas.
+=== SERVIDOR FINAL ELEGIDO: .\SQLEXPRESS ===
+=== INICIANDO DETECCIÓN DE SQL SERVER ===
+--- FASE 1: BUSCANDO SQLEXPRESS ---
+-> HACIENDO PING CON SQLCMD A: .\SQLEXPRESS
+   Comando lanzado. Código de respuesta de SQL (0 = Éxito): 0
+¡ÉXITO! .\SQLEXPRESS responde.
+El sistema destino SOPORTA TrustServerCertificate. Agregándolo al JSON.
