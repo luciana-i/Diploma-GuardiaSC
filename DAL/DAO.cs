@@ -12,23 +12,6 @@ namespace DAL
     public class DAO
     {
         private readonly string _connectionString;
-        /*
-                public DAO()
-                {
-
-                    _connectionString = "Data Source=WIN-O7CAF1FNCVK;Initial Catalog=Proyecto_Ing_softw;Integrated Security=True;TrustServerCertificate=True;";
-                }
-
-                protected SqlConnection GetConnection()
-                {
-                    return new SqlConnection(_connectionString);
-                }
-
-                public DAO(string connectionString)
-                {
-                    _connectionString = connectionString;
-                }
-                */
         public DAO()
         {
             string rutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
@@ -45,7 +28,7 @@ namespace DAL
             }
             else
             {
-                cadenaBase = @"Data Source=.;Initial Catalog=Proyecto_Ing_softw;Integrated Security=True";
+                cadenaBase = @"Data Source=WIN-O7CAF1FNCVK;Initial Catalog=Proyecto_Ing_softw;Integrated Security=True";
             }
 
             var builder = new SqlConnectionStringBuilder(cadenaBase);

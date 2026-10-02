@@ -96,7 +96,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="scriptBD.sql" />
     <Content Include="storeProcedures.sql" />
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 using BLL;
 using BLL.Servicios;
 using Seguridad;
+using SistemaTurnos.Negocio;
 using SistemaTurnosUI;
 using System;
 using System.Collections.Generic;
@@ -298,6 +299,31 @@ namespace SistemaTurnos
 
         }
 
-       
+        private void admisionGuardiaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AdmisionGuardiaForm admisionGuardiaForm = new AdmisionGuardiaForm();
+            admisionGuardiaForm.MdiParent = this;
+            admisionGuardiaForm.Show();
+        }
+
+        private void listaEsperaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BandejaEnfermeriaForm bEnfermeria = new BandejaEnfermeriaForm();
+            bEnfermeria.MdiParent = this;
+            bEnfermeria.Show();
+        }
+
+        private void listaEsperaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            BandejaMedicaForm admisionGuardiaForm = new BandejaMedicaForm();
+            admisionGuardiaForm.ShowDialog();
+            this.Close();
+        }
+        private void agregarEmpleadosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EmpleadosForm eForm = new EmpleadosForm();
+            eForm.ShowDialog();
+            this.Close();
+        }
     }
 }

@@ -15,16 +15,24 @@ namespace BLL
             // Constructor logic here
         }
 
-        public AtencionMedica RegistrarAtencion(Consulta consulta, Usuario medico )
+        public AtencionMedica RegistrarAtencion(Consulta consulta,Usuario usuario )
         {
-            AtencionMedica atencionMedica = new AtencionMedica(consulta, medico);   
+            EmpleadoBL empleadoBL=new EmpleadoBL();
+            Empleado empleado = empleadoBL.ObtenerEmpleado(usuario);
+            AtencionMedica atencionMedica = new AtencionMedica(consulta, empleado, usuario);   
             AtencionMedicaDAL.Insertar(atencionMedica);
             return atencionMedica;  
         }
 
         public void FinalizarAtencionMedica(AtencionMedica atencionMedica)
         {
+            atencionMedica.FechaFin = DateTime.Now;
             AtencionMedicaDAL.FinalizarAtencion(atencionMedica);
+        }
+
+        public List<AtencionMedica> ObtenerAtencionesMedicasPorPaciente(int pacienteId)
+        {
+            return AtencionMedicaDAL.ObtenerAtencionesMedicasPorPaciente(pacienteId);
         }
     }
 }

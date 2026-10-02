@@ -13,8 +13,6 @@ namespace BE
         public string Apellido { get; set; }
         public DateTime? FechaNacimiento { get; set; }
         public string Telefono { get; set; }
-        public int? DVH { get; set; }
-
         public string NombreCompleto => $"{Apellido}, {Nombre}".Trim(' ', ',');
         public string NombreConDni => $"{NombreCompleto} (DNI: {Dni})";
 

@@ -46,6 +46,14 @@ namespace SistemaTurnos
             this.gestionarIdiomaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionarIdiomaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.seleccionarIdiomaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.admisionPacientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.admisionGuardiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enfermeriaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listaEsperaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.medicoGuardiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listaEsperaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.empleadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.agregarEmpleadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cerrarSesionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -54,11 +62,15 @@ namespace SistemaTurnos
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.administradorToolStripMenuItem,
-            this.gEToolStripMenuItem,
+            this.admisionPacientesToolStripMenuItem,
+            this.enfermeriaToolStripMenuItem,
+            this.medicoGuardiaToolStripMenuItem,
+            this.gestionarIdiomaToolStripMenuItem,
+            this.empleadosToolStripMenuItem,
             this.gestionPerfilesToolStripMenuItem,
             this.bitacoraToolStripMenuItem1,
-            this.gestionarIdiomaToolStripMenuItem,
             this.seleccionarIdiomaToolStripMenuItem1,
+            this.gEToolStripMenuItem,
             this.cerrarSesionToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -80,7 +92,7 @@ namespace SistemaTurnos
             // modificarMailToolStripMenuItem
             // 
             this.modificarMailToolStripMenuItem.Name = "modificarMailToolStripMenuItem";
-            this.modificarMailToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modificarMailToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.modificarMailToolStripMenuItem.Tag = "MODIFICAR_MAIL";
             this.modificarMailToolStripMenuItem.Text = "Modificar Mail";
             this.modificarMailToolStripMenuItem.Click += new System.EventHandler(this.modificarMailToolStripMenuItem_Click);
@@ -88,7 +100,7 @@ namespace SistemaTurnos
             // cambiarClaveToolStripMenuItem
             // 
             this.cambiarClaveToolStripMenuItem.Name = "cambiarClaveToolStripMenuItem";
-            this.cambiarClaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cambiarClaveToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.cambiarClaveToolStripMenuItem.Tag = "MODIFICAR_CLAVE";
             this.cambiarClaveToolStripMenuItem.Text = "Cambiar Clave";
             this.cambiarClaveToolStripMenuItem.Click += new System.EventHandler(this.cambiarClaveToolStripMenuItem_Click_1);
@@ -183,7 +195,7 @@ namespace SistemaTurnos
             // gestionarIdiomaToolStripMenuItem1
             // 
             this.gestionarIdiomaToolStripMenuItem1.Name = "gestionarIdiomaToolStripMenuItem1";
-            this.gestionarIdiomaToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.gestionarIdiomaToolStripMenuItem1.Size = new System.Drawing.Size(164, 22);
             this.gestionarIdiomaToolStripMenuItem1.Tag = "GESTIONAR_IDIOMA";
             this.gestionarIdiomaToolStripMenuItem1.Text = "Gestionar Idioma";
             this.gestionarIdiomaToolStripMenuItem1.Click += new System.EventHandler(this.gestionarIdiomaToolStripMenuItem1_Click);
@@ -195,6 +207,73 @@ namespace SistemaTurnos
             this.seleccionarIdiomaToolStripMenuItem1.Tag = "SELECCION_IDIOMA";
             this.seleccionarIdiomaToolStripMenuItem1.Text = "Seleccionar Idioma";
             this.seleccionarIdiomaToolStripMenuItem1.Click += new System.EventHandler(this.seleccionarIdiomaToolStripMenuItem1_Click);
+            // 
+            // admisionPacientesToolStripMenuItem
+            // 
+            this.admisionPacientesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.admisionGuardiaToolStripMenuItem});
+            this.admisionPacientesToolStripMenuItem.Name = "admisionPacientesToolStripMenuItem";
+            this.admisionPacientesToolStripMenuItem.Size = new System.Drawing.Size(92, 20);
+            this.admisionPacientesToolStripMenuItem.Tag = "RECEPCIONISTA";
+            this.admisionPacientesToolStripMenuItem.Text = "Recepcionista";
+            // 
+            // admisionGuardiaToolStripMenuItem
+            // 
+            this.admisionGuardiaToolStripMenuItem.Name = "admisionGuardiaToolStripMenuItem";
+            this.admisionGuardiaToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.admisionGuardiaToolStripMenuItem.Tag = "RES_ADMISION";
+            this.admisionGuardiaToolStripMenuItem.Text = "Admision Guardia";
+            this.admisionGuardiaToolStripMenuItem.Click += new System.EventHandler(this.admisionGuardiaToolStripMenuItem_Click);
+            // 
+            // enfermeriaToolStripMenuItem
+            // 
+            this.enfermeriaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.listaEsperaToolStripMenuItem});
+            this.enfermeriaToolStripMenuItem.Name = "enfermeriaToolStripMenuItem";
+            this.enfermeriaToolStripMenuItem.Size = new System.Drawing.Size(76, 20);
+            this.enfermeriaToolStripMenuItem.Tag = "ENFERMERIA";
+            this.enfermeriaToolStripMenuItem.Text = "Enfermeria";
+            // 
+            // listaEsperaToolStripMenuItem
+            // 
+            this.listaEsperaToolStripMenuItem.Name = "listaEsperaToolStripMenuItem";
+            this.listaEsperaToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.listaEsperaToolStripMenuItem.Tag = "ENFERMERIA_LISTA";
+            this.listaEsperaToolStripMenuItem.Text = "Lista Espera";
+            this.listaEsperaToolStripMenuItem.Click += new System.EventHandler(this.listaEsperaToolStripMenuItem_Click);
+            // 
+            // medicoGuardiaToolStripMenuItem
+            // 
+            this.medicoGuardiaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.listaEsperaToolStripMenuItem1});
+            this.medicoGuardiaToolStripMenuItem.Name = "medicoGuardiaToolStripMenuItem";
+            this.medicoGuardiaToolStripMenuItem.Size = new System.Drawing.Size(103, 20);
+            this.medicoGuardiaToolStripMenuItem.Tag = "MEDICO";
+            this.medicoGuardiaToolStripMenuItem.Text = "Medico Guardia";
+            // 
+            // listaEsperaToolStripMenuItem1
+            // 
+            this.listaEsperaToolStripMenuItem1.Name = "listaEsperaToolStripMenuItem1";
+            this.listaEsperaToolStripMenuItem1.Size = new System.Drawing.Size(135, 22);
+            this.listaEsperaToolStripMenuItem1.Tag = "MEDICO_LISTA";
+            this.listaEsperaToolStripMenuItem1.Text = "Lista Espera";
+            this.listaEsperaToolStripMenuItem1.Click += new System.EventHandler(this.listaEsperaToolStripMenuItem1_Click);
+            // 
+            // empleadosToolStripMenuItem
+            // 
+            this.empleadosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.agregarEmpleadosToolStripMenuItem});
+            this.empleadosToolStripMenuItem.Name = "empleadosToolStripMenuItem";
+            this.empleadosToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
+            this.empleadosToolStripMenuItem.Text = "Empleados";
+            // 
+            // agregarEmpleadosToolStripMenuItem
+            // 
+            this.agregarEmpleadosToolStripMenuItem.Name = "agregarEmpleadosToolStripMenuItem";
+            this.agregarEmpleadosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.agregarEmpleadosToolStripMenuItem.Tag = "EMPLEADOS_ADD";
+            this.agregarEmpleadosToolStripMenuItem.Text = "Agregar Empleados";
+            this.agregarEmpleadosToolStripMenuItem.Click += new System.EventHandler(this.agregarEmpleadosToolStripMenuItem_Click);
             // 
             // cerrarSesionToolStripMenuItem
             // 
@@ -244,5 +323,13 @@ namespace SistemaTurnos
         private System.Windows.Forms.ToolStripMenuItem asignarToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem asignarPerfilesAUsuarioToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem seleccionarIdiomaToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem admisionPacientesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem admisionGuardiaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enfermeriaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem listaEsperaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem medicoGuardiaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem listaEsperaToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem empleadosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem agregarEmpleadosToolStripMenuItem;
     }
 }

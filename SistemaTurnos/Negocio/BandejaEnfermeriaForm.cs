@@ -19,11 +19,9 @@ namespace SistemaTurnos.Negocio
         {
             InitializeComponent();
 
-            // 1. Suscripción a eventos de grilla (Ya no manejamos el panel modal acá dentro)
             dgvEpisodios.CellPainting += Dgv_CellPainting_Acciones;
             dgvEpisodios.CellClick += DgvEpisodios_CellClick;
 
-            // 2. Inicializar combos, filtros y carga de BD
             ConfigurarFiltroEstados();
         }
 

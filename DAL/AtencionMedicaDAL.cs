@@ -1,5 +1,6 @@
 ﻿using BE;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -16,17 +17,19 @@ namespace DAL
             DAO dao = new DAO();
             string sql = @"
                 INSERT INTO dbo.AtencionMedica (
-                    Consulta_Id,
+                    AtencionMedica_ConsultaId,
                     AtencionMedica_UsuarioId,
+                    AtencionMedica_EmpleadoId,
                     AtencionMedica_FechaInicio,
                     AtencionMedica_FechaFin,
                     AtencionMedica_Diagnostico,
                     AtencionMedica_Indicaciones,
-                    AtencionMedica_Destino
+                    DestinoConsulta_Id
                 )
                 VALUES (
                     @ConsultaId,
                     @UsuarioId,
+                    @EmpleadoId,
                     @FechaInicio,
                     @FechaFin,
                     @Diagnostico,
@@ -37,13 +40,14 @@ namespace DAL
 
             var parametros = new SqlParameter[]
             {
-                new SqlParameter("@ConsultaId", atencion.Consulta != null ? (object)atencion.Consulta.Id : DBNull.Value),
-                new SqlParameter("@UsuarioId", atencion.Medico != null ? (object)atencion.Medico.Id : DBNull.Value),
-                new SqlParameter("@FechaInicio", atencion.FechaInicio),
-                new SqlParameter("@FechaFin", (object)atencion.FechaFin ?? DBNull.Value),
-                new SqlParameter("@Diagnostico", atencion.Diagnostico ?? string.Empty),
-                new SqlParameter("@Indicaciones", (object)atencion.Indicaciones ?? DBNull.Value),
-                new SqlParameter("@Destino", atencion.Destino ?? string.Empty),
+               new SqlParameter("@ConsultaId", atencion.Consulta.Id),
+               new SqlParameter("@UsuarioId", atencion.Medico.Id),
+               new SqlParameter("@EmpleadoId", atencion.Consulta.Id),
+               new SqlParameter("@FechaInicio", atencion.FechaInicio),
+               new SqlParameter("@FechaFin", (object)atencion.FechaFin ?? DBNull.Value),
+               new SqlParameter("@Diagnostico", atencion.Diagnostico ?? string.Empty),
+               new SqlParameter("@Indicaciones", (object)atencion.Indicaciones ?? DBNull.Value),
+               new SqlParameter("@Destino", atencion.Destino.HasValue ? (int)atencion.Destino.Value : (object)DBNull.Value)
             };
 
             object resultado = dao.ExecuteScalarFunction(sql, parametros);
@@ -62,7 +66,7 @@ namespace DAL
                 SET AtencionMedica_FechaFin = @FechaFin,
                     AtencionMedica_Diagnostico = @Diagnostico,
                     AtencionMedica_Indicaciones = @Indicaciones,
-                    AtencionMedica_Destino = @Destino
+                    DestinoConsulta_Id = @Destino
                 WHERE AtencionMedica_Id = @AtencionMedicaId;";
 
             var parametros = new SqlParameter[]
@@ -71,7 +75,7 @@ namespace DAL
                 new SqlParameter("@FechaFin", atencion.FechaFin ?? DateTime.Now),
                 new SqlParameter("@Diagnostico", atencion.Diagnostico ?? string.Empty),
                 new SqlParameter("@Indicaciones", (object)atencion.Indicaciones ?? DBNull.Value),
-                new SqlParameter("@Destino", atencion.Destino ?? string.Empty),
+                new SqlParameter("@Destino", (int)atencion.Destino.Value)
             };
 
             dao.ExecuteNonQueryFuntion(sql, parametros);
@@ -88,11 +92,12 @@ namespace DAL
                     AtencionMedica_Id,
                     Consulta_Id,
                     AtencionMedica_UsuarioId,
+                    AtencionMedica_EmpleadoId
                     AtencionMedica_FechaInicio,
                     AtencionMedica_FechaFin,
                     AtencionMedica_Diagnostico,
-                    AtencionMedica_Indicaciones,
-                    AtencionMedica_Destino
+                    AtencionMedica_Indicaciones,,
+                    DestinoConsulta_Id
                 FROM dbo.AtencionMedica
                 WHERE Consulta_Id = @ConsultaId;";
 
@@ -118,11 +123,12 @@ namespace DAL
                     AtencionMedica_Id,
                     Consulta_Id,
                     AtencionMedica_UsuarioId,
+                    AtencionMedica_EmpleadoId
                     AtencionMedica_FechaInicio,
                     AtencionMedica_FechaFin,
                     AtencionMedica_Diagnostico,
                     AtencionMedica_Indicaciones,
-                    AtencionMedica_Destino
+                    DestinoConsulta_Id
                 FROM dbo.AtencionMedica
                 WHERE AtencionMedica_Id = @AtencionMedicaId;";
 
@@ -146,12 +152,47 @@ namespace DAL
                 FechaFin = row["AtencionMedica_FechaFin"] != DBNull.Value ? Convert.ToDateTime(row["AtencionMedica_FechaFin"]) : (DateTime?)null,
                 Diagnostico = row["AtencionMedica_Diagnostico"] != DBNull.Value ? row["AtencionMedica_Diagnostico"].ToString() : string.Empty,
                 Indicaciones = row["AtencionMedica_Indicaciones"] != DBNull.Value ? row["AtencionMedica_Indicaciones"].ToString() : null,
-                Destino = row["AtencionMedica_Destino"] != DBNull.Value ? row["AtencionMedica_Destino"].ToString() : string.Empty,
+                Destino = row.Table.Columns.Contains("DestinoConsulta_Id") && row["DestinoConsulta_Id"] != DBNull.Value
+                  ? (DestinoConsulta)Convert.ToInt32(row["DestinoConsulta_Id"])
+                  : (DestinoConsulta?)null,
 
-                // Mapeo orientado a objetos:
                 Consulta = row["Consulta_Id"] != DBNull.Value ? new Consulta { Id = Convert.ToInt32(row["Consulta_Id"]) } : null,
-                Medico = row["AtencionMedica_UsuarioId"] != DBNull.Value ? new Usuario { Id = Convert.ToInt32(row["AtencionMedica_UsuarioId"]) } : null
+                Usuario = row["AtencionMedica_UsuarioId"] != DBNull.Value ? new Usuario { Id = Convert.ToInt32(row["AtencionMedica_UsuarioId"]) } : null,
+                Medico = row["AtencionMedica_EmpleadoId"] != DBNull.Value ? new Empleado { Id = Convert.ToInt32(row["AtencionMedica_EmpleadoId"]) } : null
             };
+        }
+
+        public static List<AtencionMedica> ObtenerAtencionesMedicasPorPaciente(int pacienteId)
+        {
+            DAO dao = new DAO();
+            string sql = @"
+            SELECT 
+                am.AtencionMedica_Id,
+                am.AtencionMedica_ConsultaId AS Consulta_Id,
+                am.AtencionMedica_UsuarioId,
+                am.AtencionMedica_FechaInicio,
+                am.AtencionMedica_FechaFin,
+                am.AtencionMedica_Diagnostico,
+                am.AtencionMedica_Indicaciones,
+                am.DestinoConsulta_Id,
+                am.AtencionMedica_EmpleadoId
+            FROM dbo.AtencionMedica am
+            INNER JOIN dbo.Consulta c ON am.AtencionMedica_ConsultaId = c.Consulta_Id
+            WHERE c.Consulta_PacienteId = @PacienteId;";
+
+            var param = new SqlParameter("@PacienteId", pacienteId);
+            DataSet ds = dao.ExecuteDataSet(sql, param);
+
+            var lista = new List<AtencionMedica>();
+
+            if (ds != null && ds.Tables.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    lista.Add(MapearAtencion(row));
+                }
+            }
+            return lista;
         }
     }
 }

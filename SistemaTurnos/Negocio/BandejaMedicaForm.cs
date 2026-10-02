@@ -186,7 +186,6 @@ namespace SistemaTurnos.Negocio
                 try
                 {
                     consultaBL.AvanzarSiguienteEstado(consultaSeleccionada);
-                    consultaSeleccionada.EstadoConsulta = EstadoConsulta.EnEnfermeria;
 
                     using (var form = new AtencionMedicaForm(consultaSeleccionada))
                     {

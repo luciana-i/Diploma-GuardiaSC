@@ -10,9 +10,19 @@ namespace BLL
 {
     public class HistoriaClinicaBLL
     {
-        public List<HistoriaClinica> ListarPorPaciente(int id)
+        public HistoriaClinica ObtenerPorPaciente(int id)
         {
-            return HistoriaClinicaDAL.ListarPorPacienteId(id);
+            return HistoriaClinicaDAL.ObtenerPorPaciente(id);
+        }
+
+        public void Insertar(HistoriaClinica historiaClinica)
+        {
+            HistoriaClinicaDAL.Insertar(historiaClinica);
+        }
+
+        public void Actualizar(HistoriaClinica historiaClinica)
+        {
+            HistoriaClinicaDAL.Actualizar(historiaClinica);
         }
     }
 }

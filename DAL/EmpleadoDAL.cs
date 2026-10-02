@@ -11,47 +11,56 @@ namespace DAL
 {
     public class EmpleadoDAL
     {
-        private readonly DAO _dao;
-
-        public EmpleadoDAL()
-        {
-            _dao = new DAO();
-        }
-
-        public EmpleadoDAL(DAO dao)
-        {
-            _dao = dao;
-        }
+     
 
         /// <summary>
         /// Inserta un empleado y retorna el Empleado_Id generado.
         /// </summary>
-        public int Insertar(Empleado empleado)
+        public static int Insertar(Empleado empleado)
         {
+            DAO dao = new DAO();
             string sql = @"
-                INSERT INTO dbo.Empleado (
-                    EmpleadoUsuario_Id,
-                    Empleado_Matricula,
-                    Empleado_TipoEmpleadoId,
-                    Empleado_Activo
-                )
-                VALUES (
-                    @UsuarioId,
-                    @Matricula,
-                    @TipoEmpleadoId,
-                    @Activo
-                );
-                SELECT CAST(SCOPE_IDENTITY() AS INT);";
+        INSERT INTO dbo.Empleado (
+            Empleado_Dni,
+            Empleado_Nombre,
+            Empleado_Apellido,
+            Empleado_FechaNac,
+            Empleado_Telefono,
+            EmpleadoUsuario_Id,
+            Empleado_Matricula,
+            Empleado_TipoEmpleadoId,
+            Empleado_Activo
+        )
+        VALUES (
+            @Dni,
+            @Nombre,
+            @Apellido,
+            @FechaNac,
+            @Telefono,
+            @UsuarioId,
+            @Matricula,
+            @TipoEmpleadoId,
+            @Activo
+        );
+        SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
             var parametros = new SqlParameter[]
             {
-                new SqlParameter("@UsuarioId", empleado.EmpleadoUsuario != null ? (object)empleado.EmpleadoUsuario.Id : DBNull.Value),
-                new SqlParameter("@Matricula", !string.IsNullOrWhiteSpace(empleado.Matricula) ? (object)empleado.Matricula : DBNull.Value),
-                new SqlParameter("@TipoEmpleadoId", (int)empleado.TipoEmpleado),
-                new SqlParameter("@Activo", empleado.Activo)
+        // Campos heredados de Persona
+        new SqlParameter("@Dni", !string.IsNullOrWhiteSpace(empleado.Dni) ? (object)empleado.Dni : DBNull.Value),
+        new SqlParameter("@Nombre", !string.IsNullOrWhiteSpace(empleado.Nombre) ? (object)empleado.Nombre : DBNull.Value),
+        new SqlParameter("@Apellido", !string.IsNullOrWhiteSpace(empleado.Apellido) ? (object)empleado.Apellido : DBNull.Value),
+        new SqlParameter("@FechaNac", empleado.FechaNacimiento.HasValue ? (object)empleado.FechaNacimiento.Value : DBNull.Value),
+        new SqlParameter("@Telefono", !string.IsNullOrWhiteSpace(empleado.Telefono) ? (object)empleado.Telefono : DBNull.Value),
+        
+        // Campos propios de Empleado
+        new SqlParameter("@UsuarioId", empleado.EmpleadoUsuario != null ? (object)empleado.EmpleadoUsuario.Id : DBNull.Value),
+        new SqlParameter("@Matricula", !string.IsNullOrWhiteSpace(empleado.Matricula) ? (object)empleado.Matricula : DBNull.Value),
+        new SqlParameter("@TipoEmpleadoId", (int)empleado.TipoEmpleado),
+        new SqlParameter("@Activo", empleado.Activo)
             };
 
-            object resultado = _dao.ExecuteScalarFunction(sql, parametros);
+            object resultado = dao.ExecuteScalarFunction(sql, parametros);
             empleado.Id = Convert.ToInt32(resultado);
             return empleado.Id;
         }
@@ -59,8 +68,9 @@ namespace DAL
         /// <summary>
         /// Actualiza los datos de un empleado.
         /// </summary>
-        public void Actualizar(Empleado empleado)
+        public static void Actualizar(Empleado empleado)
         {
+            DAO dao = new DAO();
             string sql = @"
                 UPDATE dbo.Empleado
                 SET EmpleadoUsuario_Id = @UsuarioId,
@@ -78,14 +88,15 @@ namespace DAL
                 new SqlParameter("@Activo", empleado.Activo)
             };
 
-            _dao.ExecuteNonQueryFuntion(sql, parametros);
+            dao.ExecuteNonQueryFuntion(sql, parametros);
         }
 
         /// <summary>
         /// Obtiene un empleado por su ID con los datos de su cuenta de usuario vinculada si existe.
         /// </summary>
-        public Empleado ObtenerPorId(int empleadoId)
+        public static Empleado ObtenerPorId(int empleadoId)
         {
+            DAO dao = new DAO();
             string sql = @"
                 SELECT 
                     e.Empleado_Id,
@@ -100,36 +111,7 @@ namespace DAL
                 WHERE e.Empleado_Id = @Empleado_Id;";
 
             var param = new SqlParameter("@Empleado_Id", empleadoId);
-            DataSet ds = _dao.ExecuteDataSet(sql, param);
-
-            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-            {
-                return MapearEmpleado(ds.Tables[0].Rows[0]);
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Obtiene el registro de empleado vinculado a un usuario logueado en el sistema.
-        /// </summary>
-        public Empleado ObtenerPorUsuarioId(int usuarioId)
-        {
-            string sql = @"
-                SELECT 
-                    e.Empleado_Id,
-                    e.EmpleadoUsuario_Id,
-                    e.Empleado_Matricula,
-                    e.Empleado_TipoEmpleadoId,
-                    e.Empleado_Activo,
-                    u.Usuario_Username,
-                    u.Usuario_Mail
-                FROM dbo.Empleado e
-                INNER JOIN dbo.Usuario u ON e.EmpleadoUsuario_Id = u.Usuario_ID
-                WHERE e.EmpleadoUsuario_Id = @UsuarioId;";
-
-            var param = new SqlParameter("@UsuarioId", usuarioId);
-            DataSet ds = _dao.ExecuteDataSet(sql, param);
+            DataSet ds = dao.ExecuteDataSet(sql, param);
 
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
@@ -142,8 +124,9 @@ namespace DAL
         /// <summary>
         /// Lista empleados activos filtrados por tipo (Médicos o Enfermeros).
         /// </summary>
-        public List<Empleado> ListarPorTipo(TipoEmpleadoEnum tipo)
+        public static List<Empleado> ListarPorTipo(TipoEmpleadoEnum tipo)
         {
+            DAO dao = new DAO();
             var lista = new List<Empleado>();
             string sql = @"
                 SELECT 
@@ -159,7 +142,7 @@ namespace DAL
                 WHERE e.Empleado_TipoEmpleadoId = @TipoId AND e.Empleado_Activo = 1;";
 
             var param = new SqlParameter("@TipoId", (int)tipo);
-            DataSet ds = _dao.ExecuteDataSet(sql, param);
+            DataSet ds = dao.ExecuteDataSet(sql, param);
 
             if (ds != null && ds.Tables.Count > 0)
             {
@@ -172,7 +155,7 @@ namespace DAL
             return lista;
         }
 
-        private Empleado MapearEmpleado(DataRow row)
+        private static Empleado MapearEmpleado(DataRow row)
         {
             var emp = new Empleado
             {
@@ -200,6 +183,33 @@ namespace DAL
             }
 
             return emp;
+        }
+
+        public static Empleado ObtenerPorUsuarioId(int usuarioId)
+        {
+            DAO dao = new DAO();
+            string sql = @"
+            SELECT 
+            e.Empleado_Id,
+            e.EmpleadoUsuario_Id,
+            e.Empleado_Matricula,
+            e.Empleado_TipoEmpleadoId,
+            e.Empleado_Activo,
+            u.Usuario_Username,
+            u.Usuario_Mail
+            FROM dbo.Empleado e
+            INNER JOIN dbo.Usuario u ON e.EmpleadoUsuario_Id = u.Usuario_ID
+            WHERE e.EmpleadoUsuario_Id = @UsuarioId;";
+
+            var param = new SqlParameter("@UsuarioId", usuarioId);
+            DataSet ds = dao.ExecuteDataSet(sql, param);
+
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                return MapearEmpleado(ds.Tables[0].Rows[0]);
+            }
+
+            return null;
         }
     }
 }

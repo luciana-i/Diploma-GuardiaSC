@@ -14,13 +14,21 @@ namespace BE
         public string Antecedente { get; set; }
         public string Alergias { get; set; }
         public string Observacion { get; set; }
-        public int? DVH { get; set; }
 
         public List<AtencionMedica> Atenciones { get; set; }
 
         public HistoriaClinica()
         {
             FechaAtencion = DateTime.Now;
+        }
+
+        public HistoriaClinica(Paciente paciente, string antecedente, string alergias, string observacion)
+        {
+            FechaAtencion = DateTime.Now;
+            Paciente = paciente;
+            Antecedente = antecedente;
+            Alergias = alergias;
+            Observacion = observacion;
         }
 
         public override string ToString() =>

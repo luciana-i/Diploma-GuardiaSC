@@ -11,8 +11,6 @@ namespace BE
         public int Id { get; set; }
         public DateTime FechaIngreso { get; set; }
         public string MotivoIngreso { get; set; }
-        public long? DVH { get; set; }
-
         public EstadoConsulta EstadoConsulta { get; set; } = EstadoConsulta.EnEsperaEnfermeria;
 
         public Paciente Paciente { get; set; }

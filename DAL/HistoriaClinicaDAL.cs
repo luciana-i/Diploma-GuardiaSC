@@ -85,10 +85,8 @@ namespace DAL
             return lista;
         }
 
-        /// <summary>
-        /// Obtiene un registro puntual por su clave primaria.
-        /// </summary>
-        public static HistoriaClinica ObtenerPorId(int historiaClinicaId)
+
+        public static HistoriaClinica ObtenerPorPaciente(int pacienteId)
         {
             DAO dao = new DAO();
             string sql = @"
@@ -105,9 +103,9 @@ namespace DAL
                     p.Paciente_telefono
                 FROM dbo.HistoriaClinica hc
                 INNER JOIN dbo.Paciente p ON hc.Paciente_Id = p.Paciente_Id
-                WHERE hc.HistoriaClinica_Id = @HistoriaClinicaId;";
+                WHERE hc.Paciente_Id = @Paciente_Id;";
 
-            var param = new SqlParameter("@HistoriaClinicaId", historiaClinicaId);
+            var param = new SqlParameter("@Paciente_Id", pacienteId);
             DataSet ds = dao.ExecuteDataSet(sql, param);
 
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
@@ -116,6 +114,32 @@ namespace DAL
             }
 
             return null;
+        }
+
+        public static void Actualizar(HistoriaClinica hc)
+        {
+
+            DAO dao = new DAO();
+            string sql = @"
+                UPDATE dbo.HistoriaClinica
+                SET Paciente_Id = @PacienteId,
+                    HistoriaClinica_FechaAtencion = @FechaAtencion,
+                    HistoriaClinica_Antecedente = @Antecedente,
+                    HistoriaClinica_Observacion = @Observacion,
+                    HistoriaClinica_Alergias = @Alergias
+                WHERE HistoriaClinica_Id = @HistoriaClinicaId;";
+
+            var parametros = new SqlParameter[]
+            {
+                new SqlParameter("@HistoriaClinicaId", hc.Id),
+                new SqlParameter("@PacienteId", hc.Paciente != null ? (object)hc.Paciente.Id : DBNull.Value),
+                new SqlParameter("@FechaAtencion", hc.FechaAtencion),
+                new SqlParameter("@Antecedente", hc.Antecedente ?? string.Empty),
+                new SqlParameter("@Observacion", (object)hc.Observacion ?? DBNull.Value),
+                new SqlParameter("@Alergias", (object)hc.Alergias ?? DBNull.Value),
+            };
+
+            dao.ExecuteNonQueryFuntion(sql, parametros);
         }
 
         public static HistoriaClinica MapearHistoriaClinica(DataRow row)

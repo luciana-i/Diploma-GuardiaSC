@@ -31,6 +31,15 @@ namespace BLL.Servicios
             "USUARIO_BASICO", // menu
             "ADMIN_FULL",
             "ADMIN_BASICO",
+            "RECEPCIONISTA",
+            "EMPLEADOS",
+            "RES_ADMISION",
+            "ENFERMERIA",
+            "ENFERMERIA_LISTA",
+            "ENFERMERIA_ATENCION",
+            "MEDICO",
+            "MEDICO_LISTA",
+            "MEDICO_ATENCION",
             "GERENCIAL"
         };
     }

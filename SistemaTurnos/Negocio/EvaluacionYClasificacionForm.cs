@@ -171,8 +171,6 @@ namespace SistemaTurnos.Negocio
         {
             using (var formHC = new HistoriaClinicaForm(_consultaActual.Paciente))
             {
-                // En Triage (enfermería) solo es para consultar antecedentes
-                formHC.ConfigurarModoConsulta(soloLectura: true);
                 formHC.ShowDialog(this);
             }
         }
@@ -401,7 +399,7 @@ namespace SistemaTurnos.Negocio
                      _prioridadSugerida,
                      prioridadFinal,
                      justificacion,
-                     new Usuario { Id = 1 } // TODO O el usuario logueado en sesión
+                     SessionManager.getInstance().ObtenerUsuario() 
                  );
 
                 // 7. Guardar la evaluación en la base de datos

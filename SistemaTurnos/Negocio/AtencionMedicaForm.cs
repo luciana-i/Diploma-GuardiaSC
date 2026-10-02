@@ -1,5 +1,6 @@
 ﻿using BE;
 using BLL;
+using BLL.Servicios;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,33 +21,11 @@ namespace SistemaTurnos.Negocio
         Consulta _consultaActual;
         AtencionMedicaBL atencionMedicaBL = new AtencionMedicaBL();
         AtencionMedica atencionMedica;
-        public AtencionMedicaForm()
-        {
-            InitializeComponent();
-
-            // 1. Suscribir el pintado custom de los 3 GroupBoxes para el título con parche
-            grpContextoTriage.Paint += GroupBox_CustomPaint;
-            grpEvolucionMedica.Paint += GroupBox_CustomPaint;
-            grpDestinoAsistencial.Paint += GroupBox_CustomPaint;
-
-            // 2. Redondear los botones y cargar datos de prueba al iniciar
-            this.Load += (s, e) =>
-            {
-                RedondearControl(btnFinalizarAtencion, 6);
-                RedondearControl(btnVerHistoriaClinica, 4);
-                _consultaActual = ObtenerConsultaMockDePrueba(); // <--- Carga la consulta simulada aquí
-                CargarDatosMock(); // <--- Carga los datos simulados aquí
-                                   // se da inicio a la consulta, se registra en AtencionMedica con fecha de inicio y estado en curso
-                atencionMedica = atencionMedicaBL.RegistrarAtencion(_consultaActual, new Usuario { Id = 1 }); // Simulación: ID del médico que atiende (en un caso real, se obtiene del usuario logueado)
-
-            };
-        }
-
         public AtencionMedicaForm(Consulta consultaSeleccionada)
         {
             InitializeComponent();
             _consultaActual = consultaSeleccionada;
-            atencionMedica = atencionMedicaBL.RegistrarAtencion(_consultaActual, new Usuario { Id = 1 }); // Simulación: ID del médico que atiende (en un caso real, se obtiene del usuario logueado)
+            atencionMedica = atencionMedicaBL.RegistrarAtencion(_consultaActual, SessionManager.getInstance().ObtenerUsuario()); 
             // 1. Suscribir el pintado custom de los 3 GroupBoxes para el título con parche
             grpContextoTriage.Paint += GroupBox_CustomPaint;
             grpEvolucionMedica.Paint += GroupBox_CustomPaint;
@@ -58,116 +37,19 @@ namespace SistemaTurnos.Negocio
                 RedondearControl(btnFinalizarAtencion, 6);
                 RedondearControl(btnVerHistoriaClinica, 4);
             };
-        }
 
-        public static Consulta ObtenerConsultaMockDePrueba()
-        {
-            return new Consulta
-            {
-                Id = 1042,
-                FechaIngreso = DateTime.Now.AddMinutes(-35), // Ingresó hace 35 minutos
-                MotivoIngreso = "Dolor torácico opresivo y dificultad respiratoria",
-                DVH = 123456789, // O null si no se usa DVH en este punto
-                EstadoConsulta = EstadoConsulta.EnEsperaAtencionMedica,
+            lblPacienteDatos.Text=_consultaActual.Paciente.NombreCompleto;
+            lblMotivoValor.Text=_consultaActual.MotivoIngreso.ToString();
+            
+            EvaluacionEnfermeriaBL evaluacionBL = new EvaluacionEnfermeriaBL();
 
-                // Composición del Paciente
-                Paciente = new Paciente
-                {
-                    Id = 1,
-                    Nombre = "Juan Manuel",
-                    Apellido = "Gómez Fernández",
-                    Dni = "38452190"
-                },
-
-                // Usuario que realizó el ingreso en Admisión
-                UsuarioIngreso = new Usuario
-                {
-                    Id = 1,
-                    Username = "Admisionista Turno Mañana"
-                },
-
-                // Composición de Triage (EvaluacionEnfermeria con prioridad asignada)
-                EvaluacionEnfermeria = new EvaluacionEnfermeria
-                {
-                    FrecuenciaCardiaca = 115,
-                    Temperatura = 37.8m,
-                    SaturacionOxigeno = 91,
-                    PresionArterial = "140/90",
-                    PrioridadFinal = NivelPrioridad.MuyUrgente // Nivel 2
-                },
-
-                // AtencionMedica se mantiene en null hasta que el médico la inicie y finalice en el consultorio
-                AtencionMedica = null
-            };
-        }
-
-        // Método para simular y asignar los datos en los Labels del panel superior
-        private void CargarDatosMock()
-        {
-            if (_consultaActual == null) return;
-
-            // 1. Datos del Paciente y Motivo de Ingreso
-            if (_consultaActual.Paciente != null)
-            {
-                lblPacienteDatos.Text = $"{_consultaActual.Paciente.Apellido}, {_consultaActual.Paciente.Nombre} (DNI: {_consultaActual.Paciente.Dni})";
-            }
-
-            lblMotivoValor.Text = !string.IsNullOrWhiteSpace(_consultaActual.MotivoIngreso)
-                ? _consultaActual.MotivoIngreso
-                : "Sin motivo especificado";
-
-            // 2. Signos Vitales y Prioridad desde la composición (EvaluacionEnfermeria)
-            if (_consultaActual.EvaluacionEnfermeria != null)
-            {
-                var eval = _consultaActual.EvaluacionEnfermeria;
-
-                // Frecuencia Cardíaca
-                lblFcValor.Text = eval.FrecuenciaCardiaca.HasValue
-                    ? $"{eval.FrecuenciaCardiaca.Value} lpm"
-                    : "-- lpm";
-
-                // Temperatura (con alerta visual si es mayor o igual a 38°C)
-                if (eval.Temperatura.HasValue)
-                {
-                    decimal temp = eval.Temperatura.Value;
-                    lblTempVal.Text = temp >= 38.0m ? $"{temp:0.1} °C (Febril)" : $"{temp:0.1} °C";
-                    lblTempVal.ForeColor = temp >= 38.0m ? ColorTranslator.FromHtml("#EF4444") : Color.White;
-                }
-                else
-                {
-                    lblTempVal.Text = "-- °C";
-                }
-
-                // Saturación de Oxígeno (con alerta si es menor al 92%)
-                if (eval.SaturacionOxigeno.HasValue)
-                {
-                    int sat = eval.SaturacionOxigeno.Value;
-                    lblSatValor.Text = $"{sat} %";
-                    lblSatValor.ForeColor = sat < 92 ? ColorTranslator.FromHtml("#EF4444") : Color.White;
-                }
-                else
-                {
-                    lblSatValor.Text = "-- %";
-                }
-
-                // Presión Arterial
-                lblPaValor.Text = !string.IsNullOrWhiteSpace(eval.PresionArterial)
-                    ? $"{eval.PresionArterial} mmHg"
-                    : "-- mmHg";
-
-                // Prioridad de Triage Final con sus respectivos colores institucionales del semáforo
-                ConfigurarBadgePrioridad(eval.PrioridadFinal);
-            }
-            else
-            {
-                // Valores por defecto si la consulta aún no tiene Triage registrado
-                lblFcValor.Text = "-- lpm";
-                lblTempVal.Text = "-- °C";
-                lblSatValor.Text = "-- %";
-                lblPaValor.Text = "-- mmHg";
-                lblPrioridadValor.Text = "Sin Triage Asignado";
-                lblPrioridadValor.ForeColor = Color.Gray;
-            }
+            EvaluacionEnfermeria enfermeria = evaluacionBL.ObtenerPorConsultaId(_consultaActual.Id);
+            lblFcValor.Text = enfermeria.FrecuenciaCardiaca.ToString();
+            lblPaValor.Text = enfermeria.PresionArterial.ToString();
+            lblSatValor.Text= enfermeria.SaturacionOxigeno.ToString();
+            lblTempVal.Text=enfermeria.Temperatura.ToString();
+            ConfigurarBadgePrioridad(enfermeria.PrioridadFinal);
+            cmbDestino.DataSource = Enum.GetValues(typeof(DestinoConsulta)).Cast<DestinoConsulta>().ToList();
         }
 
         // Helper auxiliar para pintar dinámicamente el badge de prioridad según el nivel de Triage
@@ -254,7 +136,6 @@ namespace SistemaTurnos.Negocio
         {
             using (var formHC = new HistoriaClinicaForm(_consultaActual.Paciente))
             {
-                // En Triage (enfermería) solo es para consultar antecedentes
                 formHC.ConfigurarModoConsulta(soloLectura: true);
                 formHC.ShowDialog(this);
             }
@@ -265,7 +146,6 @@ namespace SistemaTurnos.Negocio
             string diagnostico = txtDiagnostico.Text.Trim();
             string indicaciones = txtIndicaciones.Text.Trim();
             string destinoSeleccionado = cmbDestino.SelectedItem?.ToString();
-            string detalleDestino = txtDetalleDestino.Text.Trim();
 
             if (string.IsNullOrWhiteSpace(diagnostico) || string.IsNullOrWhiteSpace(indicaciones) || string.IsNullOrWhiteSpace(destinoSeleccionado))
             {
@@ -292,28 +172,13 @@ namespace SistemaTurnos.Negocio
 
             try
             {
-                // si hay detalle o pautas de alarma,va a indicaciones
-                string indicacionesFinales = string.IsNullOrWhiteSpace(detalleDestino)
-                ? indicaciones
-                : $"{indicaciones}\r\n[Detalle/Pautas de Alarma]: {detalleDestino}";
-                /*
-                                atencionMedica = {
-                                    FechaFin = DateTime.Now, 
-                                    Diagnostico = diagnostico,
-                                    Indicaciones = indicacionesFinales,
-                                    Destino = destinoSeleccionado
-                                }
+                atencionMedica.Diagnostico = diagnostico;
+                atencionMedica.Indicaciones = indicaciones;
+                atencionMedica.Destino = (DestinoConsulta)Enum.Parse(typeof(DestinoConsulta), destinoSeleccionado);
 
 
-                                new AtencionMedicaBL().RegistrarAtencion(atencionMedica);
-                                consultaBL.CambiarEstado(_consultaActual.Id, EstadoConsulta.Finalizado);
+                atencionMedicaBL.FinalizarAtencionMedica(atencionMedica);
 
-                                MessageBox.Show(
-                                    "La atención médica se ha registrado y finalizado con éxito.\nEl episodio ha concluido.",
-                                    "Atención Concluida",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Information);
-                */
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

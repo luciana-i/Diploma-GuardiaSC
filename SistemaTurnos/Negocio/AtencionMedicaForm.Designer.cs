@@ -32,8 +32,6 @@
             this.btnFinalizarAtencion = new System.Windows.Forms.Button();
             this.grpDestinoAsistencial = new SistemaTurnos.DarkGroupBox();
             this.cmbDestino = new System.Windows.Forms.ComboBox();
-            this.txtDetalleDestino = new System.Windows.Forms.TextBox();
-            this.lblTitDetalleDestino = new System.Windows.Forms.Label();
             this.lblTitDiagnostico = new System.Windows.Forms.Label();
             this.grpEvolucionMedica = new SistemaTurnos.DarkGroupBox();
             this.txtIndicaciones = new System.Windows.Forms.TextBox();
@@ -112,8 +110,6 @@
             this.grpDestinoAsistencial.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
             this.grpDestinoAsistencial.BorderRadius = 14;
             this.grpDestinoAsistencial.Controls.Add(this.cmbDestino);
-            this.grpDestinoAsistencial.Controls.Add(this.txtDetalleDestino);
-            this.grpDestinoAsistencial.Controls.Add(this.lblTitDetalleDestino);
             this.grpDestinoAsistencial.Controls.Add(this.lblTitDiagnostico);
             this.grpDestinoAsistencial.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.grpDestinoAsistencial.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
@@ -138,30 +134,8 @@
             "Solicitud de Estudios"});
             this.cmbDestino.Location = new System.Drawing.Point(19, 63);
             this.cmbDestino.Name = "cmbDestino";
-            this.cmbDestino.Size = new System.Drawing.Size(447, 25);
+            this.cmbDestino.Size = new System.Drawing.Size(466, 25);
             this.cmbDestino.TabIndex = 17;
-            // 
-            // txtDetalleDestino
-            // 
-            this.txtDetalleDestino.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
-            this.txtDetalleDestino.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtDetalleDestino.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(176)))), ((int)(((byte)(184)))));
-            this.txtDetalleDestino.Location = new System.Drawing.Point(515, 63);
-            this.txtDetalleDestino.Multiline = true;
-            this.txtDetalleDestino.Name = "txtDetalleDestino";
-            this.txtDetalleDestino.Size = new System.Drawing.Size(532, 61);
-            this.txtDetalleDestino.TabIndex = 16;
-            // 
-            // lblTitDetalleDestino
-            // 
-            this.lblTitDetalleDestino.AutoSize = true;
-            this.lblTitDetalleDestino.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
-            this.lblTitDetalleDestino.ForeColor = System.Drawing.Color.White;
-            this.lblTitDetalleDestino.Location = new System.Drawing.Point(512, 43);
-            this.lblTitDetalleDestino.Name = "lblTitDetalleDestino";
-            this.lblTitDetalleDestino.Size = new System.Drawing.Size(374, 17);
-            this.lblTitDetalleDestino.TabIndex = 15;
-            this.lblTitDetalleDestino.Text = "Detalle del Destino / Pautas de Alarma / Centro Derivación";
             // 
             // lblTitDiagnostico
             // 
@@ -546,8 +520,6 @@
         private System.Windows.Forms.Label lblPrioridadValor;
         private System.Windows.Forms.Label lblTitTriageBadge;
         private DarkGroupBox grpDestinoAsistencial;
-        private System.Windows.Forms.TextBox txtDetalleDestino;
-        private System.Windows.Forms.Label lblTitDetalleDestino;
         private System.Windows.Forms.Label lblTitDiagnostico;
         private System.Windows.Forms.TextBox txtIndicaciones;
         private System.Windows.Forms.Label label3;

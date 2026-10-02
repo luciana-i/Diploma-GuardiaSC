@@ -46,8 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Instalador\setupv3.iss" />
-    <Content Include="Instalador\SETUPV2.iss" />
+    <Content Include="Instalador\setupv4.iss" />
     <Compile Include="Negocio\AtencionMedicaForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +67,12 @@
     </Compile>
     <Compile Include="Negocio\CancelarGuardiaForm.Designer.cs">
       <DependentUpon>CancelarGuardiaForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Negocio\EmpleadosForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Negocio\EmpleadosForm.Designer.cs">
+      <DependentUpon>EmpleadosForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Negocio\HistoriaClinicaForm.cs">
       <SubType>Form</SubType>
@@ -184,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Negocio\CancelarGuardiaForm.resx">
       <DependentUpon>CancelarGuardiaForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Negocio\EmpleadosForm.resx">
+      <DependentUpon>EmpleadosForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Negocio\HistoriaClinicaForm.resx">
       <DependentUpon>HistoriaClinicaForm.cs</DependentUpon>

@@ -14,23 +14,22 @@ namespace BE
         public DateTime? FechaFin { get; set; }
         public string Diagnostico { get; set; }
         public string Indicaciones { get; set; }
-        public string Destino { get; set; } // 'Alta', 'Internación', 'Derivación'
-        public long? DVH { get; set; }
+        public Usuario Usuario { get; set; }
+        public Empleado Medico { get; set; }
 
-        public Usuario Medico { get; set; }
+        public DestinoConsulta? Destino { get; set; }
 
         public AtencionMedica()
         {
         }
 
-        public AtencionMedica(Consulta consulta, Usuario medico)
+        public AtencionMedica(Consulta consulta, Empleado medico, Usuario usuario)
         {
             Consulta = consulta;
             Medico = medico;    
             FechaInicio = DateTime.Now;
         }
 
-        public override string ToString() =>
-            $"Atención Médica #{Consulta.Id} - Destino: {Destino ?? "En Curso"}";
+       
     }
 }

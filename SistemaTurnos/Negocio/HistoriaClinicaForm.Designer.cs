@@ -42,10 +42,11 @@
             this.lblAlergias = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.grpHistorial = new SistemaTurnos.DarkGroupBox();
-            this.dgvHistoriaClinica = new System.Windows.Forms.DataGridView();
-            this.colFecha = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAntecedente = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colObservacion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvAtencionMedicas = new System.Windows.Forms.DataGridView();
+            this.fechaInicio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.diagnostico = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.indicaciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.destino = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.grpPaciente = new SistemaTurnos.DarkGroupBox();
             this.lblPacienteTelefono = new System.Windows.Forms.Label();
             this.lblPacienteFecNac = new System.Windows.Forms.Label();
@@ -60,7 +61,7 @@
             this.pnlMainContainer.SuspendLayout();
             this.grpCondicionesBase.SuspendLayout();
             this.grpHistorial.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvHistoriaClinica)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAtencionMedicas)).BeginInit();
             this.grpPaciente.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             this.SuspendLayout();
@@ -111,6 +112,7 @@
             this.btnGuardarCondiciones.TabIndex = 10;
             this.btnGuardarCondiciones.Text = "Actualizar";
             this.btnGuardarCondiciones.UseVisualStyleBackColor = false;
+            this.btnGuardarCondiciones.Click += new System.EventHandler(this.btnGuardarCondiciones_Click);
             // 
             // txtObservacion
             // 
@@ -147,7 +149,7 @@
             // 
             this.lblObservaciones.AutoSize = true;
             this.lblObservaciones.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblObservaciones.Location = new System.Drawing.Point(20, 83);
+            this.lblObservaciones.Location = new System.Drawing.Point(16, 84);
             this.lblObservaciones.Name = "lblObservaciones";
             this.lblObservaciones.Size = new System.Drawing.Size(88, 15);
             this.lblObservaciones.TabIndex = 7;
@@ -167,7 +169,7 @@
             // 
             this.lblAlergias.AutoSize = true;
             this.lblAlergias.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblAlergias.Location = new System.Drawing.Point(20, 36);
+            this.lblAlergias.Location = new System.Drawing.Point(16, 36);
             this.lblAlergias.Name = "lblAlergias";
             this.lblAlergias.Size = new System.Drawing.Size(51, 15);
             this.lblAlergias.TabIndex = 0;
@@ -193,25 +195,25 @@
             this.grpHistorial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(51)))), ((int)(((byte)(57)))));
             this.grpHistorial.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
             this.grpHistorial.BorderRadius = 14;
-            this.grpHistorial.Controls.Add(this.dgvHistoriaClinica);
+            this.grpHistorial.Controls.Add(this.dgvAtencionMedicas);
             this.grpHistorial.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.grpHistorial.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
             this.grpHistorial.Location = new System.Drawing.Point(9, 343);
             this.grpHistorial.Name = "grpHistorial";
             this.grpHistorial.Padding = new System.Windows.Forms.Padding(16, 32, 16, 16);
-            this.grpHistorial.Size = new System.Drawing.Size(777, 277);
+            this.grpHistorial.Size = new System.Drawing.Size(779, 277);
             this.grpHistorial.TabIndex = 2;
             this.grpHistorial.Text = "Registro de Atenciones Previas";
             this.grpHistorial.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
             // 
-            // dgvHistoriaClinica
+            // dgvAtencionMedicas
             // 
-            this.dgvHistoriaClinica.AllowUserToAddRows = false;
+            this.dgvAtencionMedicas.AllowUserToAddRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(44)))), ((int)(((byte)(51)))));
-            this.dgvHistoriaClinica.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvHistoriaClinica.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
-            this.dgvHistoriaClinica.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvHistoriaClinica.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.dgvAtencionMedicas.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvAtencionMedicas.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
+            this.dgvAtencionMedicas.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvAtencionMedicas.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(66)))), ((int)(((byte)(88)))));
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
@@ -219,13 +221,14 @@
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvHistoriaClinica.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvHistoriaClinica.ColumnHeadersHeight = 32;
-            this.dgvHistoriaClinica.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvHistoriaClinica.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colFecha,
-            this.colAntecedente,
-            this.colObservacion});
+            this.dgvAtencionMedicas.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvAtencionMedicas.ColumnHeadersHeight = 32;
+            this.dgvAtencionMedicas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvAtencionMedicas.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.fechaInicio,
+            this.diagnostico,
+            this.indicaciones,
+            this.destino});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(27)))), ((int)(((byte)(37)))), ((int)(((byte)(43)))));
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
@@ -233,37 +236,40 @@
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(78)))), ((int)(((byte)(74)))));
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvHistoriaClinica.DefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvHistoriaClinica.EnableHeadersVisualStyles = false;
-            this.dgvHistoriaClinica.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
-            this.dgvHistoriaClinica.Location = new System.Drawing.Point(22, 51);
-            this.dgvHistoriaClinica.Name = "dgvHistoriaClinica";
-            this.dgvHistoriaClinica.ReadOnly = true;
-            this.dgvHistoriaClinica.RowHeadersVisible = false;
-            this.dgvHistoriaClinica.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvHistoriaClinica.Size = new System.Drawing.Size(736, 198);
-            this.dgvHistoriaClinica.TabIndex = 0;
+            this.dgvAtencionMedicas.DefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvAtencionMedicas.EnableHeadersVisualStyles = false;
+            this.dgvAtencionMedicas.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
+            this.dgvAtencionMedicas.Location = new System.Drawing.Point(22, 51);
+            this.dgvAtencionMedicas.Name = "dgvAtencionMedicas";
+            this.dgvAtencionMedicas.ReadOnly = true;
+            this.dgvAtencionMedicas.RowHeadersVisible = false;
+            this.dgvAtencionMedicas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvAtencionMedicas.Size = new System.Drawing.Size(736, 198);
+            this.dgvAtencionMedicas.TabIndex = 0;
             // 
-            // colFecha
+            // fechaInicio
             // 
-            this.colFecha.HeaderText = "Fecha Registro";
-            this.colFecha.Name = "colFecha";
-            this.colFecha.ReadOnly = true;
-            this.colFecha.Width = 130;
+            this.fechaInicio.HeaderText = "Fecha inicio";
+            this.fechaInicio.Name = "fechaInicio";
+            this.fechaInicio.ReadOnly = true;
             // 
-            // colAntecedente
+            // diagnostico
             // 
-            this.colAntecedente.HeaderText = "Antecedente / Condicion";
-            this.colAntecedente.Name = "colAntecedente";
-            this.colAntecedente.ReadOnly = true;
-            this.colAntecedente.Width = 240;
+            this.diagnostico.HeaderText = "Diagnóstico";
+            this.diagnostico.Name = "diagnostico";
+            this.diagnostico.ReadOnly = true;
             // 
-            // colObservacion
+            // indicaciones
             // 
-            this.colObservacion.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.colObservacion.HeaderText = "Observaciones";
-            this.colObservacion.Name = "colObservacion";
-            this.colObservacion.ReadOnly = true;
+            this.indicaciones.HeaderText = "Indicaciones";
+            this.indicaciones.Name = "indicaciones";
+            this.indicaciones.ReadOnly = true;
+            // 
+            // destino
+            // 
+            this.destino.HeaderText = "Destino";
+            this.destino.Name = "destino";
+            this.destino.ReadOnly = true;
             // 
             // grpPaciente
             // 
@@ -401,7 +407,7 @@
             this.grpCondicionesBase.ResumeLayout(false);
             this.grpCondicionesBase.PerformLayout();
             this.grpHistorial.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvHistoriaClinica)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAtencionMedicas)).EndInit();
             this.grpPaciente.ResumeLayout(false);
             this.grpPaciente.PerformLayout();
             this.pnlHeader.ResumeLayout(false);
@@ -425,10 +431,7 @@
         private System.Windows.Forms.Label lblPacienteDni;
         private System.Windows.Forms.Label lblTitDni;
         private System.Windows.Forms.Label lblPacienteNombre;
-        private System.Windows.Forms.DataGridView dgvHistoriaClinica;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colFecha;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colAntecedente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colObservacion;
+        private System.Windows.Forms.DataGridView dgvAtencionMedicas;
         private System.Windows.Forms.Button button1;
         private DarkGroupBox grpCondicionesBase;
         private System.Windows.Forms.Label lblAntecedentes;
@@ -438,5 +441,9 @@
         private System.Windows.Forms.Button btnGuardarCondiciones;
         private System.Windows.Forms.TextBox txtObservacion;
         private System.Windows.Forms.TextBox txtAntecedente;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fechaInicio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn diagnostico;
+        private System.Windows.Forms.DataGridViewTextBoxColumn indicaciones;
+        private System.Windows.Forms.DataGridViewTextBoxColumn destino;
     }
 }

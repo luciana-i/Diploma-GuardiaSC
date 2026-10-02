@@ -10,6 +10,8 @@ namespace BE
     {
         Medico = 1,
         Enfermero = 2,
-        Administrativo = 3
+        Administrativo = 3,
+        Recepcionista = 4,
+        Gerente = 5
     }
 }

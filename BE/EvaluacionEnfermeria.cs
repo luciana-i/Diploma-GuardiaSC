@@ -18,8 +18,6 @@ namespace BE
         public bool EsConsultaAdministrativa { get; set; }
         public string JustificacionCambio { get; set; }
         public DateTime FechaEvaluacion { get; set; }
-        public long? DVH { get; set; }
-
         public NivelPrioridad PrioridadSugerida { get; set; }
         public NivelPrioridad PrioridadFinal { get; set; }
 

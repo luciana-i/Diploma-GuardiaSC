@@ -1,5 +1,6 @@
 ﻿using BE;
 using BLL;
+using BLL.Servicios;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -209,7 +210,7 @@ namespace SistemaTurnos
                     FechaIngreso = DateTime.Now,
                     MotivoIngreso = motivo,
                     EstadoConsulta = BE.EstadoConsulta.EnEsperaEnfermeria,
-                    UsuarioIngreso = new Usuario { Id = 1 }
+                    UsuarioIngreso = SessionManager.getInstance().ObtenerUsuario()
                 };
                 try
                 {

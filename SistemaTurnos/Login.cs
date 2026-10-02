@@ -208,46 +208,5 @@ namespace SistemaTurnosUI
         }
         #endregion
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            AdmisionGuardiaForm admisionGuardiaForm = new AdmisionGuardiaForm();
-            admisionGuardiaForm.ShowDialog();
-            this.Close();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            EvaluacionYClasificacionForm admisionGuardiaForm = new EvaluacionYClasificacionForm();
-            admisionGuardiaForm.ShowDialog();
-            this.Close();
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            BandejaEnfermeriaForm admisionGuardiaForm = new BandejaEnfermeriaForm();
-            admisionGuardiaForm.ShowDialog();
-            this.Close();
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            HistoriaClinicaForm admisionGuardiaForm = new HistoriaClinicaForm();
-            admisionGuardiaForm.ShowDialog();
-            this.Close();
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            AtencionMedicaForm admisionGuardiaForm = new AtencionMedicaForm();
-            admisionGuardiaForm.ShowDialog();
-            this.Close();
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            BandejaMedicaForm admisionGuardiaForm = new BandejaMedicaForm();
-            admisionGuardiaForm.ShowDialog();
-            this.Close();
-        }
     }
 }
