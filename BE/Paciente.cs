@@ -9,7 +9,6 @@ namespace BE
     public class Paciente : Persona
     {
         public int Id { get; set; }
-        public List<HistoriaClinica> HistoriasClinicas { get; set; } = new List<HistoriaClinica>();
 
     }
 }
