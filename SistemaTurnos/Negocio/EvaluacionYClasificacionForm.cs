@@ -16,23 +16,7 @@ namespace SistemaTurnos.Negocio
         private ConsultaBL consultaBL = new ConsultaBL();
         private EvaluacionEnfermeriaBL evaluacionEnfermeriaBL = new EvaluacionEnfermeriaBL();
 
-        public EvaluacionYClasificacionForm()
-        {
-            InitializeComponent();
-
-            // 1. Redondeo de botones
-            Redondear(btnCalcularPrioridad, 8);
-            Redondear(btnConfirmarTriage, 8);
-            Redondear(btnCancelar, 8);
-
-            // 2. Suscribir GroupBoxes al pintado oscuro
-            grpPacienteEspera.Paint += GroupBox_DarkPaint;
-            grpEvaluacionClinica.Paint += GroupBox_DarkPaint;
-            grpDeterminacionPrioridad.Paint += GroupBox_DarkPaint;
-            InicializarConsultaMockPrueba();
-        }
-
-        public EvaluacionYClasificacionForm(Consulta consulta)
+         public EvaluacionYClasificacionForm(Consulta consulta)
         {
             InitializeComponent();
 
@@ -47,26 +31,6 @@ namespace SistemaTurnos.Negocio
             grpDeterminacionPrioridad.Paint += GroupBox_DarkPaint;
 
             _consultaActual = consulta;
-            CargarDatosCabecera();
-        }
-
-        private void InicializarConsultaMockPrueba()
-        {
-            _consultaActual = new BE.Consulta
-            {
-                Id = 2,
-                FechaIngreso = new DateTime(2026, 9, 20, 12, 9, 26),
-                MotivoIngreso = "tos",
-                EstadoConsulta = BE.EstadoConsulta.EnEnfermeria, // Estado 2
-                Paciente = new BE.Paciente
-                {
-                    Id = 1,
-                    Nombre = "Martín Eduardo",
-                    Apellido = "Gómez",
-                    Dni = "38452119"
-                }
-            };
-
             CargarDatosCabecera();
         }
 
@@ -369,7 +333,6 @@ namespace SistemaTurnos.Negocio
                 return;
             }
 
-            // 5. Confirmación del operador
             var confirmacion = MessageBox.Show(
                 $"¿Confirma asignar la prioridad {prioridadFinal.ToString().ToUpper()} al paciente?\n\nEl episodio quedará en espera de atención médica.",
                 "Confirmación de Clasificación de Triage",
@@ -380,7 +343,6 @@ namespace SistemaTurnos.Negocio
 
             try
             {
-                // 6. Preparar la entidad EvaluacionEnfermeria
                 bool esAdministrativa = chkConsultaAdministrativa != null && chkConsultaAdministrativa.Checked;
                 int? fc = int.TryParse(txtFc.Text.Trim(), out int valFc) ? valFc : (int?)null;
                 decimal? temp = decimal.TryParse(txtTemperatura.Text.Trim().Replace('.', ','), out decimal valTemp) ? valTemp : (decimal?)null;
@@ -398,20 +360,16 @@ namespace SistemaTurnos.Negocio
                      esAdministrativa,
                      _prioridadSugerida,
                      prioridadFinal,
-                     justificacion,
-                     SessionManager.getInstance().ObtenerUsuario() 
+                     justificacion 
                  );
 
-                // 7. Guardar la evaluación en la base de datos
                 evaluacionEnfermeriaBL.Insertar(evaluacion);
 
-                // 8. Avanzar la consulta al siguiente estado 
                 consultaBL.AvanzarSiguienteEstado(_consultaActual);
 
                 MessageBox.Show("Evaluación de Enfermeria registrada exitosamente. El paciente está disponible para llamada médica.",
                     "Atencion de Enfermeria Completada", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                // 9. Salir devolviendo OK para que el formulario padre refresque la grilla
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }

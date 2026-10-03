@@ -18,7 +18,6 @@ namespace DAL
             string sql = @"
                 INSERT INTO dbo.AtencionMedica (
                     AtencionMedica_ConsultaId,
-                    AtencionMedica_UsuarioId,
                     AtencionMedica_EmpleadoId,
                     AtencionMedica_FechaInicio,
                     AtencionMedica_FechaFin,
@@ -28,7 +27,6 @@ namespace DAL
                 )
                 VALUES (
                     @ConsultaId,
-                    @UsuarioId,
                     @EmpleadoId,
                     @FechaInicio,
                     @FechaFin,
@@ -41,7 +39,6 @@ namespace DAL
             var parametros = new SqlParameter[]
             {
                new SqlParameter("@ConsultaId", atencion.Consulta.Id),
-               new SqlParameter("@UsuarioId", atencion.Medico.Id),
                new SqlParameter("@EmpleadoId", atencion.Consulta.Id),
                new SqlParameter("@FechaInicio", atencion.FechaInicio),
                new SqlParameter("@FechaFin", (object)atencion.FechaFin ?? DBNull.Value),
@@ -91,7 +88,6 @@ namespace DAL
                 SELECT 
                     AtencionMedica_Id,
                     Consulta_Id,
-                    AtencionMedica_UsuarioId,
                     AtencionMedica_EmpleadoId
                     AtencionMedica_FechaInicio,
                     AtencionMedica_FechaFin,
@@ -122,7 +118,6 @@ namespace DAL
                 SELECT 
                     AtencionMedica_Id,
                     Consulta_Id,
-                    AtencionMedica_UsuarioId,
                     AtencionMedica_EmpleadoId
                     AtencionMedica_FechaInicio,
                     AtencionMedica_FechaFin,
@@ -157,7 +152,6 @@ namespace DAL
                   : (DestinoConsulta?)null,
 
                 Consulta = row["Consulta_Id"] != DBNull.Value ? new Consulta { Id = Convert.ToInt32(row["Consulta_Id"]) } : null,
-                Usuario = row["AtencionMedica_UsuarioId"] != DBNull.Value ? new Usuario { Id = Convert.ToInt32(row["AtencionMedica_UsuarioId"]) } : null,
                 Medico = row["AtencionMedica_EmpleadoId"] != DBNull.Value ? new Empleado { Id = Convert.ToInt32(row["AtencionMedica_EmpleadoId"]) } : null
             };
         }
@@ -169,7 +163,6 @@ namespace DAL
             SELECT 
                 am.AtencionMedica_Id,
                 am.AtencionMedica_ConsultaId AS Consulta_Id,
-                am.AtencionMedica_UsuarioId,
                 am.AtencionMedica_FechaInicio,
                 am.AtencionMedica_FechaFin,
                 am.AtencionMedica_Diagnostico,

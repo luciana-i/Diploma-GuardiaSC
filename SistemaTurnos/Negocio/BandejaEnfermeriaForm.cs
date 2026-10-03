@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace SistemaTurnos.Negocio
 {
-    public partial class BandejaEnfermeriaForm : BaseEsperaGuardiaForm
+    public partial class BandejaEnfermeriaForm : Form
     {
         private List<Consulta> _consultasActivas = new List<Consulta>();
         private List<Consulta> _consultasVisibles = new List<Consulta>();

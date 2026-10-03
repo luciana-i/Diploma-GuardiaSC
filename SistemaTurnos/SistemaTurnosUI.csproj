@@ -59,9 +59,6 @@
     <Compile Include="Negocio\BandejaEnfermeriaForm.Designer.cs">
       <DependentUpon>BandejaEnfermeriaForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Negocio\BaseEsperaGuardiaForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Negocio\CancelarGuardiaForm.cs">
       <SubType>Form</SubType>
     </Compile>

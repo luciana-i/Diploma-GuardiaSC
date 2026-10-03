@@ -1,4 +1,5 @@
 ﻿using BE;
+using BLL.Servicios;
 using DAL;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,10 @@ namespace BLL
     public class EvaluacionEnfermeriaBL
     {
 
-      
+
         public void Insertar(EvaluacionEnfermeria evaluacion)
         {
+            evaluacion.Enfermero = new EmpleadoBL().ObtenerEmpleado(SessionManager.getInstance().ObtenerUsuario());
             EvaluacionEnfermeriaDAL.Insertar(evaluacion);
         }
 

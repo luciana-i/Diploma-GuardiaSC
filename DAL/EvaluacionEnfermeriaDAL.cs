@@ -22,7 +22,7 @@ namespace DAL
                     NivelPrioridad_IdSugerido,
                     NivelPrioridad_IdFinal,
                     EvaluacionEnfermeria_JustificacionCambio,
-                    Usuario_Id,
+                    Empleado_Id,
                     EvaluacionEnfermeria_FechaEvaluacion
                 )
                 VALUES (
@@ -36,7 +36,7 @@ namespace DAL
                     @NivelPrioridadIdSugerido,
                     @NivelPrioridadIdFinal,
                     @JustificacionCambio,
-                    @UsuarioId,
+                    @EmpleadoId,
                     @FechaEvaluacion
                 );
                 SELECT CAST(SCOPE_IDENTITY() AS INT);";
@@ -53,7 +53,7 @@ namespace DAL
                 new SqlParameter("@NivelPrioridadIdSugerido", (int)evaluacion.PrioridadSugerida),
                 new SqlParameter("@NivelPrioridadIdFinal", (int)evaluacion.PrioridadFinal),
                 new SqlParameter("@JustificacionCambio", !string.IsNullOrWhiteSpace(evaluacion.JustificacionCambio) ? (object)evaluacion.JustificacionCambio : DBNull.Value),
-                new SqlParameter("@UsuarioId", evaluacion.Enfermero != null ? (object)evaluacion.Enfermero.Id : DBNull.Value),
+                new SqlParameter("@EmpleadoId", evaluacion.Enfermero != null ? (object)evaluacion.Enfermero.Id : DBNull.Value),
                 new SqlParameter("@FechaEvaluacion", evaluacion.FechaEvaluacion),
             };
 
@@ -78,7 +78,7 @@ namespace DAL
                     NivelPrioridad_IdSugerido,
                     NivelPrioridad_IdFinal,
                     EvaluacionEnfermeria_JustificacionCambio,
-                    Usuario_Id,
+                    Empleado_Id,
                     EvaluacionEnfermeria_FechaEvaluacion
                 FROM dbo.EvaluacionEnfermeria
                 WHERE EvaluacionEnfermeria_ConsultaId = @ConsultaId;";
@@ -110,7 +110,7 @@ namespace DAL
                     NivelPrioridad_IdSugerido,
                     NivelPrioridad_IdFinal,
                     EvaluacionEnfermeria_JustificacionCambio,
-                    Usuario_Id,
+                    Empleado_Id,
                     EvaluacionEnfermeria_FechaEvaluacion
                 FROM dbo.EvaluacionEnfermeria
                 WHERE EvaluacionEnfermeria_Id = @EvaluacionId;";
@@ -156,8 +156,8 @@ namespace DAL
                 JustificacionCambio = row["EvaluacionEnfermeria_JustificacionCambio"] != DBNull.Value
                     ? row["EvaluacionEnfermeria_JustificacionCambio"].ToString()
                     : null,
-                Enfermero = row["Usuario_Id"] != DBNull.Value
-                    ? new Usuario { Id = Convert.ToInt32(row["Usuario_Id"]) }
+                Enfermero = row["Empleado_Id"] != DBNull.Value
+                    ? new Empleado { Id = Convert.ToInt32(row["Empleado_Id"]) }
                     : null,
                 FechaEvaluacion = Convert.ToDateTime(row["EvaluacionEnfermeria_FechaEvaluacion"]),
             };

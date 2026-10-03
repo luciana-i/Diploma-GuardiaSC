@@ -21,7 +21,7 @@ namespace BE
         public NivelPrioridad PrioridadSugerida { get; set; }
         public NivelPrioridad PrioridadFinal { get; set; }
 
-        public Usuario Enfermero { get; set; }
+        public Empleado Enfermero { get; set; }
 
         public EvaluacionEnfermeria()
         {
@@ -38,8 +38,7 @@ namespace BE
             bool esConsultaAdministrativa,
             NivelPrioridad prioridadSugerida,
             NivelPrioridad prioridadFinal,
-            string justificacionCambio,
-            Usuario enfermero)
+            string justificacionCambio)
         {
             Consulta = consulta;
             FrecuenciaCardiaca = frecuenciaCardiaca;
@@ -51,7 +50,6 @@ namespace BE
             PrioridadSugerida = prioridadSugerida;
             PrioridadFinal = prioridadFinal;
             JustificacionCambio = string.IsNullOrWhiteSpace(justificacionCambio) ? null : justificacionCambio;
-            Enfermero = enfermero;
             FechaEvaluacion = DateTime.Now;
         }
 

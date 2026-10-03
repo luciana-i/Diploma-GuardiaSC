@@ -9,7 +9,7 @@ using BLL;
 
 namespace SistemaTurnos.Negocio
 {
-    public partial class BandejaMedicaForm : BaseEsperaGuardiaForm
+    public partial class BandejaMedicaForm : Form
     {
         private List<Consulta> _consultasActivas = new List<Consulta>();
         private List<Consulta> _consultasVisibles = new List<Consulta>();

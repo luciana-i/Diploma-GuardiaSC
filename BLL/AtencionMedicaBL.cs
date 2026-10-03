@@ -19,7 +19,7 @@ namespace BLL
         {
             EmpleadoBL empleadoBL=new EmpleadoBL();
             Empleado empleado = empleadoBL.ObtenerEmpleado(usuario);
-            AtencionMedica atencionMedica = new AtencionMedica(consulta, empleado, usuario);   
+            AtencionMedica atencionMedica = new AtencionMedica(consulta, empleado);   
             AtencionMedicaDAL.Insertar(atencionMedica);
             return atencionMedica;  
         }

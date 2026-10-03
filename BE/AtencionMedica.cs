@@ -14,7 +14,6 @@ namespace BE
         public DateTime? FechaFin { get; set; }
         public string Diagnostico { get; set; }
         public string Indicaciones { get; set; }
-        public Usuario Usuario { get; set; }
         public Empleado Medico { get; set; }
 
         public DestinoConsulta? Destino { get; set; }
@@ -23,7 +22,7 @@ namespace BE
         {
         }
 
-        public AtencionMedica(Consulta consulta, Empleado medico, Usuario usuario)
+        public AtencionMedica(Consulta consulta, Empleado medico)
         {
             Consulta = consulta;
             Medico = medico;    
