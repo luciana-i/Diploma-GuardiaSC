@@ -56,9 +56,7 @@ namespace SistemaTurnos.Negocio
             try
             {
                 _consultasActivas = consultaBL.ObtenerConsultasParaMedcicosConPrioridad();
-                _consultasVisibles = _consultasActivas; 
-
-                MostrarEnGrilla(_consultasVisibles);
+                AplicarFiltroEnMemoria();
             }
             catch (Exception ex)
             {
@@ -70,16 +68,11 @@ namespace SistemaTurnos.Negocio
         {
             int? estadoSeleccionado = cmbFiltroEstado.SelectedValue as int?;
 
-            // 1. Filtramos las activas según el combo
-            var filtradas = consultaBL.ObtenerConsultasConPrioridad()
-                .Where(x => !estadoSeleccionado.HasValue || (int)x.EstadoConsulta == estadoSeleccionado.Value)
-                .ToList();
-
-            //    Primero por el nivel de prioridad (si es null, toma 99 para mandarlo al final) y luego por fecha.
-            _consultasVisibles = filtradas
-                .OrderBy(c => c.EvaluacionEnfermeria?.PrioridadFinal != null ? (int)c.EvaluacionEnfermeria.PrioridadFinal : 99)
-                .ThenBy(c => c.FechaIngreso)
-                .ToList();
+            _consultasVisibles = _consultasActivas
+                 .Where(x => !estadoSeleccionado.HasValue || (int)x.EstadoConsulta == estadoSeleccionado.Value)
+                 .OrderBy(c => c.EvaluacionEnfermeria != null ? (int)c.EvaluacionEnfermeria.PrioridadFinal : 99)
+                 .ThenBy(c => c.FechaIngreso)
+                 .ToList();
 
             MostrarEnGrilla(_consultasVisibles);
         }
@@ -144,9 +137,14 @@ namespace SistemaTurnos.Negocio
 
             int btnHeight = 28;
             int btnY = e.CellBounds.Y + (e.CellBounds.Height - btnHeight) / 2;
-            Rectangle rectAtender = new Rectangle(e.CellBounds.X + 10, btnY, e.CellBounds.Width - 20, btnHeight);
+            int gap = 8;
+            int btnWidth = (e.CellBounds.Width - 20 - gap) / 2;
 
-            DibujarBotonGrilla(e.Graphics, rectAtender, "#1D4ED8", "#60A5FA", "🩺 Llamar y Atender");
+            Rectangle rectAtender = new Rectangle(e.CellBounds.X + 10, btnY, btnWidth, btnHeight);
+            Rectangle rectAusencia = new Rectangle(rectAtender.Right + gap, btnY, btnWidth, btnHeight);
+
+            DibujarBotonGrilla(e.Graphics, rectAtender, "#1D4ED8", "#60A5FA", "🩺 Atender");
+            DibujarBotonGrilla(e.Graphics, rectAusencia, "#7F1D1D", "#DC2626", "✕ Ausencia");
 
             e.Handled = true;
         }
@@ -175,29 +173,80 @@ namespace SistemaTurnos.Negocio
             string paciente = $"{consultaSeleccionada.Paciente.Apellido}, {consultaSeleccionada.Paciente.Nombre}";
             string dni = consultaSeleccionada.Paciente.Dni;
 
+            Point cursorEnGrilla = dgvEpisodios.PointToClient(Cursor.Position);
+            Rectangle cellRect = dgvEpisodios.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, false);
+
+            if (cursorEnGrilla.X < (cellRect.X + (cellRect.Width / 2)))
+            {
+                AtenderPaciente(consultaSeleccionada, paciente, dni);
+            }
+            else
+            {
+                RegistrarRetiroPaciente(consultaSeleccionada, paciente, dni);
+            }
+        }
+
+        private void AtenderPaciente(Consulta consulta, string paciente, string dni)
+        {
+            if (consulta.EstadoConsulta != EstadoConsulta.EnEsperaAtencionMedica)
+            {
+                MessageBox.Show("Este paciente ya fue llamado a consultorio.",
+                    "Operación no permitida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var respuesta = MessageBox.Show(
                 $"¿Confirma llamar al paciente a consultorio:\n\n{paciente} (DNI: {dni})?",
                 "Llamado a Consultorio",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
 
-            if (respuesta == DialogResult.Yes)
+            if (respuesta != DialogResult.Yes) return;
+
+            try
             {
-                try
-                {
-                    consultaBL.AvanzarSiguienteEstado(consultaSeleccionada);
+                consultaBL.AvanzarSiguienteEstado(consulta);
 
-                    using (var form = new AtencionMedicaForm(consultaSeleccionada))
-                    {
-                        form.ShowDialog(this);
-                    }
-
-                    CargarConsultas();
-                }
-                catch (Exception ex)
+                using (var form = new AtencionMedicaForm(consulta))
                 {
-                    MessageBox.Show($"Error al iniciar la atención: {ex.Message}", "Error de Concurrencia", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    form.ShowDialog(this);
                 }
+
+                CargarConsultas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al iniciar la atención: {ex.Message}", "Error de Concurrencia", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void RegistrarRetiroPaciente(Consulta consulta, string paciente, string dni)
+        {
+            if (consulta.EstadoConsulta != EstadoConsulta.EnEsperaAtencionMedica)
+            {
+                MessageBox.Show("Solo se puede registrar el retiro de pacientes que están en espera de atención médica.",
+                    "Operación no permitida", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var respuesta = MessageBox.Show(
+                $"¿Confirma el retiro / ausencia del paciente:\n\n{paciente} (DNI: {dni})?\n\nLa consulta se registrará como Cancelada.",
+                "Confirmar Retiro",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (respuesta != DialogResult.Yes) return;
+
+            try
+            {
+                consultaBL.CancelarConsulta(consulta);
+
+                MessageBox.Show("Se registró el retiro del paciente correctamente.", "Consulta Cancelada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarConsultas();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al registrar el retiro: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

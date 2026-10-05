@@ -59,12 +59,6 @@
     <Compile Include="Negocio\BandejaEnfermeriaForm.Designer.cs">
       <DependentUpon>BandejaEnfermeriaForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Negocio\CancelarGuardiaForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Negocio\CancelarGuardiaForm.Designer.cs">
-      <DependentUpon>CancelarGuardiaForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Negocio\EmpleadosForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,9 +177,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Negocio\BandejaEnfermeriaForm.resx">
       <DependentUpon>BandejaEnfermeriaForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Negocio\CancelarGuardiaForm.resx">
-      <DependentUpon>CancelarGuardiaForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Negocio\EmpleadosForm.resx">
       <DependentUpon>EmpleadosForm.cs</DependentUpon>

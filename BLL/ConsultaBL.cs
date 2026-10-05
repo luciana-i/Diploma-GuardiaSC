@@ -95,5 +95,10 @@ namespace BLL
             return listaConsultas;
 
         }
+
+        public void CancelarConsulta(Consulta consulta)
+        {
+            ConsultaDAL.CambiarEstado(consulta.Id, EstadoConsulta.Cancelado);
+        }
     }
 }

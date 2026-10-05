@@ -33,6 +33,7 @@ namespace BLL.Servicios
             "ADMIN_BASICO",
             "RECEPCIONISTA",
             "EMPLEADOS",
+            "EMPLEADOS_ADD",
             "RES_ADMISION",
             "ENFERMERIA",
             "ENFERMERIA_LISTA",

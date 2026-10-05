@@ -112,10 +112,10 @@ namespace SistemaTurnos.Negocio
             int btnWidth = (e.CellBounds.Width - 20 - gap) / 2;
 
             Rectangle rectAtender = new Rectangle(e.CellBounds.X + 10, btnY, btnWidth, btnHeight);
-            Rectangle rectAbandono = new Rectangle(rectAtender.Right + gap, btnY, btnWidth, btnHeight);
+            Rectangle rectAusencia = new Rectangle(rectAtender.Right + gap, btnY, btnWidth, btnHeight);
 
             DibujarBotonGrilla(e.Graphics, rectAtender, "#134E4A", "#2DD4BF", "▶ Atender");
-            DibujarBotonGrilla(e.Graphics, rectAbandono, "#7F1D1D", "#DC2626", "✕ Abandono");
+            DibujarBotonGrilla(e.Graphics, rectAusencia, "#7F1D1D", "#DC2626", "✕ Ausencia");
 
             e.Handled = true;
         }
@@ -175,12 +175,25 @@ namespace SistemaTurnos.Negocio
             }
             else
             {
-                // ABANDONO: Abre el nuevo formulario independiente como diálogo modal
-                using (var formAbandono = new CancelarGuardiaForm(consultaSeleccionada.Id, dni, paciente))
+                // Registrar Retiro / Ausencia del Paciente
+                var respuesta = MessageBox.Show(
+                    $"¿Confirma el retiro / ausencia del paciente:\n\n{paciente} (DNI: {dni})?\n\nLa consulta se registrará como Cancelada.",
+                    "Confirmar Retiro",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (respuesta == DialogResult.Yes)
                 {
-                    if (formAbandono.ShowDialog(this) == DialogResult.OK)
+                    try
                     {
-                        CargarConsultas(); // Refresca la grilla al confirmar la baja
+                        consultaBL.CancelarConsulta(consultaSeleccionada);
+
+                        MessageBox.Show("Se registró el retiro del paciente correctamente.", "Consulta Cancelada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CargarConsultas(); 
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al registrar el retiro: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }

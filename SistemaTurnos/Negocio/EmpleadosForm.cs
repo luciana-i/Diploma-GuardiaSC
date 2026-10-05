@@ -25,11 +25,6 @@ namespace SistemaTurnos.Negocio
 
         }
 
-        public EmpleadosForm(Empleado empleado) : this()
-        {
-            _empleadoActual = empleado;
-        }
-
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             if(!ValidarCamposObligatorios()) return;

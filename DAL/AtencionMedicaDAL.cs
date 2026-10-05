@@ -39,7 +39,7 @@ namespace DAL
             var parametros = new SqlParameter[]
             {
                new SqlParameter("@ConsultaId", atencion.Consulta.Id),
-               new SqlParameter("@EmpleadoId", atencion.Consulta.Id),
+               new SqlParameter("@EmpleadoId", atencion.Medico != null ? (object)atencion.Medico.Id : DBNull.Value),
                new SqlParameter("@FechaInicio", atencion.FechaInicio),
                new SqlParameter("@FechaFin", (object)atencion.FechaFin ?? DBNull.Value),
                new SqlParameter("@Diagnostico", atencion.Diagnostico ?? string.Empty),
@@ -88,11 +88,11 @@ namespace DAL
                 SELECT 
                     AtencionMedica_Id,
                     Consulta_Id,
-                    AtencionMedica_EmpleadoId
+                    AtencionMedica_EmpleadoId,
                     AtencionMedica_FechaInicio,
                     AtencionMedica_FechaFin,
                     AtencionMedica_Diagnostico,
-                    AtencionMedica_Indicaciones,,
+                    AtencionMedica_Indicaciones,
                     DestinoConsulta_Id
                 FROM dbo.AtencionMedica
                 WHERE Consulta_Id = @ConsultaId;";
@@ -118,7 +118,7 @@ namespace DAL
                 SELECT 
                     AtencionMedica_Id,
                     Consulta_Id,
-                    AtencionMedica_EmpleadoId
+                    AtencionMedica_EmpleadoId,
                     AtencionMedica_FechaInicio,
                     AtencionMedica_FechaFin,
                     AtencionMedica_Diagnostico,

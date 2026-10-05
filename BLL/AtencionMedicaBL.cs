@@ -28,6 +28,7 @@ namespace BLL
         {
             atencionMedica.FechaFin = DateTime.Now;
             AtencionMedicaDAL.FinalizarAtencion(atencionMedica);
+            new ConsultaBL().AvanzarSiguienteEstado(atencionMedica.Consulta); 
         }
 
         public List<AtencionMedica> ObtenerAtencionesMedicasPorPaciente(int pacienteId)
