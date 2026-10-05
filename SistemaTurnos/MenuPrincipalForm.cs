@@ -316,14 +316,14 @@ namespace SistemaTurnos
         private void listaEsperaToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             BandejaMedicaForm admisionGuardiaForm = new BandejaMedicaForm();
-            admisionGuardiaForm.ShowDialog();
-            this.Close();
+            admisionGuardiaForm.MdiParent = this;
+            admisionGuardiaForm.Show();
         }
         private void agregarEmpleadosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EmpleadosForm eForm = new EmpleadosForm();
-            eForm.ShowDialog();
-            this.Close();
+            eForm.MdiParent = this;
+            eForm.Show();
         }
     }
 }

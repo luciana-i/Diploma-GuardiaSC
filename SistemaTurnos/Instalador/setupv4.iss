@@ -1,4 +1,4 @@
-#define MyAppName "Sistema de Guardia Clínica"
+#define MyAppName "GuardiaSC"
 #define MyAppVersion "1.0.0"
 #define MyAppExeName "SistemaTurnos.exe"
 
@@ -12,14 +12,16 @@ OutputBaseFilename=Instalador_Proyecto_Facultad
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
+SetupIconFile=Assets\icono.ico
 
 [Files]
 Source: "..\bin\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\..\DAL\script_base.sql"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Assets\icono.ico"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\icono.ico"
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "Ejecutar la aplicación ahora"; Flags: nowait postinstall skipifsilent

@@ -275,5 +275,10 @@ namespace SistemaTurnos
         {
             this.Close();
         }
+
+        private void lblTelefono_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

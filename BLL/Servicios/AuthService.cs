@@ -97,11 +97,13 @@ namespace BLL.Servicios
                     usuario.Bloqueado = true;
                     _bitacoraBL.IngresarBitacora(usuario.Id, usuario.Username, "Bloqueado", "Alcanzo 3 intentos", string.Empty, SeveridadLog.Warn);
                     _usuarioBL.ActualizarUsuario(usuario);
+                    _dVVBL.CalcularDVV("usuario");
                     return LoginResult.UsuarioBloqueado;
                 }
 
                 _bitacoraBL.IngresarBitacora(usuario.Id, usuario.Username, "Credenciales Erroneas", "Se actualiza intento fallido", string.Empty,SeveridadLog.Warn);
                 _usuarioBL.ActualizarUsuario(usuario);
+                _dVVBL.CalcularDVV("usuario");
                 return LoginResult.CredencialesInvalidas;
             }
         }
