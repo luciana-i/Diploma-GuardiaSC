@@ -45,6 +45,7 @@
     <Compile Include="Bitacora.cs" />
     <Compile Include="Consulta.cs" />
     <Compile Include="DestinoConsulta.cs" />
+    <Compile Include="DocumentoClinico.cs" />
     <Compile Include="DVV.cs" />
     <Compile Include="Empleado.cs" />
     <Compile Include="EstadoConsulta.cs" />
@@ -58,6 +59,7 @@
     <Compile Include="Familia.cs" />
     <Compile Include="Patente.cs" />
     <Compile Include="Persona.cs" />
+    <Compile Include="TipoDocumentoClinico.cs" />
     <Compile Include="TipoEmpleado.cs" />
     <Compile Include="Traduccion.cs" />
     <Compile Include="Usuario.cs" />

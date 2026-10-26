@@ -100,5 +100,10 @@ namespace BLL
         {
             ConsultaDAL.CambiarEstado(consulta.Id, EstadoConsulta.Cancelado);
         }
+
+        public List<Consulta> ObtenerPacientesAtendidos(DateTime fecha, int? paciente)
+        {
+            return ConsultaDAL.ObtenerPacientesAtendidos(fecha, paciente);
+        }
     }
 }

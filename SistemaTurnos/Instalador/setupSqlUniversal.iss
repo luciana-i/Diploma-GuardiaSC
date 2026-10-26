@@ -1,0 +1,209 @@
+﻿#define MyAppName "GuardiaSC"
+#define MyAppVersion "1.0.0"
+#define MyAppExeName "SistemaTurnos.exe"
+
+[Setup]
+AppName={#MyAppName}
+AppVersion={#MyAppVersion}
+DefaultDirName={autopf}\{#MyAppName}
+DefaultGroupName={#MyAppName}
+OutputDir=..\InstaladorFinal
+OutputBaseFilename=Instalador_Proyecto_Facultad
+Compression=lzma
+SolidCompression=yes
+WizardStyle=modern
+SetupIconFile=Assets\icono.ico
+UninstallDisplayName={#MyAppName}
+UninstallDisplayIcon={app}\{#MyAppExeName}
+PrivilegesRequired=admin
+
+[Files]
+Source: "..\bin\Release\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\bin\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\..\DAL\script_base.sql"; DestDir: "{app}"; Flags: ignoreversion
+Source: "Assets\icono.ico"; DestDir: "{app}"; Flags: ignoreversion
+
+; Instalador local de SQL Server Express (en subcarpeta Redist junto al .iss)
+Source: "Redist\SQLEXPR_x64_ENU.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall ignoreversion
+
+[Icons]
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\icono.ico"
+
+[Run]
+Filename: "{app}\{#MyAppExeName}"; Description: "Ejecutar la aplicación ahora"; Flags: nowait postinstall skipifsilent
+
+[Code]
+var
+  NombreServidor, LogPath: String;
+  InstalarSQL: Boolean;
+
+procedure EscribirLog(Mensaje: String);
+begin
+  if LogPath = '' then
+    LogPath := ExpandConstant('{src}\Seguimiento_SQL.txt');
+  SaveStringToFile(LogPath, Mensaje + #13#10, True);
+end;
+
+// 1. COMPROBACIÓN DE CONEXIÓN CON REFRESCO DINÁMICO DE PATH
+function ProbarConexionSQL(Servidor: String): Boolean;
+var
+  ResultCode: Integer;
+  PSContent: String;
+begin
+  EscribirLog('-> Probando conexion con: ' + Servidor);
+  
+  // Refresca el PATH en memoria para detectar sqlcmd recién instalado
+  PSContent := '$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User");' + #13#10 +
+               'sqlcmd -S "' + Servidor + '" -E -Q "SELECT 1" -b -l 3';
+  SaveStringToFile(ExpandConstant('{tmp}\test_sql.ps1'), PSContent, False);
+  
+  Result := Exec('powershell.exe', '-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "' + ExpandConstant('{tmp}\test_sql.ps1') + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode) and (ResultCode = 0);
+  
+  if Result then
+    EscribirLog('   Conexion exitosa con ' + Servidor)
+  else
+    EscribirLog('   No respondio la conexion a ' + Servidor);
+end;
+
+function SoportaTrustServerCertificate(): Boolean;
+var
+  ResultCode: Integer;
+begin
+  Exec('powershell.exe', '-NoProfile -ExecutionPolicy Bypass -Command "try { $conn = New-Object System.Data.SqlClient.SqlConnection; $conn.ConnectionString = ''Data Source=.;Integrated Security=True;TrustServerCertificate=True''; exit 0 } catch { exit 1 }"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+  Result := (ResultCode = 0);
+end;
+
+// 2. DETECCIÓN PREVIA AL ASISTENTE (100% SILENCIOSA)
+function InitializeSetup(): Boolean;
+var
+  ResultCode, i, RootKey: Integer;
+  NombresInstancias: TArrayOfString;
+begin
+  Result := True;
+  NombreServidor := '';
+  InstalarSQL := False;
+  LogPath := '';
+
+  EscribirLog('=== INICIANDO DETECCION DE SQL SERVER ===');
+
+  if IsWin64 then RootKey := HKLM64 else RootKey := HKLM;
+
+  if RegGetValueNames(RootKey, 'SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL', NombresInstancias) then
+  begin
+    // Paso A: Buscar SQLEXPRESS existente
+    for i := 0 to GetArrayLength(NombresInstancias) - 1 do
+    begin
+      if CompareText(NombresInstancias[i], 'SQLEXPRESS') = 0 then
+      begin
+        Exec('net', 'start MSSQL$SQLEXPRESS', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+        if ProbarConexionSQL('.\SQLEXPRESS') then
+        begin
+          NombreServidor := '.\SQLEXPRESS';
+          EscribirLog('SQLEXPRESS existente detectado.');
+          Break;
+        end;
+      end;
+    end;
+
+    // Paso B: Buscar MSSQLSERVER (.) existente
+    if NombreServidor = '' then
+    begin
+      for i := 0 to GetArrayLength(NombresInstancias) - 1 do
+      begin
+        if CompareText(NombresInstancias[i], 'MSSQLSERVER') = 0 then
+        begin
+          Exec('net', 'start MSSQLSERVER', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+          if ProbarConexionSQL('.') then
+          begin
+            NombreServidor := '.';
+            EscribirLog('MSSQLSERVER (.) existente detectado.');
+            Break;
+          end;
+        end;
+      end;
+    end;
+  end;
+
+  // Si no se encontró instancia previa, se marca la bandera sin mostrar ningún mensaje al usuario
+  if NombreServidor = '' then
+  begin
+    EscribirLog('No se detecto SQL Server. Se programara instalacion automatica silenciosa.');
+    InstalarSQL := True;
+  end;
+end;
+
+// 3. EJECUCIÓN POST-INSTALACIÓN (SQL, CONFIG Y BASE DE DATOS)
+procedure CurStepChanged(CurStep: TSetupStep);
+var
+  AppDir, SqlScriptPath, ConfigJsonPath, JsonContent, ServidorJson, SqlInstallParams, SqlCmdParams: String;
+  ResultCode, IntentosConexion: Integer;
+begin
+  if CurStep = ssPostInstall then
+  begin
+    AppDir := ExpandConstant('{app}');
+    SqlScriptPath := AppDir + '\script_base.sql';
+    ConfigJsonPath := AppDir + '\appsettings.json';
+
+    // FASE A: INSTALACIÓN DE SQL SERVER EXPRESS (SI NO EXISTÍA)
+    if InstalarSQL then
+    begin
+      WizardForm.StatusLabel.Caption := 'Instalando Microsoft SQL Server Express (puede demorar unos minutos)...';
+      WizardForm.ProgressGauge.Style := npbstMarquee;
+
+      EscribirLog('=== INSTALANDO SQL SERVER EXPRESS OFFLINE ===');
+      
+      SqlInstallParams := '/Q /ACTION=Install /FEATURES=SQLEngine /INSTANCENAME=SQLEXPRESS /IACCEPTSQLSERVERLICENSETERMS=1 /TCPENABLED=1 /ADDCURRENTUSERASSQLADMIN=1';
+      Exec(ExpandConstant('{tmp}\SQLEXPR_x64_ENU.exe'), SqlInstallParams, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+      EscribirLog('Setup finalizado con codigo: ' + IntToStr(ResultCode));
+
+      WizardForm.StatusLabel.Caption := 'Iniciando servicio de SQL Server...';
+      Exec(ExpandConstant('{cmd}'), '/c net start MSSQL$SQLEXPRESS', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+      
+      NombreServidor := '.\SQLEXPRESS';
+
+      WizardForm.StatusLabel.Caption := 'Esperando a que SQL Server esté listo...';
+      IntentosConexion := 0;
+      while (not ProbarConexionSQL(NombreServidor)) and (IntentosConexion < 30) do
+      begin
+        Sleep(2000);
+        IntentosConexion := IntentosConexion + 1;
+      end;
+      
+      WizardForm.ProgressGauge.Style := npbstNormal;
+    end;
+
+    // FASE B: GENERACIÓN DE APPSETTINGS.JSON
+    WizardForm.StatusLabel.Caption := 'Configurando cadena de conexión...';
+    ServidorJson := NombreServidor;
+    StringChange(ServidorJson, '\', '\\');
+
+    if SoportaTrustServerCertificate() then
+    begin
+      EscribirLog('Generando appsettings.json con TrustServerCertificate=True');
+      JsonContent := '{ "ConnectionString": "Data Source=' + ServidorJson + ';Initial Catalog=Proyecto_Ing_softw;Integrated Security=True;TrustServerCertificate=True" }';
+    end
+    else
+    begin
+      EscribirLog('Generando appsettings.json sin TrustServerCertificate');
+      JsonContent := '{ "ConnectionString": "Data Source=' + ServidorJson + ';Initial Catalog=Proyecto_Ing_softw;Integrated Security=True" }';
+    end;
+
+    SaveStringToFile(ConfigJsonPath, JsonContent, False);
+
+    // FASE C: CREACIÓN Y POBLACIÓN DE LA BASE DE DATOS
+    if FileExists(SqlScriptPath) then
+    begin
+      WizardForm.StatusLabel.Caption := 'Creando y configurando la base de datos...';
+      EscribirLog('Ejecutando script_base.sql...');
+
+      // Limpieza de base previa si existiera y ejecución del script DDL/DML con PATH refrescado
+      SqlCmdParams := '$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User");' + #13#10 +
+                      'sqlcmd -S "' + NombreServidor + '" -E -Q "IF EXISTS (SELECT name FROM sys.databases WHERE name = N''Proyecto_Ing_softw'') BEGIN ALTER DATABASE [Proyecto_Ing_softw] SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE [Proyecto_Ing_softw]; END"' + #13#10 +
+                      'sqlcmd -S "' + NombreServidor + '" -E -f 65001 -i "' + SqlScriptPath + '" -o "' + AppDir + '\Log_SQL.txt"';
+
+      SaveStringToFile(ExpandConstant('{tmp}\run_sql.ps1'), SqlCmdParams, False);
+      Exec('powershell.exe', '-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "' + ExpandConstant('{tmp}\run_sql.ps1') + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+      EscribirLog('Base de datos inicializada.');
+    end;
+  end;
+end;

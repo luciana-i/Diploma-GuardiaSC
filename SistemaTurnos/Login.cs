@@ -17,7 +17,6 @@ namespace SistemaTurnosUI
     public partial class Login : Form
     {
         private ComboBox cmbIdiomas;
-        private Label lblSeleccioneIdioma;
         private AuthService authService = new AuthService();
         private IdiomaBL IdiomaBL = new IdiomaBL();
         private DVVBL DVVBL = new DVVBL();

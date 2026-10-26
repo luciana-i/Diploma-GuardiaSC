@@ -29,8 +29,10 @@
         private void InitializeComponent()
         {
             this.pnlMainContainer = new System.Windows.Forms.Panel();
+            this.btnGenerarIndicaciones = new System.Windows.Forms.Button();
             this.btnFinalizarAtencion = new System.Windows.Forms.Button();
             this.grpDestinoAsistencial = new SistemaTurnos.DarkGroupBox();
+            this.btnGenerarDerivacion = new System.Windows.Forms.Button();
             this.cmbDestino = new System.Windows.Forms.ComboBox();
             this.lblTitDiagnostico = new System.Windows.Forms.Label();
             this.grpEvolucionMedica = new SistemaTurnos.DarkGroupBox();
@@ -77,6 +79,7 @@
             // 
             this.pnlMainContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(242)))), ((int)(((byte)(246)))));
             this.pnlMainContainer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMainContainer.Controls.Add(this.btnGenerarIndicaciones);
             this.pnlMainContainer.Controls.Add(this.btnFinalizarAtencion);
             this.pnlMainContainer.Controls.Add(this.grpDestinoAsistencial);
             this.pnlMainContainer.Controls.Add(this.grpEvolucionMedica);
@@ -88,6 +91,18 @@
             this.pnlMainContainer.Size = new System.Drawing.Size(1101, 783);
             this.pnlMainContainer.TabIndex = 0;
             // 
+            // btnGenerarIndicaciones
+            // 
+            this.btnGenerarIndicaciones.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
+            this.btnGenerarIndicaciones.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.btnGenerarIndicaciones.Location = new System.Drawing.Point(22, 718);
+            this.btnGenerarIndicaciones.Name = "btnGenerarIndicaciones";
+            this.btnGenerarIndicaciones.Size = new System.Drawing.Size(234, 42);
+            this.btnGenerarIndicaciones.TabIndex = 6;
+            this.btnGenerarIndicaciones.Text = "Generar Receta con Indicaciones";
+            this.btnGenerarIndicaciones.UseVisualStyleBackColor = false;
+            this.btnGenerarIndicaciones.Click += new System.EventHandler(this.btnGenerarIndicaciones_Click);
+            // 
             // btnFinalizarAtencion
             // 
             this.btnFinalizarAtencion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
@@ -96,9 +111,9 @@
             this.btnFinalizarAtencion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFinalizarAtencion.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFinalizarAtencion.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(85)))), ((int)(((byte)(105)))));
-            this.btnFinalizarAtencion.Location = new System.Drawing.Point(913, 723);
+            this.btnFinalizarAtencion.Location = new System.Drawing.Point(894, 718);
             this.btnFinalizarAtencion.Name = "btnFinalizarAtencion";
-            this.btnFinalizarAtencion.Size = new System.Drawing.Size(175, 38);
+            this.btnFinalizarAtencion.Size = new System.Drawing.Size(175, 42);
             this.btnFinalizarAtencion.TabIndex = 5;
             this.btnFinalizarAtencion.Text = "Finalizar Atención Médica";
             this.btnFinalizarAtencion.UseVisualStyleBackColor = false;
@@ -109,6 +124,7 @@
             this.grpDestinoAsistencial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(51)))), ((int)(((byte)(57)))));
             this.grpDestinoAsistencial.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
             this.grpDestinoAsistencial.BorderRadius = 14;
+            this.grpDestinoAsistencial.Controls.Add(this.btnGenerarDerivacion);
             this.grpDestinoAsistencial.Controls.Add(this.cmbDestino);
             this.grpDestinoAsistencial.Controls.Add(this.lblTitDiagnostico);
             this.grpDestinoAsistencial.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
@@ -120,6 +136,17 @@
             this.grpDestinoAsistencial.TabIndex = 4;
             this.grpDestinoAsistencial.Text = "Destino Asistencial de guardia";
             this.grpDestinoAsistencial.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
+            // 
+            // btnGenerarDerivacion
+            // 
+            this.btnGenerarDerivacion.Enabled = false;
+            this.btnGenerarDerivacion.Location = new System.Drawing.Point(551, 63);
+            this.btnGenerarDerivacion.Name = "btnGenerarDerivacion";
+            this.btnGenerarDerivacion.Size = new System.Drawing.Size(179, 33);
+            this.btnGenerarDerivacion.TabIndex = 18;
+            this.btnGenerarDerivacion.Text = "Generar Orden";
+            this.btnGenerarDerivacion.UseVisualStyleBackColor = true;
+            this.btnGenerarDerivacion.Click += new System.EventHandler(this.btnGenerarDerivacion_Click);
             // 
             // cmbDestino
             // 
@@ -136,6 +163,7 @@
             this.cmbDestino.Name = "cmbDestino";
             this.cmbDestino.Size = new System.Drawing.Size(466, 25);
             this.cmbDestino.TabIndex = 17;
+            this.cmbDestino.SelectedIndexChanged += new System.EventHandler(this.cmbDestinoConsulta_SelectedIndexChanged);
             // 
             // lblTitDiagnostico
             // 
@@ -525,5 +553,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cmbDestino;
         private System.Windows.Forms.Button btnFinalizarAtencion;
+        private System.Windows.Forms.Button btnGenerarIndicaciones;
+        private System.Windows.Forms.Button btnGenerarDerivacion;
     }
 }

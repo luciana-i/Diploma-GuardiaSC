@@ -24,14 +24,22 @@ namespace SistemaTurnos
         private AuthService authService = new AuthService();
         private UsuarioBL usuarioBL = new UsuarioBL();
         private DVVBL dVVBL = new DVVBL();
+
+        private EmpleadoBL empleadoBL = new EmpleadoBL();
+
+        Empleado empleado;
         public MenuPrincipalForm( )
         {
             InitializeComponent();
             IdiomaService.Suscribir(this);
             CargarPermisosUser();
             this.WindowState = FormWindowState.Maximized;
+            empleado = empleadoBL.ObtenerEmpleado(SessionManager.getInstance().ObtenerUsuario());
+            VisualizarFormSegunEmpleado(empleado);
 
         }
+
+        
         #region Gestión de Permisos y Seguridad
 
         private void CargarPermisosUser()
@@ -324,6 +332,32 @@ namespace SistemaTurnos
             EmpleadosForm eForm = new EmpleadosForm();
             eForm.MdiParent = this;
             eForm.Show();
+        }
+        private void VisualizarFormSegunEmpleado(Empleado empleado)
+        {
+            if (empleado == null)
+            {
+                return;
+            }
+            if (empleado.TipoEmpleado == TipoEmpleadoEnum.Medico)
+            {
+                BandejaMedicaForm admisionGuardiaForm = new BandejaMedicaForm();
+                admisionGuardiaForm.MdiParent = this;
+                admisionGuardiaForm.Show();
+            }
+            else if (empleado.TipoEmpleado == TipoEmpleadoEnum.Enfermero)
+            {
+                BandejaEnfermeriaForm bEnfermeria = new BandejaEnfermeriaForm();
+                bEnfermeria.MdiParent = this;
+                bEnfermeria.Show();
+            }
+        }
+
+        private void listadoPacientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ListadoPacientesForm form = new ListadoPacientesForm();
+            form.MdiParent = this;
+            form.Show();
         }
     }
 }

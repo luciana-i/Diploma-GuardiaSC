@@ -6,3 +6,8 @@
 .vs/
 *.suo
 *.user
+
+# Ignorar ejecutables e instaladores pesados
+*.exe
+SistemaTurnos/Instalador/Redist/
+SistemaTurnos/InstaladorFinal/

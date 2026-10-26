@@ -188,6 +188,48 @@ namespace DAL
             return lista;
         }
 
+
+        public static List<Consulta> ObtenerPacientesAtendidos(DateTime? fecha, int? pacienteId)
+        {
+            DAO dao = new DAO();
+            var lista = new List<Consulta>();
+
+            var parametros = new SqlParameter[]
+            {
+                new SqlParameter("@Fecha", (object)fecha?.Date ?? DBNull.Value),
+                new SqlParameter("@PacienteId", (object)pacienteId ?? DBNull.Value)
+            };
+
+            DataTable dt = dao.ExecuteStoredProcedureReader("sp_ObtenerPacientesAtendidos", parametros);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                var consulta = new Consulta
+                {
+                    Id = Convert.ToInt32(row["Consulta_Id"]),
+                    FechaIngreso = Convert.ToDateTime(row["Consulta_FechaIngreso"]),
+                    Paciente = new Paciente
+                    {
+                        Id = Convert.ToInt32(row["Paciente_Id"]),
+                        Dni = row["Paciente_dni"].ToString(),
+                        Apellido = row["Paciente_apellido"].ToString(),
+                        Nombre = row["Paciente_nombre"].ToString()
+                    },
+                    AtencionMedica = new AtencionMedica
+                    {
+                        Diagnostico = row["AtencionMedica_Diagnostico"] != DBNull.Value
+                                      ? row["AtencionMedica_Diagnostico"].ToString()
+                                      : "Sin registro",
+                        Destino = (DestinoConsulta)Convert.ToInt32(row["DestinoConsulta_Id"])
+                    }
+                };
+
+                lista.Add(consulta);
+            }
+
+            return lista;
+        }
+
         public static Consulta MapearConsulta(DataRow row)
         {
             var consulta = new Consulta

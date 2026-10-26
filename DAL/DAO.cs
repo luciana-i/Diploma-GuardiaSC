@@ -86,6 +86,27 @@ namespace DAL
             }
         }
 
+        public DataTable ExecuteStoredProcedureReader(string spName, params SqlParameter[] parameters)
+        {
+            var dt = new DataTable();
+
+            using (var cn = GetConnection())
+            using (var cmd = new SqlCommand(spName, cn))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                if (parameters != null && parameters.Length > 0)
+                    cmd.Parameters.AddRange(parameters);
+
+                using (var adapter = new SqlDataAdapter(cmd))
+                {
+                    adapter.Fill(dt);
+                }
+            }
+
+            return dt;
+        }
+
 
 
         public object ExecuteScalarFunction(string sql, params SqlParameter[] parameters)

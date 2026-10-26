@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +23,8 @@ namespace SistemaTurnos.Negocio
         Consulta _consultaActual;
         AtencionMedicaBL atencionMedicaBL = new AtencionMedicaBL();
         AtencionMedica atencionMedica;
+
+        DocumentoClinicoBL _documentoBL = new DocumentoClinicoBL();
         public AtencionMedicaForm(Consulta consultaSeleccionada)
         {
             InitializeComponent();
@@ -186,6 +190,74 @@ namespace SistemaTurnos.Negocio
             {
                 MessageBox.Show($"Error al intentar registrar la atención médica: {ex.Message}", "Error de Persistencia", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btnGenerarIndicaciones_Click(object sender, EventArgs e)
+        {
+            EmitirDocumento(TipoDocumentoClinico.Indicaciones, txtIndicaciones.Text.Trim());
+        }
+
+        private void EmitirDocumento(TipoDocumentoClinico tipo, string contenido)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(contenido))
+                {
+                    MessageBox.Show("Debe ingresar el detalle antes de emitir el documento.",
+                                    "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var doc = new DocumentoClinico
+                {
+                    ConsultaId = _consultaActual.Id,
+                    Tipo = tipo,
+                    FechaEmision = DateTime.Now,
+                    Diagnostico = txtDiagnostico.Text.Trim(),
+                    Contenido = contenido
+                };
+
+                string rutaArchivo = _documentoBL.GenerarYSerializarDocumento(doc);
+
+                DocumentoClinico docRecuperado = _documentoBL.RecuperarDocumento(rutaArchivo);
+
+                if (docRecuperado != null)
+                {
+                    string nombrePaciente = $"{_consultaActual.Paciente.Apellido}, {_consultaActual.Paciente.Nombre}";
+                    string dniPaciente = _consultaActual.Paciente.Dni;
+
+                    // 3. La BLL se encarga de armar el modelo y crear el PDF
+                    string rutaPdf = _documentoBL.GenerarPdfDocumento(docRecuperado, nombrePaciente, dniPaciente);
+
+                    // 4. La UI abre el visor predeterminado
+                    Process.Start(new ProcessStartInfo(rutaPdf) { UseShellExecute = true });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al generar el documento: {ex.Message}",
+                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
+
+        private void cmbDestinoConsulta_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbDestino.SelectedItem != null &&
+                cmbDestino.SelectedItem is DestinoConsulta destino)
+            {
+                btnGenerarDerivacion.Enabled = (destino != DestinoConsulta.AltaMedica);
+            }
+            else
+            {
+                btnGenerarDerivacion.Enabled = false;
+            }
+        }
+
+        private void btnGenerarDerivacion_Click(object sender, EventArgs e)
+        {
+            string motivoDerivacion = $"Destino: {cmbDestino.Text} - Indicaciones: {txtIndicaciones.Text.Trim()}";
+            EmitirDocumento(TipoDocumentoClinico.Derivacion, motivoDerivacion);
         }
     }
 }
