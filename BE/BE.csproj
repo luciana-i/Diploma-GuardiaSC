@@ -53,6 +53,8 @@
     <Compile Include="HistoriaClinica.cs" />
     <Compile Include="Historial.cs" />
     <Compile Include="Idioma.cs" />
+    <Compile Include="Metricas\DemandaHoraria.cs" />
+    <Compile Include="Metricas\SnapshotMetricas.cs" />
     <Compile Include="NivelPrioridad.cs" />
     <Compile Include="Paciente.cs" />
     <Compile Include="Perfil.cs" />

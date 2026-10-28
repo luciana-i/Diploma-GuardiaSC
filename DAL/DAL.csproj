@@ -83,6 +83,7 @@
     <Compile Include="HistoriaClinicaDAL.cs" />
     <Compile Include="HistorialDAL.cs" />
     <Compile Include="IdiomaDAL.cs" />
+    <Compile Include="MetricasDAL.cs" />
     <Compile Include="PacienteDAL.cs" />
     <Compile Include="PerfilDAL.cs" />
     <Compile Include="TraduccionDAL.cs" />

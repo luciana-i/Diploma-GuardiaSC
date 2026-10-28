@@ -103,6 +103,7 @@
     <Compile Include="Servicios\IdiomaService.cs" />
     <Compile Include="Servicios\Clases\PdfDocumento.cs" />
     <Compile Include="Servicios\Clases\PermisoTag.cs" />
+    <Compile Include="Servicios\MetricasService.cs" />
     <Compile Include="Servicios\SessionManager.cs" />
     <Compile Include="TraduccionBL.cs" />
     <Compile Include="UsuarioBL.cs" />
