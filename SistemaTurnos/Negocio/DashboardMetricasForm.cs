@@ -2,7 +2,9 @@
 using BLL.Servicios;
 using LiveCharts;
 using LiveCharts.Wpf;
+using Seguridad;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -10,7 +12,7 @@ using System.Windows.Media;
 
 namespace SistemaTurnos.Negocio
 {
-    public partial class DashboardMetricasForm : Form
+    public partial class DashboardMetricasForm : Form, IIdiomaObserver
     {
         private readonly MetricasService _metricasService = new MetricasService();
         private SnapshotMetricas _snapshotActual;
@@ -20,6 +22,19 @@ namespace SistemaTurnos.Negocio
             InitializeComponent();
             ConfigurarControlesIniciales();
             InicializarGraficoLiveCharts();
+            InicializarDotacionActiva();
+
+            IdiomaService.Suscribir(this);
+            if (IdiomaService.TraduccionesActuales != null)
+            {
+                this.UpdateIdioma(IdiomaService.TraduccionesActuales);
+            }
+        }
+
+        private void InicializarDotacionActiva()
+        {
+            nudMedicosSimulados.Value = 2;
+            nudEnfermerosSimulados.Value = 1;
         }
 
         private void ConfigurarControlesIniciales()
@@ -92,9 +107,18 @@ namespace SistemaTurnos.Negocio
             });
 
             cartesianChartDemanda.LegendLocation = LegendLocation.Top;
+
+            if (cartesianChartDemanda.Base is LiveCharts.Wpf.CartesianChart wpfChart)
+            {
+                wpfChart.ChartLegend = new LiveCharts.Wpf.DefaultLegend
+                {
+                    Foreground = System.Windows.Media.Brushes.White,
+                    FontSize = 11
+                };
+            }
         }
 
-        // Evento Click del botón Analizar (o button1_Click según el diseñador)
+        // Evento Click del botón Analizar 
         private void button1_Click(object sender, EventArgs e)
         {
             nudMedicosSimulados.Value = 2;
@@ -118,11 +142,10 @@ namespace SistemaTurnos.Negocio
                 int? prioridad = cmbPrioridad.SelectedValue as int?;
                 int medicos = (int)nudMedicosSimulados.Value;
                 int enfermeros = (int)nudEnfermerosSimulados.Value;
-
-                // 1. Invocar a la capa de negocio
+                
                 _snapshotActual = _metricasService.AnalizarPeriodo(desde, hasta, turno, prioridad, medicos, enfermeros);
 
-                // 2. Volcar resultados a la interfaz
+                
                 MostrarDatosEnPantalla(_snapshotActual);
             }
             catch (Exception ex)
@@ -293,5 +316,37 @@ namespace SistemaTurnos.Negocio
                 Cursor = Cursors.Default;
             }
         }
+
+        #region Implementación del Patrón Observer (IIdiomaObserver)
+
+        public void UpdateIdioma(Dictionary<string, string> traducciones)
+        {
+            if (this.Tag != null && traducciones.ContainsKey(this.Tag.ToString()))
+            {
+                this.Text = traducciones[this.Tag.ToString()];
+            }
+
+            TraducirControlesRecursivo(this, traducciones);
+        }
+
+        private void TraducirControlesRecursivo(Control contenedor, Dictionary<string, string> traducciones)
+        {
+            foreach (Control c in contenedor.Controls)
+            {
+                if (c.Tag != null && traducciones.ContainsKey(c.Tag.ToString()))
+                {
+                    c.Text = traducciones[c.Tag.ToString()];
+                }
+
+                if (c.HasChildren)
+                {
+                    TraducirControlesRecursivo(c, traducciones);
+                }
+            }
+        }
+
+
+        #endregion
+
     }
 }

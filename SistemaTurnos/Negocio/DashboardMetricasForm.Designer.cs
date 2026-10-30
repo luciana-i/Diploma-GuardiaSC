@@ -162,6 +162,7 @@
             this.lblFiltroPrioridad.Name = "lblFiltroPrioridad";
             this.lblFiltroPrioridad.Size = new System.Drawing.Size(57, 15);
             this.lblFiltroPrioridad.TabIndex = 8;
+            this.lblFiltroPrioridad.Tag = "METPRIORIDAD";
             this.lblFiltroPrioridad.Text = "Prioridad";
             // 
             // cmbTurno
@@ -184,6 +185,7 @@
             this.lblFiltroTurno.Name = "lblFiltroTurno";
             this.lblFiltroTurno.Size = new System.Drawing.Size(44, 17);
             this.lblFiltroTurno.TabIndex = 6;
+            this.lblFiltroTurno.Tag = "METTURNO";
             this.lblFiltroTurno.Text = "Turno";
             // 
             // btnExportarSnapshot
@@ -197,6 +199,7 @@
             this.btnExportarSnapshot.Name = "btnExportarSnapshot";
             this.btnExportarSnapshot.Size = new System.Drawing.Size(155, 30);
             this.btnExportarSnapshot.TabIndex = 5;
+            this.btnExportarSnapshot.Tag = "METSNAPSHOT";
             this.btnExportarSnapshot.Text = "Exportar Snapshot";
             this.btnExportarSnapshot.UseVisualStyleBackColor = true;
             this.btnExportarSnapshot.Click += new System.EventHandler(this.btnExportarSnapshot_Click);
@@ -212,6 +215,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(138, 30);
             this.button1.TabIndex = 4;
+            this.button1.Tag = "METANALIZAR";
             this.button1.Text = "Analizar";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -253,6 +257,7 @@
             this.lblPeriodo.Name = "lblPeriodo";
             this.lblPeriodo.Size = new System.Drawing.Size(125, 13);
             this.lblPeriodo.TabIndex = 0;
+            this.lblPeriodo.Tag = "METPERIODO";
             this.lblPeriodo.Text = "PERÍODO ASISTENCIAL";
             // 
             // pnlKpiEspera
@@ -283,6 +288,7 @@
             this.lblKpiEsperaTitulo.Name = "lblKpiEsperaTitulo";
             this.lblKpiEsperaTitulo.Size = new System.Drawing.Size(142, 17);
             this.lblKpiEsperaTitulo.TabIndex = 4;
+            this.lblKpiEsperaTitulo.Tag = "METESPERA";
             this.lblKpiEsperaTitulo.Text = "ESPERA CONSULTORIO";
             // 
             // pnlKpiLab
@@ -343,6 +349,7 @@
             this.lblKpiInternacionTitulo.Name = "lblKpiInternacionTitulo";
             this.lblKpiInternacionTitulo.Size = new System.Drawing.Size(125, 17);
             this.lblKpiInternacionTitulo.TabIndex = 0;
+            this.lblKpiInternacionTitulo.Tag = "METTASA";
             this.lblKpiInternacionTitulo.Text = "TASA INTERNACIÓN";
             // 
             // pnlKpiTotal
@@ -373,6 +380,7 @@
             this.lblKpiTotalTitulo.Name = "lblKpiTotalTitulo";
             this.lblKpiTotalTitulo.Size = new System.Drawing.Size(117, 17);
             this.lblKpiTotalTitulo.TabIndex = 0;
+            this.lblKpiTotalTitulo.Tag = "METOTAL";
             this.lblKpiTotalTitulo.Text = "TOTAL CONSULTAS";
             // 
             // pnlContenedorGrafico
@@ -403,6 +411,7 @@
             this.lblGraficoTitulo.Name = "lblGraficoTitulo";
             this.lblGraficoTitulo.Size = new System.Drawing.Size(328, 17);
             this.lblGraficoTitulo.TabIndex = 0;
+            this.lblGraficoTitulo.Tag = "METGRAF";
             this.lblGraficoTitulo.Text = "Curva de Demanda Horaria de Prácticas (00 a 23 hs)";
             // 
             // pnlContenedorDestinos
@@ -466,6 +475,7 @@
             this.lblAlertaTitulo.Name = "lblAlertaTitulo";
             this.lblAlertaTitulo.Size = new System.Drawing.Size(180, 17);
             this.lblAlertaTitulo.TabIndex = 0;
+            this.lblAlertaTitulo.Tag = "METCUELLO";
             this.lblAlertaTitulo.Text = "Cuello de Botella Detectado";
             // 
             // lblValorDerivaciones
@@ -505,6 +515,7 @@
             this.lblDerivacion.Name = "lblDerivacion";
             this.lblDerivacion.Size = new System.Drawing.Size(124, 17);
             this.lblDerivacion.TabIndex = 7;
+            this.lblDerivacion.Tag = "METDER";
             this.lblDerivacion.Text = "Derivación Externa";
             // 
             // pnlFondoBarraInternaciones
@@ -544,6 +555,7 @@
             this.lblInternacion.Name = "lblInternacion";
             this.lblInternacion.Size = new System.Drawing.Size(78, 17);
             this.lblInternacion.TabIndex = 4;
+            this.lblInternacion.Tag = "METINTER";
             this.lblInternacion.Text = "Internación";
             // 
             // pnlFondoBarraAltas
@@ -583,6 +595,7 @@
             this.lblAltas.Name = "lblAltas";
             this.lblAltas.Size = new System.Drawing.Size(81, 17);
             this.lblAltas.TabIndex = 1;
+            this.lblAltas.Tag = "METALTA";
             this.lblAltas.Text = "Alta Médica";
             // 
             // lblDestinosTitulo
@@ -593,6 +606,7 @@
             this.lblDestinosTitulo.Name = "lblDestinosTitulo";
             this.lblDestinosTitulo.Size = new System.Drawing.Size(191, 17);
             this.lblDestinosTitulo.TabIndex = 0;
+            this.lblDestinosTitulo.Tag = "METRESDEST";
             this.lblDestinosTitulo.Text = "Resolución y Destinos Finales";
             // 
             // pnlRecomendaciones
@@ -627,6 +641,7 @@
             this.lblRecomendacionHeader.Name = "lblRecomendacionHeader";
             this.lblRecomendacionHeader.Size = new System.Drawing.Size(411, 17);
             this.lblRecomendacionHeader.TabIndex = 0;
+            this.lblRecomendacionHeader.Tag = "METRECOMEND";
             this.lblRecomendacionHeader.Text = "RECOMENDACIÓN GERENCIAL PARA CRONOGRAMA Y DOTACIÓN";
             // 
             // pnlKpiRayos
@@ -658,6 +673,7 @@
             this.lblTituloPicoRayos.Name = "lblTituloPicoRayos";
             this.lblTituloPicoRayos.Size = new System.Drawing.Size(114, 17);
             this.lblTituloPicoRayos.TabIndex = 0;
+            this.lblTituloPicoRayos.Tag = "METRAYOS";
             this.lblTituloPicoRayos.Text = "RAYOS POR HORA";
             // 
             // pnlTeoriaColas
@@ -689,6 +705,7 @@
             this.lblTituloPoisson.Name = "lblTituloPoisson";
             this.lblTituloPoisson.Size = new System.Drawing.Size(154, 17);
             this.lblTituloPoisson.TabIndex = 4;
+            this.lblTituloPoisson.Tag = "METCOL";
             this.lblTituloPoisson.Text = "Probabilidad de Colapso";
             // 
             // lblValorPoisson
@@ -720,6 +737,7 @@
             this.lblTituloLittle.Name = "lblTituloLittle";
             this.lblTituloLittle.Size = new System.Drawing.Size(198, 17);
             this.lblTituloLittle.TabIndex = 2;
+            this.lblTituloLittle.Tag = "METPECESP";
             this.lblTituloLittle.Text = "Pacientes en espera simultanea";
             // 
             // lblValorLittle
@@ -751,6 +769,7 @@
             this.lblTituloLambda.Name = "lblTituloLambda";
             this.lblTituloLambda.Size = new System.Drawing.Size(122, 17);
             this.lblTituloLambda.TabIndex = 0;
+            this.lblTituloLambda.Tag = "METPAC";
             this.lblTituloLambda.Text = "Pacientes por hora";
             // 
             // lblValorLambda
@@ -782,6 +801,7 @@
             this.lblAnalisis.Name = "lblAnalisis";
             this.lblAnalisis.Size = new System.Drawing.Size(234, 17);
             this.lblAnalisis.TabIndex = 0;
+            this.lblAnalisis.Tag = "METANALIS";
             this.lblAnalisis.Text = "ANALISIS DE CAPACIDAD Y ARRIBOS";
             // 
             // pnlSimulador
@@ -817,6 +837,7 @@
             this.lblSimuladorTitulo.Name = "lblSimuladorTitulo";
             this.lblSimuladorTitulo.Size = new System.Drawing.Size(190, 17);
             this.lblSimuladorTitulo.TabIndex = 0;
+            this.lblSimuladorTitulo.Tag = "METSIM";
             this.lblSimuladorTitulo.Text = "SIMULACION DE ESCENARIOS";
             // 
             // lblValorDemoraSimulada
@@ -839,6 +860,7 @@
             this.lblSimResultadoTitulo.Name = "lblSimResultadoTitulo";
             this.lblSimResultadoTitulo.Size = new System.Drawing.Size(146, 13);
             this.lblSimResultadoTitulo.TabIndex = 5;
+            this.lblSimResultadoTitulo.Tag = "METDEMORA";
             this.lblSimResultadoTitulo.Text = "Demora esperada simulada";
             // 
             // nudEnfermerosSimulados
@@ -874,6 +896,7 @@
             this.lblSimTecnicos.Name = "lblSimTecnicos";
             this.lblSimTecnicos.Size = new System.Drawing.Size(119, 17);
             this.lblSimTecnicos.TabIndex = 3;
+            this.lblSimTecnicos.Tag = "METSIMENF";
             this.lblSimTecnicos.Text = "Enfermeros activos";
             // 
             // nudMedicosSimulados
@@ -909,6 +932,7 @@
             this.lblSimMedicos.Name = "lblSimMedicos";
             this.lblSimMedicos.Size = new System.Drawing.Size(102, 17);
             this.lblSimMedicos.TabIndex = 1;
+            this.lblSimMedicos.Tag = "METSIMED";
             this.lblSimMedicos.Text = "Médicos activos";
             // 
             // DashboardMetricasForm
@@ -935,6 +959,7 @@
             this.Name = "DashboardMetricasForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Tag = "METRICASFORM";
             this.Text = "Gestión de Métricas y Optimización - Guardia Médica";
             this.pnlFiltros.ResumeLayout(false);
             this.pnlFiltros.PerformLayout();

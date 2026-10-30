@@ -11,7 +11,7 @@ namespace DAL
     {
         /// <summary>
         /// Obtiene el conteo real de estudios de Radiología (Destino 3) y Laboratorio (Destino 4)
-        /// agrupados por cada una de las 24 franjas horarias (00 a 23 hs).
+        /// agrupados por cada una de las 24 franjas horarias.
         /// </summary>
         public static List<DemandaHoraria> ObtenerDemandaHoraria(DateTime fechaDesde, DateTime fechaHasta, int? turno = null, int? prioridadId = null)
         {
@@ -78,7 +78,8 @@ namespace DAL
         public static (double esperaEnfermeria, double esperaConsultorio, double duracionAtencion, double tasaArriboPico)
             ObtenerTiemposPromedio(DateTime fechaDesde, DateTime fechaHasta, int? turno = null, int? prioridadId = null)
         {
-            DAO dao = new DAO();
+            DAO dao = new DAO(); 
+            // por turnos mañana tarde y noche y prioridad
             string filtroExtra = ConstruirClausulaFiltros(turno, prioridadId);
 
             string sql = $@"

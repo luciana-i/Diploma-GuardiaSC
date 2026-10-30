@@ -14,6 +14,9 @@ namespace BLL.Servicios
         private const int CAPACIDAD_MAXIMA_LAB_POR_TECNICO = 5;
         private const int CAPACIDAD_MAXIMA_RAYOS_POR_TECNICO = 4;
         private const double CAPACIDAD_ATENCION_POR_MEDICO_HORA = 3.5; // ~17 min promedio por paciente
+        private const double DOTACION_MEDICA_BASE = 2.0;
+        private const double BONIFICACION_ENFERMERIA = 0.90; // 10% de ahorro
+        private const double TIEMPO_MINIMO_ASISTENCIAL_MINUTOS = 5.0;
 
         /// <summary>
         /// Orquesta el cálculo analítico, probabilístico y las sugerencias de dotación.
@@ -31,29 +34,32 @@ namespace BLL.Servicios
                 EnfermerosSimulados = enfermerosSim
             };
 
-            // 1. Obtener datos crudos agrupados desde la DAL aplicando filtros
+
+            // calcula los cuellos de botella de la guardia: cuanto espera para que lo clasifique enfermeria, cuánto espera en la sala de espera para el consultorio, y cuanto dura la atención del medico
             var tiempos = MetricasDAL.ObtenerTiemposPromedio(fechaDesde, fechaHasta, turno, prioridadId);
+            // hora por hora, cuantos estudios reales de rayos y de laboratorio se hicieron
             var demandaHoraria = MetricasDAL.ObtenerDemandaHoraria(fechaDesde, fechaHasta, turno, prioridadId);
+            // cuenta cuantos pacientes terminaron en cada destino final (alta, internacion, derivacion) --- distribución de egresos de la guardia
             var destinos = MetricasDAL.ObtenerDistribucionDestinos(fechaDesde, fechaHasta, turno, prioridadId);
 
-            // 2. Procesar Tiempos de Ciclo y KPIs
+            
             snapshot.EsperaPromedioConsultorioMinutos = Math.Round(tiempos.esperaConsultorio, 1);
 
-            // 3. Procesar Distribución de Destinos Finales
+            // calcula los porcentajes de cada destino final y la tasa de internación
             ProcesarDestinos(snapshot, destinos);
 
-            // 4. Proyección de Demanda Horaria y Picos de Prácticas
+            // Identifica las horas pico de Rayos/Laboratorio y proyecta la demanda futura con un 15% de margen por picos imprevistos.
             ProcesarCurvaYProyeccion(snapshot, demandaHoraria);
 
-            // 5. Análisis de Teoría de Colas (Little y Poisson)
+            // Aplica teoría de colas para calcular el promedio de pacientes en sala de espera  (La Ley de Little)y el porcentaje de riesgo de colapso de la guardia  (La Distribución de Poisson )
             ProcesarTeoriaColas(snapshot, tiempos.tasaArriboPico, tiempos.esperaEnfermeria, tiempos.esperaConsultorio);
 
-            // 6. Simulación de Escenarios ("What-If")
+            // Simulacion de Escenarios
             SimularEscenario(snapshot, medicosSim, enfermerosSim);
 
-            // 7. Diagnóstico de Cuellos de Botella y Recomendación de Dotación
+            // Diagnóstico de Cuellos de Botella y Recomendación de Dotación
             EvaluarCuelloDeBotella(snapshot, tiempos.esperaEnfermeria, tiempos.esperaConsultorio);
-            GenerarRecomendacionStaffing(snapshot);
+            GenerarRecomendacion(snapshot);
 
             return snapshot;
         }
@@ -118,7 +124,7 @@ namespace BLL.Servicios
             // Tiempo medio en el sistema W (en horas)
             double tiempoEsperaHoras = (esperaEnf + esperaCons) / 60.0;
 
-            // Ley de Little: L = Lambda * W (pacientes en espera simultánea)
+            // Ley de Little: L = Lambda * W (pacientes en espera simultanea)
             snapshot.PacientesEnEsperaLittle = Math.Round(snapshot.TasaArriboLambda * tiempoEsperaHoras, 1);
 
             // Capacidad de resolución del turno base (2 médicos estándar)
@@ -129,7 +135,7 @@ namespace BLL.Servicios
         }
 
         /// <summary>
-        /// Recalcula en memoria el impacto en la demora ante modificaciones del staffing.
+        /// Recalcula en memoria el impacto en la demora ante modificaciones del staff de medicos.
         /// </summary>
        public void SimularEscenario(SnapshotMetricas snapshot, int medicos, int enfermeros)
         {
@@ -137,16 +143,16 @@ namespace BLL.Servicios
             snapshot.EnfermerosSimulados = enfermeros;
 
             // Relación de capacidad médica (base de 2 médicos)
-            double factorMedicos = 2.0 / Math.Max(medicos, 1);
+            double factorMedicos = DOTACION_MEDICA_BASE / Math.Max(medicos, 1);
             double demoraAjustada = snapshot.EsperaPromedioConsultorioMinutos * factorMedicos;
 
             // Aceleración si se refuerza la enfermería (más de 1 enfermero activo)
             if (enfermeros > 1)
             {
-                demoraAjustada *= 0.90; // Reducción del 10% por mayor agilidad en clasificación
+                demoraAjustada *= BONIFICACION_ENFERMERIA; // Reducción del 10% por mayor agilidad en clasificación
             }
 
-            snapshot.DemoraSimuladaMinutos = Math.Max(Math.Round(demoraAjustada, 1), 5.0);
+            snapshot.DemoraSimuladaMinutos = Math.Max(Math.Round(demoraAjustada, 1), TIEMPO_MINIMO_ASISTENCIAL_MINUTOS);
         }
 
         private double CalcularProbabilidadPoissonSaturacion(double lambda, int capacidad)
@@ -190,7 +196,7 @@ namespace BLL.Servicios
             }
         }
 
-        private void GenerarRecomendacionStaffing(SnapshotMetricas snapshot)
+        private void GenerarRecomendacion(SnapshotMetricas snapshot)
         {
             var recomendaciones = new List<string>();
 

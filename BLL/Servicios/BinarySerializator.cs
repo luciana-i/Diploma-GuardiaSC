@@ -18,7 +18,7 @@ namespace BLL.Servicios
 
         public override object Serializar(object que)
         {
-            // Usa el nombre de la clase (ej: "DocumentoClinico") como subcarpeta y prefijo
+            // Usa el nombre de la clase serializable DocumentoClinico o DemandaHoraria como subcarpeta y prefijo
             string tipoNombre = typeof(T).Name;
             var fs = FileStreamManager.Instance.CreateFile("dat", subCarpeta: tipoNombre + "s", prefijo: tipoNombre);
 

@@ -43,6 +43,9 @@ namespace BLL.Servicios
             "MEDICO_ATENCION",
             "GERENCIAL",
             "PACIENTES",
+            "LISTADO_PACIENTES",
+            "METRICAS",
+            "MENU_PACIENTES",
             "LISTADO_PACIENTES"
         };
     }

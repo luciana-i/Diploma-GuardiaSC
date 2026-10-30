@@ -359,5 +359,12 @@ namespace SistemaTurnos
             form.MdiParent = this;
             form.Show();
         }
+
+        private void metricasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DashboardMetricasForm form = new DashboardMetricasForm();
+            form.MdiParent = this;
+            form.Show();
+        }
     }
 }

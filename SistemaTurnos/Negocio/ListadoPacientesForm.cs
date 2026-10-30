@@ -1,5 +1,7 @@
 ﻿using BE;
 using BLL;
+using BLL.Servicios;
+using Seguridad;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +15,7 @@ using System.Windows.Forms;
 
 namespace SistemaTurnos.Negocio
 {
-    public partial class ListadoPacientesForm : Form
+    public partial class ListadoPacientesForm : Form, IIdiomaObserver
     {
         private List<Consulta> _consultasFiltradas = new List<Consulta>();
         private readonly ConsultaBL _consultaBL = new ConsultaBL();
@@ -25,10 +27,29 @@ namespace SistemaTurnos.Negocio
         public ListadoPacientesForm()
         {
             InitializeComponent();
+
+            setearTagDGV();
             dtpFechaAtencion.Value = DateTime.Today;
             pacientes=pacienteBL.Obtener();
+
             CargarCombo();
 
+            IdiomaService.Suscribir(this);
+            if (IdiomaService.TraduccionesActuales != null)
+            {
+                this.UpdateIdioma(IdiomaService.TraduccionesActuales);
+            }
+
+        }
+
+        private void setearTagDGV()
+        {
+            colDni.Tag = "PACCOLDNI";
+            colPaciente.Tag = "PACCOLPAC";
+            colFechaHora.Tag = "PACCOLFECHA";
+            colDiagnostico.Tag = "PACCOLDIAG";
+            colDestino.Tag = "PACCOLDEST";
+            colDocumentos.Tag = "PACCOLDOC";
         }
 
         private void CargarCombo()
@@ -144,5 +165,36 @@ namespace SistemaTurnos.Negocio
 
             dgvPacientes.ClearSelection();
         }
+
+        #region Implementación del Patrón Observer (IIdiomaObserver)
+
+        public void UpdateIdioma(Dictionary<string, string> traducciones)
+        {
+            if (this.Tag != null && traducciones.ContainsKey(this.Tag.ToString()))
+            {
+                this.Text = traducciones[this.Tag.ToString()];
+            }
+
+            TraducirControlesRecursivo(this, traducciones);
+        }
+
+        private void TraducirControlesRecursivo(Control contenedor, Dictionary<string, string> traducciones)
+        {
+            foreach (Control c in contenedor.Controls)
+            {
+                if (c.Tag != null && traducciones.ContainsKey(c.Tag.ToString()))
+                {
+                    c.Text = traducciones[c.Tag.ToString()];
+                }
+
+                if (c.HasChildren)
+                {
+                    TraducirControlesRecursivo(c, traducciones);
+                }
+            }
+        }
+
+
+        #endregion
     }
 }

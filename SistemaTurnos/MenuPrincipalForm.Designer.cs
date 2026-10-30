@@ -38,12 +38,15 @@ namespace SistemaTurnos
             this.admisionGuardiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enfermeriaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listaEsperaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.medicoGuardiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listaEsperaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.listaPacientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listadoPacientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.metricasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionarIdiomaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionarIdiomaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.empleadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.agregarEmpleadosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.medicoGuardiaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.listaEsperaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionPerfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionarPerfilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,8 +58,6 @@ namespace SistemaTurnos
             this.crearUsuariosToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.restaurarMailAnteriorToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.cerrarSesionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listaPacientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listadoPacientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,16 +65,17 @@ namespace SistemaTurnos
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.administradorToolStripMenuItem,
+            this.seleccionarIdiomaToolStripMenuItem1,
             this.admisionPacientesToolStripMenuItem,
             this.enfermeriaToolStripMenuItem,
-            this.medicoGuardiaToolStripMenuItem,
             this.listaPacientesToolStripMenuItem,
-            this.gestionarIdiomaToolStripMenuItem,
             this.empleadosToolStripMenuItem,
+            this.medicoGuardiaToolStripMenuItem,
+            this.metricasToolStripMenuItem,
             this.gestionPerfilesToolStripMenuItem,
             this.bitacoraToolStripMenuItem1,
-            this.seleccionarIdiomaToolStripMenuItem1,
             this.gEToolStripMenuItem,
+            this.gestionarIdiomaToolStripMenuItem,
             this.cerrarSesionToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -95,7 +97,7 @@ namespace SistemaTurnos
             // modificarMailToolStripMenuItem
             // 
             this.modificarMailToolStripMenuItem.Name = "modificarMailToolStripMenuItem";
-            this.modificarMailToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.modificarMailToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.modificarMailToolStripMenuItem.Tag = "MODIFICAR_MAIL";
             this.modificarMailToolStripMenuItem.Text = "Modificar Mail";
             this.modificarMailToolStripMenuItem.Click += new System.EventHandler(this.modificarMailToolStripMenuItem_Click);
@@ -103,7 +105,7 @@ namespace SistemaTurnos
             // cambiarClaveToolStripMenuItem
             // 
             this.cambiarClaveToolStripMenuItem.Name = "cambiarClaveToolStripMenuItem";
-            this.cambiarClaveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cambiarClaveToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.cambiarClaveToolStripMenuItem.Tag = "MODIFICAR_CLAVE";
             this.cambiarClaveToolStripMenuItem.Text = "Cambiar Clave";
             this.cambiarClaveToolStripMenuItem.Click += new System.EventHandler(this.cambiarClaveToolStripMenuItem_Click_1);
@@ -120,7 +122,7 @@ namespace SistemaTurnos
             // admisionGuardiaToolStripMenuItem
             // 
             this.admisionGuardiaToolStripMenuItem.Name = "admisionGuardiaToolStripMenuItem";
-            this.admisionGuardiaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.admisionGuardiaToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.admisionGuardiaToolStripMenuItem.Tag = "RES_ADMISION";
             this.admisionGuardiaToolStripMenuItem.Text = "Admision Guardia";
             this.admisionGuardiaToolStripMenuItem.Click += new System.EventHandler(this.admisionGuardiaToolStripMenuItem_Click);
@@ -137,36 +139,44 @@ namespace SistemaTurnos
             // listaEsperaToolStripMenuItem
             // 
             this.listaEsperaToolStripMenuItem.Name = "listaEsperaToolStripMenuItem";
-            this.listaEsperaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.listaEsperaToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.listaEsperaToolStripMenuItem.Tag = "ENFERMERIA_LISTA";
             this.listaEsperaToolStripMenuItem.Text = "Lista Espera";
             this.listaEsperaToolStripMenuItem.Click += new System.EventHandler(this.listaEsperaToolStripMenuItem_Click);
             // 
-            // medicoGuardiaToolStripMenuItem
+            // listaPacientesToolStripMenuItem
             // 
-            this.medicoGuardiaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.listaEsperaToolStripMenuItem1});
-            this.medicoGuardiaToolStripMenuItem.Name = "medicoGuardiaToolStripMenuItem";
-            this.medicoGuardiaToolStripMenuItem.Size = new System.Drawing.Size(103, 20);
-            this.medicoGuardiaToolStripMenuItem.Tag = "MEDICO";
-            this.medicoGuardiaToolStripMenuItem.Text = "Medico Guardia";
+            this.listaPacientesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.listadoPacientesToolStripMenuItem});
+            this.listaPacientesToolStripMenuItem.Name = "listaPacientesToolStripMenuItem";
+            this.listaPacientesToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.listaPacientesToolStripMenuItem.Tag = "PACIENTES";
+            this.listaPacientesToolStripMenuItem.Text = "Pacientes";
             // 
-            // listaEsperaToolStripMenuItem1
+            // listadoPacientesToolStripMenuItem
             // 
-            this.listaEsperaToolStripMenuItem1.Name = "listaEsperaToolStripMenuItem1";
-            this.listaEsperaToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
-            this.listaEsperaToolStripMenuItem1.Tag = "MEDICO_LISTA";
-            this.listaEsperaToolStripMenuItem1.Text = "Lista Espera";
-            this.listaEsperaToolStripMenuItem1.Click += new System.EventHandler(this.listaEsperaToolStripMenuItem1_Click);
+            this.listadoPacientesToolStripMenuItem.Name = "listadoPacientesToolStripMenuItem";
+            this.listadoPacientesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.listadoPacientesToolStripMenuItem.Tag = "LISTADO_PACIENTES";
+            this.listadoPacientesToolStripMenuItem.Text = "Listado Pacientes";
+            this.listadoPacientesToolStripMenuItem.Click += new System.EventHandler(this.listadoPacientesToolStripMenuItem_Click);
+            // 
+            // metricasToolStripMenuItem
+            // 
+            this.metricasToolStripMenuItem.Name = "metricasToolStripMenuItem";
+            this.metricasToolStripMenuItem.Size = new System.Drawing.Size(124, 20);
+            this.metricasToolStripMenuItem.Tag = "METRICAS";
+            this.metricasToolStripMenuItem.Text = "Metricas de Guardia";
+            this.metricasToolStripMenuItem.Click += new System.EventHandler(this.metricasToolStripMenuItem_Click);
             // 
             // gestionarIdiomaToolStripMenuItem
             // 
             this.gestionarIdiomaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gestionarIdiomaToolStripMenuItem1});
             this.gestionarIdiomaToolStripMenuItem.Name = "gestionarIdiomaToolStripMenuItem";
-            this.gestionarIdiomaToolStripMenuItem.Size = new System.Drawing.Size(56, 20);
+            this.gestionarIdiomaToolStripMenuItem.Size = new System.Drawing.Size(99, 20);
             this.gestionarIdiomaToolStripMenuItem.Tag = "IDIOMA_MENU";
-            this.gestionarIdiomaToolStripMenuItem.Text = "Idioma";
+            this.gestionarIdiomaToolStripMenuItem.Text = "Gestion Idioma";
             // 
             // gestionarIdiomaToolStripMenuItem1
             // 
@@ -191,6 +201,23 @@ namespace SistemaTurnos
             this.agregarEmpleadosToolStripMenuItem.Tag = "EMPLEADOS_ADD";
             this.agregarEmpleadosToolStripMenuItem.Text = "Agregar Empleados";
             this.agregarEmpleadosToolStripMenuItem.Click += new System.EventHandler(this.agregarEmpleadosToolStripMenuItem_Click);
+            // 
+            // medicoGuardiaToolStripMenuItem
+            // 
+            this.medicoGuardiaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.listaEsperaToolStripMenuItem1});
+            this.medicoGuardiaToolStripMenuItem.Name = "medicoGuardiaToolStripMenuItem";
+            this.medicoGuardiaToolStripMenuItem.Size = new System.Drawing.Size(103, 20);
+            this.medicoGuardiaToolStripMenuItem.Tag = "MEDICO";
+            this.medicoGuardiaToolStripMenuItem.Text = "Medico Guardia";
+            // 
+            // listaEsperaToolStripMenuItem1
+            // 
+            this.listaEsperaToolStripMenuItem1.Name = "listaEsperaToolStripMenuItem1";
+            this.listaEsperaToolStripMenuItem1.Size = new System.Drawing.Size(135, 22);
+            this.listaEsperaToolStripMenuItem1.Tag = "MEDICO_LISTA";
+            this.listaEsperaToolStripMenuItem1.Text = "Lista Espera";
+            this.listaEsperaToolStripMenuItem1.Click += new System.EventHandler(this.listaEsperaToolStripMenuItem1_Click);
             // 
             // gestionPerfilesToolStripMenuItem
             // 
@@ -238,9 +265,9 @@ namespace SistemaTurnos
             // seleccionarIdiomaToolStripMenuItem1
             // 
             this.seleccionarIdiomaToolStripMenuItem1.Name = "seleccionarIdiomaToolStripMenuItem1";
-            this.seleccionarIdiomaToolStripMenuItem1.Size = new System.Drawing.Size(119, 20);
+            this.seleccionarIdiomaToolStripMenuItem1.Size = new System.Drawing.Size(56, 20);
             this.seleccionarIdiomaToolStripMenuItem1.Tag = "SELECCION_IDIOMA";
-            this.seleccionarIdiomaToolStripMenuItem1.Text = "Seleccionar Idioma";
+            this.seleccionarIdiomaToolStripMenuItem1.Text = "Idioma";
             this.seleccionarIdiomaToolStripMenuItem1.Click += new System.EventHandler(this.seleccionarIdiomaToolStripMenuItem1_Click);
             // 
             // gEToolStripMenuItem
@@ -285,21 +312,6 @@ namespace SistemaTurnos
             this.cerrarSesionToolStripMenuItem.Tag = "CERRAR_SESION";
             this.cerrarSesionToolStripMenuItem.Text = "Cerrar Sesion";
             this.cerrarSesionToolStripMenuItem.Click += new System.EventHandler(this.cerrarSesionToolStripMenuItem_Click);
-            // 
-            // listaPacientesToolStripMenuItem
-            // 
-            this.listaPacientesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.listadoPacientesToolStripMenuItem});
-            this.listaPacientesToolStripMenuItem.Name = "listaPacientesToolStripMenuItem";
-            this.listaPacientesToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
-            this.listaPacientesToolStripMenuItem.Text = "Pacientes";
-            // 
-            // listadoPacientesToolStripMenuItem
-            // 
-            this.listadoPacientesToolStripMenuItem.Name = "listadoPacientesToolStripMenuItem";
-            this.listadoPacientesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.listadoPacientesToolStripMenuItem.Text = "Listado Pacientes";
-            this.listadoPacientesToolStripMenuItem.Click += new System.EventHandler(this.listadoPacientesToolStripMenuItem_Click);
             // 
             // MenuPrincipalForm
             // 
@@ -351,5 +363,6 @@ namespace SistemaTurnos
         private System.Windows.Forms.ToolStripMenuItem agregarEmpleadosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listaPacientesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listadoPacientesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem metricasToolStripMenuItem;
     }
 }

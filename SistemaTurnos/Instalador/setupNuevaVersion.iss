@@ -1,4 +1,4 @@
-﻿#define MyAppName "GuardiaSC"
+#define MyAppName "GuardiaSC"
 #define MyAppVersion "1.0.0"
 #define MyAppExeName "SistemaTurnos.exe"
 
@@ -44,17 +44,24 @@ begin
   SaveStringToFile(LogPath, Mensaje + #13#10, True);
 end;
 
-// 1. COMPROBACIÓN DE CONEXIÓN CON REFRESCO DINÁMICO DE PATH
+// 1. COMPROBACIÓN ROBUSTA DE CONEXIÓN VÍA .NET (Sin depender de sqlcmd)
 function ProbarConexionSQL(Servidor: String): Boolean;
 var
   ResultCode: Integer;
   PSContent: String;
 begin
-  EscribirLog('-> Probando conexion con: ' + Servidor);
+  EscribirLog('-> Probando conexion con instancia: ' + Servidor);
   
-  // Refresca el PATH en memoria para detectar sqlcmd recién instalado
-  PSContent := '$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User");' + #13#10 +
-               'sqlcmd -S "' + Servidor + '" -E -Q "SELECT 1" -b -l 3';
+  PSContent := 
+    'try {' + #13#10 +
+    '    $c = New-Object System.Data.SqlClient.SqlConnection("Server=' + Servidor + ';Integrated Security=True;TrustServerCertificate=True;Connect Timeout=4");' + #13#10 +
+    '    $c.Open();' + #13#10 +
+    '    $c.Close();' + #13#10 +
+    '    exit 0;' + #13#10 +
+    '} catch {' + #13#10 +
+    '    exit 1;' + #13#10 +
+    '}';
+
   SaveStringToFile(ExpandConstant('{tmp}\test_sql.ps1'), PSContent, False);
   
   Result := Exec('powershell.exe', '-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "' + ExpandConstant('{tmp}\test_sql.ps1') + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode) and (ResultCode = 0);
@@ -99,7 +106,7 @@ begin
         if ProbarConexionSQL('.\SQLEXPRESS') then
         begin
           NombreServidor := '.\SQLEXPRESS';
-          EscribirLog('SQLEXPRESS existente detectado.');
+          EscribirLog('SQLEXPRESS existente detectado (.\SQLEXPRESS).');
           Break;
         end;
       end;
@@ -124,7 +131,7 @@ begin
     end;
   end;
 
-  // Si no se encontró instancia previa, se marca la bandera sin mostrar ningún mensaje al usuario
+  // Si no se encontró instancia previa, se marca la bandera sin cuadros de diálogo
   if NombreServidor = '' then
   begin
     EscribirLog('No se detecto SQL Server. Se programara instalacion automatica silenciosa.');
@@ -132,10 +139,10 @@ begin
   end;
 end;
 
-// 3. EJECUCIÓN POST-INSTALACIÓN (SQL, CONFIG Y BASE DE DATOS)
+// 3. EJECUCIÓN POST-INSTALACIÓN (SQL EXPRESS, CONFIG Y BASE DE DATOS)
 procedure CurStepChanged(CurStep: TSetupStep);
 var
-  AppDir, SqlScriptPath, ConfigJsonPath, JsonContent, ServidorJson, SqlInstallParams, SqlCmdParams: String;
+  AppDir, SqlScriptPath, ConfigJsonPath, JsonContent, ServidorJson, SqlInstallParams, DeployScriptContent: String;
   ResultCode, IntentosConexion: Integer;
 begin
   if CurStep = ssPostInstall then
@@ -144,15 +151,18 @@ begin
     SqlScriptPath := AppDir + '\script_base.sql';
     ConfigJsonPath := AppDir + '\appsettings.json';
 
-    // FASE A: INSTALACIÓN DE SQL SERVER EXPRESS (SI NO EXISTÍA)
+    // FASE A: INSTALACIÓN OFFLINE DE SQL SERVER EXPRESS (SI NO EXISTÍA)
     if InstalarSQL then
     begin
       WizardForm.StatusLabel.Caption := 'Instalando Microsoft SQL Server Express (puede demorar unos minutos)...';
-      WizardForm.ProgressGauge.Style := npbstMarquee;
 
       EscribirLog('=== INSTALANDO SQL SERVER EXPRESS OFFLINE ===');
       
-      SqlInstallParams := '/Q /ACTION=Install /FEATURES=SQLEngine /INSTANCENAME=SQLEXPRESS /IACCEPTSQLSERVERLICENSETERMS=1 /TCPENABLED=1 /ADDCURRENTUSERASSQLADMIN=1';
+      // /UpdateEnabled=False evita el error -2022834173 al bloquear búsquedas en línea en Windows Update
+      SqlInstallParams := '/Q /ACTION=Install /FEATURES=SQLEngine /INSTANCENAME=SQLEXPRESS ' +
+                          '/IACCEPTSQLSERVERLICENSETERMS=1 /TCPENABLED=1 ' +
+                          '/ADDCURRENTUSERASSQLADMIN=1 /UpdateEnabled=False';
+
       Exec(ExpandConstant('{tmp}\SQLEXPR_x64_ENU.exe'), SqlInstallParams, '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
       EscribirLog('Setup finalizado con codigo: ' + IntToStr(ResultCode));
 
@@ -168,9 +178,11 @@ begin
         Sleep(2000);
         IntentosConexion := IntentosConexion + 1;
       end;
-      
-      WizardForm.ProgressGauge.Style := npbstNormal;
     end;
+
+    // Respaldo de seguridad si NombreServidor quedase vacío
+    if Trim(NombreServidor) = '' then
+      NombreServidor := '.\SQLEXPRESS';
 
     // FASE B: GENERACIÓN DE APPSETTINGS.JSON
     WizardForm.StatusLabel.Caption := 'Configurando cadena de conexión...';
@@ -190,20 +202,61 @@ begin
 
     SaveStringToFile(ConfigJsonPath, JsonContent, False);
 
-    // FASE C: CREACIÓN Y POBLACIÓN DE LA BASE DE DATOS
+    // FASE C: CREACIÓN Y CARGA DE LA BASE DE DATOS (Nativo vía .NET con limpieza física de .mdf / .ldf huérfanos)
     if FileExists(SqlScriptPath) then
     begin
       WizardForm.StatusLabel.Caption := 'Creando y configurando la base de datos...';
-      EscribirLog('Ejecutando script_base.sql...');
+      EscribirLog('Ejecutando despliegue de base de datos...');
 
-      // Limpieza de base previa si existiera y ejecución del script DDL/DML con PATH refrescado
-      SqlCmdParams := '$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User");' + #13#10 +
-                      'sqlcmd -S "' + NombreServidor + '" -E -Q "IF EXISTS (SELECT name FROM sys.databases WHERE name = N''Proyecto_Ing_softw'') BEGIN ALTER DATABASE [Proyecto_Ing_softw] SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE [Proyecto_Ing_softw]; END"' + #13#10 +
-                      'sqlcmd -S "' + NombreServidor + '" -E -f 65001 -i "' + SqlScriptPath + '" -o "' + AppDir + '\Log_SQL.txt"';
+      DeployScriptContent :=
+        '$servidores = @("' + NombreServidor + '", "localhost\SQLEXPRESS", "127.0.0.1\SQLEXPRESS", ".\SQLEXPRESS");' + #13#10 +
+        '$conn = $null;' + #13#10 +
+        'foreach ($s in $servidores) {' + #13#10 +
+        '    try {' + #13#10 +
+        '        $c = New-Object System.Data.SqlClient.SqlConnection("Server=$s;Integrated Security=True;TrustServerCertificate=True;Connect Timeout=5");' + #13#10 +
+        '        $c.Open();' + #13#10 +
+        '        $conn = $c;' + #13#10 +
+        '        break;' + #13#10 +
+        '    } catch {}' + #13#10 +
+        '}' + #13#10 +
+        'if ($conn -ne $null) {' + #13#10 +
+        '    try {' + #13#10 +
+        '        # 1. Limpieza lógica si la base ya estaba registrada en el catálogo' + #13#10 +
+        '        $cmd = $conn.CreateCommand();' + #13#10 +
+        '        $cmd.CommandText = "IF EXISTS (SELECT name FROM sys.databases WHERE name = N''Proyecto_Ing_softw'') BEGIN ALTER DATABASE [Proyecto_Ing_softw] SET SINGLE_USER WITH ROLLBACK IMMEDIATE; DROP DATABASE [Proyecto_Ing_softw]; END";' + #13#10 +
+        '        $cmd.ExecuteNonQuery();' + #13#10 +
+        '        ' + #13#10 +
+        '        # 2. Eliminación física de archivos huérfanos (.mdf / .ldf) dejados por desinstalaciones previas' + #13#10 +
+        '        $cmd.CommandText = "SELECT CAST(SERVERPROPERTY(''InstanceDefaultDataPath'') AS NVARCHAR(512))";' + #13#10 +
+        '        $dataPath = $cmd.ExecuteScalar();' + #13#10 +
+        '        if ($dataPath -and (Test-Path $dataPath)) {' + #13#10 +
+        '            Remove-Item (Join-Path $dataPath "Proyecto_Ing_softw*.mdf") -Force -ErrorAction SilentlyContinue;' + #13#10 +
+        '            Remove-Item (Join-Path $dataPath "Proyecto_Ing_softw*.ldf") -Force -ErrorAction SilentlyContinue;' + #13#10 +
+        '        }' + #13#10 +
+        '        ' + #13#10 +
+        '        # 3. Ejecución por lotes GO del script_base.sql' + #13#10 +
+        '        $script = [System.IO.File]::ReadAllText("' + SqlScriptPath + '");' + #13#10 +
+        '        $batches = $script -split "(?m)^\s*GO\s*$";' + #13#10 +
+        '        foreach ($b in $batches) {' + #13#10 +
+        '            if ($b.Trim()) {' + #13#10 +
+        '                $cmd = $conn.CreateCommand();' + #13#10 +
+        '                $cmd.CommandText = $b;' + #13#10 +
+        '                $cmd.ExecuteNonQuery();' + #13#10 +
+        '            }' + #13#10 +
+        '        }' + #13#10 +
+        '        "Base de datos desplegada con exito" | Out-File "' + AppDir + '\Log_SQL.txt";' + #13#10 +
+        '    } catch {' + #13#10 +
+        '        $_ | Out-File "' + AppDir + '\Log_SQL_Error.txt";' + #13#10 +
+        '    } finally {' + #13#10 +
+        '        $conn.Close();' + #13#10 +
+        '    }' + #13#10 +
+        '} else {' + #13#10 +
+        '    "No se pudo establecer conexion con ninguna instancia local" | Out-File "' + AppDir + '\Log_SQL_Error.txt";' + #13#10 +
+        '}';
 
-      SaveStringToFile(ExpandConstant('{tmp}\run_sql.ps1'), SqlCmdParams, False);
-      Exec('powershell.exe', '-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "' + ExpandConstant('{tmp}\run_sql.ps1') + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
-      EscribirLog('Base de datos inicializada.');
+      SaveStringToFile(ExpandConstant('{tmp}\deploy_db.ps1'), DeployScriptContent, False);
+      Exec('powershell.exe', '-NoProfile -ExecutionPolicy Bypass -WindowStyle Hidden -File "' + ExpandConstant('{tmp}\deploy_db.ps1') + '"', '', SW_HIDE, ewWaitUntilTerminated, ResultCode);
+      EscribirLog('Despliegue de base de datos finalizado.');
     end;
   end;
 end;

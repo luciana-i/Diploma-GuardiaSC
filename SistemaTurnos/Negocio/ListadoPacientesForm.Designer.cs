@@ -32,6 +32,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnlFiltros = new System.Windows.Forms.Panel();
+            this.cmbPacientes = new System.Windows.Forms.ComboBox();
             this.btnBuscar = new System.Windows.Forms.Button();
             this.lblBuscarPaciente = new System.Windows.Forms.Label();
             this.dtpFechaAtencion = new System.Windows.Forms.DateTimePicker();
@@ -43,7 +44,6 @@
             this.colDiagnostico = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDestino = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDocumentos = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.cmbPacientes = new System.Windows.Forms.ComboBox();
             this.pnlFiltros.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPacientes)).BeginInit();
             this.SuspendLayout();
@@ -62,6 +62,18 @@
             this.pnlFiltros.Padding = new System.Windows.Forms.Padding(10);
             this.pnlFiltros.Size = new System.Drawing.Size(984, 65);
             this.pnlFiltros.TabIndex = 0;
+            // 
+            // cmbPacientes
+            // 
+            this.cmbPacientes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.cmbPacientes.DisplayMember = "NombreCompleto";
+            this.cmbPacientes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPacientes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
+            this.cmbPacientes.Location = new System.Drawing.Point(237, 32);
+            this.cmbPacientes.Name = "cmbPacientes";
+            this.cmbPacientes.Size = new System.Drawing.Size(280, 23);
+            this.cmbPacientes.TabIndex = 5;
+            this.cmbPacientes.ValueMember = "Paciente_Id";
             // 
             // btnBuscar
             // 
@@ -83,10 +95,11 @@
             this.lblBuscarPaciente.AutoSize = true;
             this.lblBuscarPaciente.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblBuscarPaciente.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(148)))), ((int)(((byte)(163)))), ((int)(((byte)(184)))));
-            this.lblBuscarPaciente.Location = new System.Drawing.Point(234, 12);
+            this.lblBuscarPaciente.Location = new System.Drawing.Point(234, 14);
             this.lblBuscarPaciente.Name = "lblBuscarPaciente";
             this.lblBuscarPaciente.Size = new System.Drawing.Size(58, 13);
             this.lblBuscarPaciente.TabIndex = 2;
+            this.lblBuscarPaciente.Tag = "PACPACIENTE";
             this.lblBuscarPaciente.Text = "PACIENTE";
             // 
             // dtpFechaAtencion
@@ -96,7 +109,7 @@
             this.dtpFechaAtencion.CalendarTitleBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(78)))), ((int)(((byte)(74)))));
             this.dtpFechaAtencion.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dtpFechaAtencion.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFechaAtencion.Location = new System.Drawing.Point(22, 30);
+            this.dtpFechaAtencion.Location = new System.Drawing.Point(25, 32);
             this.dtpFechaAtencion.Name = "dtpFechaAtencion";
             this.dtpFechaAtencion.Size = new System.Drawing.Size(190, 25);
             this.dtpFechaAtencion.TabIndex = 1;
@@ -110,6 +123,7 @@
             this.lblFecha.Name = "lblFecha";
             this.lblFecha.Size = new System.Drawing.Size(122, 15);
             this.lblFecha.TabIndex = 0;
+            this.lblFecha.Tag = "PACLISTAFECH";
             this.lblFecha.Text = "FECHA DE ATENCIÓN";
             // 
             // dgvPacientes
@@ -209,18 +223,6 @@
             this.colDocumentos.UseColumnTextForButtonValue = true;
             this.colDocumentos.Width = 120;
             // 
-            // cmbPacientes
-            // 
-            this.cmbPacientes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.cmbPacientes.DisplayMember = "NombreCompleto";
-            this.cmbPacientes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbPacientes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(232)))), ((int)(((byte)(240)))));
-            this.cmbPacientes.Location = new System.Drawing.Point(237, 28);
-            this.cmbPacientes.Name = "cmbPacientes";
-            this.cmbPacientes.Size = new System.Drawing.Size(280, 23);
-            this.cmbPacientes.TabIndex = 5;
-            this.cmbPacientes.ValueMember = "Paciente_Id";
-            // 
             // ListadoPacientesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -236,6 +238,7 @@
             this.Name = "ListadoPacientesForm";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Tag = "PAC";
             this.Text = "Pacientes Atendidos - Guardia";
             this.pnlFiltros.ResumeLayout(false);
             this.pnlFiltros.PerformLayout();
