@@ -29,10 +29,8 @@
         private void InitializeComponent()
         {
             this.pnlMainContainer = new System.Windows.Forms.Panel();
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblTitulo = new System.Windows.Forms.Label();
-            this.btnCancelar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             this.grpInstitucional = new SistemaTurnos.DarkGroupBox();
             this.chkActivo = new System.Windows.Forms.CheckBox();
             this.cmbUsuario = new System.Windows.Forms.ComboBox();
@@ -51,11 +49,16 @@
             this.lblNombre = new System.Windows.Forms.Label();
             this.lblTelefono = new System.Windows.Forms.Label();
             this.lblApellido = new System.Windows.Forms.Label();
+            this.pnlHeader = new System.Windows.Forms.Panel();
+            this.lblTitulo = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.lblDni = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnBuscarPaciente = new System.Windows.Forms.Button();
             this.pnlMainContainer.SuspendLayout();
-            this.pnlHeader.SuspendLayout();
             this.grpInstitucional.SuspendLayout();
             this.grpIdentidad.SuspendLayout();
+            this.pnlHeader.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlMainContainer
@@ -73,26 +76,20 @@
             this.pnlMainContainer.TabIndex = 0;
             this.pnlMainContainer.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlMainContainer_Paint);
             // 
-            // pnlHeader
+            // btnGuardar
             // 
-            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
-            this.pnlHeader.Controls.Add(this.lblTitulo);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(840, 50);
-            this.pnlHeader.TabIndex = 0;
-            // 
-            // lblTitulo
-            // 
-            this.lblTitulo.AutoSize = true;
-            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
-            this.lblTitulo.Location = new System.Drawing.Point(15, 15);
-            this.lblTitulo.Name = "lblTitulo";
-            this.lblTitulo.Size = new System.Drawing.Size(118, 20);
-            this.lblTitulo.TabIndex = 0;
-            this.lblTitulo.Text = "Alta Empleados";
+            this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
+            this.btnGuardar.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGuardar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(111)))), ((int)(((byte)(83)))));
+            this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGuardar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(62)))), ((int)(((byte)(48)))));
+            this.btnGuardar.Location = new System.Drawing.Point(600, 494);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(201, 38);
+            this.btnGuardar.TabIndex = 5;
+            this.btnGuardar.Text = "✓ Guardar Empleado";
+            this.btnGuardar.UseVisualStyleBackColor = false;
+            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // btnCancelar
             // 
@@ -108,21 +105,6 @@
             this.btnCancelar.Text = "✗ Cancelar";
             this.btnCancelar.UseVisualStyleBackColor = false;
             this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
-            // 
-            // btnGuardar
-            // 
-            this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
-            this.btnGuardar.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnGuardar.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(111)))), ((int)(((byte)(83)))));
-            this.btnGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGuardar.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(62)))), ((int)(((byte)(48)))));
-            this.btnGuardar.Location = new System.Drawing.Point(600, 494);
-            this.btnGuardar.Name = "btnGuardar";
-            this.btnGuardar.Size = new System.Drawing.Size(201, 38);
-            this.btnGuardar.TabIndex = 5;
-            this.btnGuardar.Text = "✓ Guardar Empleado";
-            this.btnGuardar.UseVisualStyleBackColor = false;
-            this.btnGuardar.Click += new System.EventHandler(this.btnGuardar_Click);
             // 
             // grpInstitucional
             // 
@@ -224,6 +206,9 @@
             this.grpIdentidad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(51)))), ((int)(((byte)(57)))));
             this.grpIdentidad.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(54)))), ((int)(((byte)(71)))), ((int)(((byte)(79)))));
             this.grpIdentidad.BorderRadius = 14;
+            this.grpIdentidad.Controls.Add(this.btnBuscarPaciente);
+            this.grpIdentidad.Controls.Add(this.label1);
+            this.grpIdentidad.Controls.Add(this.comboBox1);
             this.grpIdentidad.Controls.Add(this.dtpFecNac);
             this.grpIdentidad.Controls.Add(this.txtTelefono);
             this.grpIdentidad.Controls.Add(this.txtNombre);
@@ -236,10 +221,10 @@
             this.grpIdentidad.Controls.Add(this.lblDni);
             this.grpIdentidad.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.grpIdentidad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
-            this.grpIdentidad.Location = new System.Drawing.Point(19, 75);
+            this.grpIdentidad.Location = new System.Drawing.Point(19, 56);
             this.grpIdentidad.Name = "grpIdentidad";
             this.grpIdentidad.Padding = new System.Windows.Forms.Padding(16, 32, 16, 16);
-            this.grpIdentidad.Size = new System.Drawing.Size(798, 206);
+            this.grpIdentidad.Size = new System.Drawing.Size(798, 244);
             this.grpIdentidad.TabIndex = 1;
             this.grpIdentidad.Text = "DATOS DE IDENTIDAD";
             this.grpIdentidad.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
@@ -250,7 +235,7 @@
             this.dtpFecNac.CalendarMonthBackground = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
             this.dtpFecNac.CalendarTitleBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(38)))), ((int)(((byte)(51)))), ((int)(((byte)(57)))));
             this.dtpFecNac.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFecNac.Location = new System.Drawing.Point(33, 147);
+            this.dtpFecNac.Location = new System.Drawing.Point(30, 199);
             this.dtpFecNac.Name = "dtpFecNac";
             this.dtpFecNac.Size = new System.Drawing.Size(152, 24);
             this.dtpFecNac.TabIndex = 9;
@@ -261,7 +246,7 @@
             this.txtTelefono.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTelefono.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.txtTelefono.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.txtTelefono.Location = new System.Drawing.Point(231, 147);
+            this.txtTelefono.Location = new System.Drawing.Point(228, 203);
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(303, 25);
             this.txtTelefono.TabIndex = 8;
@@ -272,9 +257,9 @@
             this.txtNombre.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNombre.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.txtNombre.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.txtNombre.Location = new System.Drawing.Point(231, 80);
+            this.txtNombre.Location = new System.Drawing.Point(228, 132);
             this.txtNombre.Name = "txtNombre";
-            this.txtNombre.Size = new System.Drawing.Size(266, 25);
+            this.txtNombre.Size = new System.Drawing.Size(199, 25);
             this.txtNombre.TabIndex = 7;
             // 
             // txtApellido
@@ -283,7 +268,7 @@
             this.txtApellido.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtApellido.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.txtApellido.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.txtApellido.Location = new System.Drawing.Point(548, 80);
+            this.txtApellido.Location = new System.Drawing.Point(450, 132);
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(234, 25);
             this.txtApellido.TabIndex = 6;
@@ -294,7 +279,7 @@
             this.txtDni.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtDni.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.txtDni.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(245)))), ((int)(((byte)(249)))));
-            this.txtDni.Location = new System.Drawing.Point(33, 80);
+            this.txtDni.Location = new System.Drawing.Point(30, 132);
             this.txtDni.Name = "txtDni";
             this.txtDni.Size = new System.Drawing.Size(152, 25);
             this.txtDni.TabIndex = 5;
@@ -302,7 +287,7 @@
             // lblFecNac
             // 
             this.lblFecNac.AutoSize = true;
-            this.lblFecNac.Location = new System.Drawing.Point(30, 126);
+            this.lblFecNac.Location = new System.Drawing.Point(27, 178);
             this.lblFecNac.Name = "lblFecNac";
             this.lblFecNac.Size = new System.Drawing.Size(118, 17);
             this.lblFecNac.TabIndex = 4;
@@ -311,7 +296,7 @@
             // lblNombre
             // 
             this.lblNombre.AutoSize = true;
-            this.lblNombre.Location = new System.Drawing.Point(235, 51);
+            this.lblNombre.Location = new System.Drawing.Point(232, 112);
             this.lblNombre.Name = "lblNombre";
             this.lblNombre.Size = new System.Drawing.Size(58, 17);
             this.lblNombre.TabIndex = 3;
@@ -320,7 +305,7 @@
             // lblTelefono
             // 
             this.lblTelefono.AutoSize = true;
-            this.lblTelefono.Location = new System.Drawing.Point(231, 126);
+            this.lblTelefono.Location = new System.Drawing.Point(225, 178);
             this.lblTelefono.Name = "lblTelefono";
             this.lblTelefono.Size = new System.Drawing.Size(62, 17);
             this.lblTelefono.TabIndex = 2;
@@ -329,20 +314,74 @@
             // lblApellido
             // 
             this.lblApellido.AutoSize = true;
-            this.lblApellido.Location = new System.Drawing.Point(545, 51);
+            this.lblApellido.Location = new System.Drawing.Point(450, 112);
             this.lblApellido.Name = "lblApellido";
             this.lblApellido.Size = new System.Drawing.Size(60, 17);
             this.lblApellido.TabIndex = 1;
             this.lblApellido.Text = "Apellido";
             // 
+            // pnlHeader
+            // 
+            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(35)))), ((int)(((byte)(45)))));
+            this.pnlHeader.Controls.Add(this.lblTitulo);
+            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlHeader.Name = "pnlHeader";
+            this.pnlHeader.Size = new System.Drawing.Size(840, 50);
+            this.pnlHeader.TabIndex = 0;
+            // 
+            // lblTitulo
+            // 
+            this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitulo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(155)))), ((int)(((byte)(210)))), ((int)(((byte)(185)))));
+            this.lblTitulo.Location = new System.Drawing.Point(15, 15);
+            this.lblTitulo.Name = "lblTitulo";
+            this.lblTitulo.Size = new System.Drawing.Size(118, 20);
+            this.lblTitulo.TabIndex = 0;
+            this.lblTitulo.Text = "Alta Empleados";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(259, 50);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(219, 25);
+            this.comboBox1.TabIndex = 10;
+            // 
             // lblDni
             // 
             this.lblDni.AutoSize = true;
-            this.lblDni.Location = new System.Drawing.Point(30, 60);
+            this.lblDni.Location = new System.Drawing.Point(27, 112);
             this.lblDni.Name = "lblDni";
             this.lblDni.Size = new System.Drawing.Size(112, 17);
             this.lblDni.TabIndex = 0;
             this.lblDni.Text = "Dni /Documento";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(27, 53);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(226, 17);
+            this.label1.TabIndex = 11;
+            this.label1.Text = "Seleccione El empleado a modificar";
+            // 
+            // btnBuscarPaciente
+            // 
+            this.btnBuscarPaciente.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(46)))), ((int)(((byte)(74)))), ((int)(((byte)(86)))));
+            this.btnBuscarPaciente.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnBuscarPaciente.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(103)))), ((int)(((byte)(120)))));
+            this.btnBuscarPaciente.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBuscarPaciente.ForeColor = System.Drawing.Color.White;
+            this.btnBuscarPaciente.Location = new System.Drawing.Point(513, 50);
+            this.btnBuscarPaciente.Name = "btnBuscarPaciente";
+            this.btnBuscarPaciente.Size = new System.Drawing.Size(162, 31);
+            this.btnBuscarPaciente.TabIndex = 12;
+            this.btnBuscarPaciente.Tag = "admGuardiaBuscarPac";
+            this.btnBuscarPaciente.Text = "🔍 ";
+            this.btnBuscarPaciente.UseVisualStyleBackColor = false;
+            this.btnBuscarPaciente.Click += new System.EventHandler(this.btnBuscarPaciente_Click_1);
             // 
             // EmpleadosForm
             // 
@@ -358,12 +397,12 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EmpleadosForm";
             this.pnlMainContainer.ResumeLayout(false);
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
             this.grpInstitucional.ResumeLayout(false);
             this.grpInstitucional.PerformLayout();
             this.grpIdentidad.ResumeLayout(false);
             this.grpIdentidad.PerformLayout();
+            this.pnlHeader.ResumeLayout(false);
+            this.pnlHeader.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -383,7 +422,6 @@
         private System.Windows.Forms.Label lblNombre;
         private System.Windows.Forms.Label lblTelefono;
         private System.Windows.Forms.Label lblApellido;
-        private System.Windows.Forms.Label lblDni;
         private System.Windows.Forms.ComboBox cmbUsuario;
         private System.Windows.Forms.ComboBox cmbTipoEmpleado;
         private System.Windows.Forms.TextBox txtMatricula;
@@ -394,5 +432,9 @@
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.CheckBox chkActivo;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label lblDni;
+        private System.Windows.Forms.Button btnBuscarPaciente;
     }
 }

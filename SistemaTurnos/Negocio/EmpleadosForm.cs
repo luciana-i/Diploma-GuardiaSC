@@ -17,12 +17,21 @@ namespace SistemaTurnos.Negocio
         private Empleado _empleadoActual;
         private readonly EmpleadoBL _empleadoBL;
         private readonly UsuarioBL _usuarioBL;
+        List<Empleado> listaEmpleados = new List<Empleado>();
         public EmpleadosForm()
         {
             InitializeComponent();
             _empleadoBL = new EmpleadoBL();
             _usuarioBL = new UsuarioBL();
+            listaEmpleados = _empleadoBL.ObtenerEmpelados();
+            cargarComboEmpelados();
 
+        }
+
+        private void cargarComboEmpelados()
+        {
+            comboBox1.DataSource = null;
+            comboBox1.DataSource = listaEmpleados;
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -137,30 +146,77 @@ namespace SistemaTurnos.Negocio
 
         private void CargarDatosEnPantalla()
         {
-            txtDni.Text = _empleadoActual.Dni;
-            txtNombre.Text = _empleadoActual.Nombre;
-            txtApellido.Text = _empleadoActual.Apellido;
+            //  Empleado Nuevo 
+            if (_empleadoActual == null)
+            {
+                txtDni.Clear();
+                txtNombre.Clear();
+                txtApellido.Clear();
+                txtTelefono.Clear();
+                txtMatricula.Clear();
+
+                // Limpia el DateTimePicker
+                dtpFecNac.Value = DateTime.Today;
+                dtpFecNac.Checked = false; // Requiere dtpFecNac.ShowCheckBox = true en diseño
+
+                cmbTipoEmpleado.SelectedIndex = -1;
+                chkActivo.Checked = true; // Por defecto activo para altas
+
+                if (cmbUsuario.DataSource != null)
+                    cmbUsuario.SelectedIndex = -1;
+                else
+                    cmbUsuario.SelectedValue = 0;
+
+                return;
+            }
+
+            //  Empleado Existente 
+            txtDni.Text = _empleadoActual.Dni ?? string.Empty;
+            txtNombre.Text = _empleadoActual.Nombre ?? string.Empty;
+            txtApellido.Text = _empleadoActual.Apellido ?? string.Empty;
+            txtTelefono.Text = _empleadoActual.Telefono ?? string.Empty;
 
             if (_empleadoActual.FechaNacimiento.HasValue)
+            {
                 dtpFecNac.Value = _empleadoActual.FechaNacimiento.Value;
+                dtpFecNac.Checked = true;
+            }
+            else
+            {
+                dtpFecNac.Value = DateTime.Today;
+                dtpFecNac.Checked = false;
+            }
 
-            txtTelefono.Text = _empleadoActual.Telefono;
-
-            // Datos propios de Empleado
             cmbTipoEmpleado.SelectedItem = _empleadoActual.TipoEmpleado;
-            txtMatricula.Text = _empleadoActual.Matricula;
+            txtMatricula.Text = _empleadoActual.Matricula ?? string.Empty;
             chkActivo.Checked = _empleadoActual.Activo;
 
-            if (_empleadoActual.EmpleadoUsuario != null)
+            if (_empleadoActual.EmpleadoUsuario != null && _empleadoActual.EmpleadoUsuario.Id > 0)
+            {
                 cmbUsuario.SelectedValue = _empleadoActual.EmpleadoUsuario.Id;
+            }
             else
-                cmbUsuario.SelectedValue = 0;
+            {
+                if (cmbUsuario.DataSource != null)
+                    cmbUsuario.SelectedIndex = -1;
+                else
+                    cmbUsuario.SelectedValue = 0;
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void btnBuscarPaciente_Click_1(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedItem is Empleado empleadoSeleccionado)
+            {
+                _empleadoActual = empleadoSeleccionado;
+                CargarDatosEnPantalla();
+            }
         }
     }
 }
