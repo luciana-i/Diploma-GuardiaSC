@@ -24,5 +24,10 @@ namespace BLL
         {
             return EmpleadoDAL.ObtenerPorUsuarioId(usuario.Id);
         }
+
+        public List<Empleado> ObtenerEmpelados()
+        {
+            return EmpleadoDAL.ObtenerEmpelados();
+        }
     }
 }

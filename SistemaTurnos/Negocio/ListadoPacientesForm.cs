@@ -29,7 +29,7 @@ namespace SistemaTurnos.Negocio
             InitializeComponent();
 
             setearTagDGV();
-            dtpFechaAtencion.Value = DateTime.Today;
+            dtpFechaAtencion.Value = new DateTime(1900, 1, 1);
             pacientes=pacienteBL.Obtener();
 
             CargarCombo();
@@ -54,31 +54,74 @@ namespace SistemaTurnos.Negocio
 
         private void CargarCombo()
         {
-           cmbPacientes.DataSource = null;
-           cmbPacientes.DataSource = pacientes;
+            pacientes.Insert(0, new BE.Paciente
+            {
+                Id = 0,
+                Nombre = "Todos los pacientes",
+                Apellido = ""
+            });
+
+            cmbPacientes.DataSource = null;
+            cmbPacientes.DisplayMember = "NombreCompleto";
+            cmbPacientes.ValueMember = "Id";
+            cmbPacientes.DataSource = pacientes;
+
+            cmbPacientes.SelectedValue = 0;
         }
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
             try
             {
-                DateTime fechaSeleccionada = dtpFechaAtencion.Value.Date;
-
                 int? pacienteId = null;
-                if (cmbPacientes.SelectedValue != null && int.TryParse(cmbPacientes.SelectedValue.ToString(), out int id) && id > 0)
+                DateTime fechaSeleccionada;
+
+                bool buscarPorPaciente =
+                    dtpFechaAtencion.Value.Date == new DateTime(1900, 1, 1);
+
+                if (buscarPorPaciente)
                 {
-                    pacienteId = id;
+                    if (cmbPacientes.SelectedValue == null ||
+                        Convert.ToInt32(cmbPacientes.SelectedValue) == 0)
+                    {
+                        MessageBox.Show("Seleccione un paciente para realizar la búsqueda.",
+                            "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    pacienteId = Convert.ToInt32(cmbPacientes.SelectedValue);
+                    fechaSeleccionada = new DateTime(1900, 1, 1);
+                }
+                else
+                {
+                    // Si hay una fecha seleccionada, el paciente es opcional.
+                    fechaSeleccionada = dtpFechaAtencion.Value.Date;
+
+                    if (cmbPacientes.SelectedValue != null)
+                    {
+                        int idSeleccionado = Convert.ToInt32(cmbPacientes.SelectedValue);
+
+                        if (idSeleccionado != 0)
+                            pacienteId = idSeleccionado;
+                    }
                 }
 
-                // La base de datos ya devuelve solo las filas que cumplen los filtros
-                _consultasFiltradas = _consultaBL.ObtenerPacientesAtendidos(fechaSeleccionada, pacienteId);
+                _consultasFiltradas = _consultaBL.ObtenerPacientesAtendidos(
+                    fechaSeleccionada, pacienteId);
+
+                if (_consultasFiltradas.Count == 0)
+                {
+                    MessageBox.Show(
+                        "No se encontraron atenciones finalizadas con los criterios seleccionados.",
+                        "Sin resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
 
                 MostrarEnGrilla(_consultasFiltradas);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al consultar pacientes: {ex.Message}",
-                                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

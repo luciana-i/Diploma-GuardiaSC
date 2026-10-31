@@ -162,7 +162,24 @@ namespace DAL
                 Id = Convert.ToInt32(row["Empleado_Id"]),
                 Matricula = row["Empleado_Matricula"] != DBNull.Value ? row["Empleado_Matricula"].ToString() : null,
                 TipoEmpleado = (TipoEmpleadoEnum)Convert.ToInt32(row["Empleado_TipoEmpleadoId"]),
-                Activo = row["Empleado_Activo"] != DBNull.Value && Convert.ToBoolean(row["Empleado_Activo"])
+                Activo = row["Empleado_Activo"] != DBNull.Value && Convert.ToBoolean(row["Empleado_Activo"]),
+
+                // Mapeo de campos heredados de Persona desde dbo.Empleado
+                Dni = row.Table.Columns.Contains("Empleado_Dni") && row["Empleado_Dni"] != DBNull.Value
+                      ? row["Empleado_Dni"].ToString()
+                      : string.Empty,
+                Nombre = row.Table.Columns.Contains("Empleado_Nombre") && row["Empleado_Nombre"] != DBNull.Value
+                      ? row["Empleado_Nombre"].ToString()
+                      : string.Empty,
+                Apellido = row.Table.Columns.Contains("Empleado_Apellido") && row["Empleado_Apellido"] != DBNull.Value
+                      ? row["Empleado_Apellido"].ToString()
+                      : string.Empty,
+                FechaNacimiento = row.Table.Columns.Contains("Empleado_FechaNac") && row["Empleado_FechaNac"] != DBNull.Value
+                      ? Convert.ToDateTime(row["Empleado_FechaNac"])
+                      : (DateTime?)null,
+                Telefono = row.Table.Columns.Contains("Empleado_Telefono") && row["Empleado_Telefono"] != DBNull.Value
+                      ? row["Empleado_Telefono"].ToString()
+                      : string.Empty
             };
 
             // Si tiene usuario asociado en la base
@@ -179,7 +196,11 @@ namespace DAL
                         : string.Empty
                 };
 
-                emp.Nombre = emp.EmpleadoUsuario.Username;
+                // Si Nombre viniese vacío de la tabla Empleado, toma de respaldo el Username
+                if (string.IsNullOrWhiteSpace(emp.Nombre))
+                {
+                    emp.Nombre = emp.EmpleadoUsuario.Username;
+                }
             }
 
             return emp;
@@ -210,6 +231,40 @@ namespace DAL
             }
 
             return null;
+        }
+
+        public static List<Empleado> ObtenerEmpelados()
+        {
+            DAO dao = new DAO();
+            var lista = new List<Empleado>();
+            string sql = @"
+                SELECT 
+                    e.Empleado_Id,
+                    e.Empleado_Dni,
+                    e.Empleado_Nombre,
+                    e.Empleado_Apellido,
+                    e.Empleado_FechaNac,
+                    e.Empleado_Telefono,
+                    e.EmpleadoUsuario_Id,
+                    e.Empleado_Matricula,
+                    e.Empleado_TipoEmpleadoId,
+                    e.Empleado_Activo,
+                    u.Usuario_Username,
+                    u.Usuario_Mail
+                FROM dbo.Empleado e
+                LEFT JOIN dbo.Usuario u ON e.EmpleadoUsuario_Id = u.Usuario_ID;";
+
+            DataSet ds = dao.ExecuteDataSet(sql);
+
+            if (ds != null && ds.Tables.Count > 0)
+            {
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    lista.Add(MapearEmpleado(row));
+                }
+            }
+
+            return lista;
         }
     }
 }

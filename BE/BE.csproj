@@ -57,10 +57,12 @@
     <Compile Include="Metricas\SnapshotMetricas.cs" />
     <Compile Include="NivelPrioridad.cs" />
     <Compile Include="Paciente.cs" />
+    <Compile Include="PdfDocumento.cs" />
     <Compile Include="Perfil.cs" />
     <Compile Include="Familia.cs" />
     <Compile Include="Patente.cs" />
     <Compile Include="Persona.cs" />
+    <Compile Include="SeccionPdf.cs" />
     <Compile Include="TipoDocumentoClinico.cs" />
     <Compile Include="TipoEmpleado.cs" />
     <Compile Include="Traduccion.cs" />
